@@ -13,9 +13,9 @@ enum class DatePublished(val day: String) {
             val twoDaysSeconds = 48 * 60 * 60L
 
             return when {
-                diffSeconds < oneDaySeconds -> DatePublished.TODAY
-                diffSeconds < twoDaysSeconds -> DatePublished.YESTERDAY
-                else -> DatePublished.WEEK
+                diffSeconds < oneDaySeconds ->TODAY
+                diffSeconds < twoDaysSeconds -> YESTERDAY
+                else -> WEEK
             }
 
         }

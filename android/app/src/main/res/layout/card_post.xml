@@ -6,10 +6,13 @@
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@android:color/transparent"
     app:cardElevation="0dp"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="20dp"
     app:cardMaxElevation="0dp"
     app:cardUseCompatPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="#F3EDF7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/common_spacing">
@@ -39,7 +42,6 @@
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            android:textColor="#000000"
             tools:text="@sample/posts.json/data/author" />
 
         <TextView
@@ -53,8 +55,7 @@
             app:layout_constraintEnd_toStartOf="@id/menu"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toBottomOf="@id/author"
-            tools:text="@sample/posts.json/data/published"
-            android:textColor="#000000"/>
+            tools:text="@sample/posts.json/data/published" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/menu"
@@ -84,9 +85,8 @@
             android:paddingBottom="@dimen/common_spacing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header"
-            tools:text="@sample/posts.json/data/content"
-            android:textColor="#000000"/>
+            app:layout_constraintTop_toBottomOf="@id/attachment"
+            tools:text="@sample/posts.json/data/content" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/footer"
@@ -104,12 +104,11 @@
             android:checkable="true"
             android:contentDescription="@string/description_post_like"
             app:icon="@drawable/ic_like_24dp"
-            app:iconTint="#000000"
+            app:iconTint="#6750A4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/footer"
             tools:checked="@sample/posts.json/data/likedByMe"
-            tools:text="@sample/posts.json/data/likes"
-            android:textColor="#000000"/>
+            tools:text="@sample/posts.json/data/likes" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/share"
@@ -119,20 +118,19 @@
             android:layout_marginStart="@dimen/common_spacing"
             android:contentDescription="@string/description_post_share"
             app:icon="@drawable/ic_share_24"
-            app:iconTint="#000000"
+            app:iconTint="#6750A4"
             app:layout_constraintStart_toEndOf="@+id/like"
-            app:layout_constraintTop_toBottomOf="@id/footer"
-            android:textColor="#000000"/>
+            app:layout_constraintTop_toBottomOf="@id/footer" />
 
         <ImageView
             android:id="@+id/attachment"
-            android:layout_width="280dp"
-            android:layout_height="280dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/footer"
+            app:layout_constraintTop_toBottomOf="@id/header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/content" />
-
+            app:layout_constraintBottom_toTopOf="@id/content" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.google.android.material.card.MaterialCardView>

@@ -42,7 +42,7 @@ class AuthFragment : Fragment() {
             }
 
         }
-        binding.btnBack.setOnClickListener {
+        binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
         return binding.root

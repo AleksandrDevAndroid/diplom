@@ -70,6 +70,6 @@ interface PostsApiService {
         @Part media: MultipartBody.Part?,
     ): Response<AuthState>
 
-    @POST("api/users/push-tokens")
+    @POST("users/push-tokens")
     suspend fun pushToken(@Body token: PushToken)
 }

@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlin.android)
@@ -29,6 +30,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val properties = Properties()
+        if (rootProject.file("local.properties").exists()) {
+                rootProject.file("local.properties").inputStream().use { properties.load(it) }
+        }
+        val API_KEY = properties.getProperty("API_KEY", "")
+        buildConfigField("String", "API_KEY", "\"$API_KEY\"")
+        val AUTH_API_KEY = properties.getProperty("AUTH_API_KEY", "")
+        buildConfigField("String", "AUTH_API_KEY", "\"$AUTH_API_KEY\"")
     }
 
     buildFeatures {
@@ -39,13 +49,16 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             manifestPlaceholders["usesCleartextTraffic"] = false
             buildConfigField("String", "BASE_URL", "\"https://netomedia.ru\"")
         }
         debug {
             manifestPlaceholders["usesCleartextTraffic"] = true
-            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:9999\"")
+            buildConfigField("String", "BASE_URL", "\"http://94.228.125.136:8080\"")
         }
     }
     compileOptions {
@@ -90,6 +103,7 @@ dependencies {
     implementation(libs.imagepicker)
     implementation(libs.ucrop)
     coreLibraryDesugaring(libs.desugaring)
+    implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.room.paging)
 }

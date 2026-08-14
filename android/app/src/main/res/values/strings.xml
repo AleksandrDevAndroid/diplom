@@ -22,7 +22,7 @@
     <string name="channel_remote_description">Notifications from remote server</string>
     <string name="update_list_posts">Update list</string>
     <string name="description_photo">Описание фото</string>
-    <string name="remove">Удалить</string>
+    <string name="remove">Remove</string>
     <string name="description_select_photo">Choose photo</string>
     <string name="description_take_photo">Pick photo</string>
     <string name="menu_save">Save\n</string>
@@ -42,4 +42,14 @@
     <string name="something_wrong">Something wrong</string>
     <string name="error_task_cancelled">"Ошибка выполнения "</string>
     <string name="image_ad">ImageAd</string>
+    <string name="back_button">back</string>
+    <string name="new_post">New post</string>
+    <string name="posts">Posts</string>
+    <string name="event">Event</string>
+    <string name="users">Users</string>
+    <string name="save_button">Save button\n\n</string>
+    <string name="choose_users">Choose users</string>
+    <string name="post">Post</string>
+    <string name="likers">Likers\n</string>
+    <string name="mentioned">Mentioned</string>
 </resources>

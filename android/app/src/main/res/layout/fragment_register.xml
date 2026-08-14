@@ -2,131 +2,137 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/text_register"
+    <ImageView
+        android:id="@+id/take_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="240dp"
-        android:layout_marginEnd="48dp"
-        android:text="@string/register"
-        android:textSize="28sp"
+        android:src="@drawable/monogram"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#000000"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_back"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:padding="0dp"
-        app:iconPadding="0dp"
-        android:clickable="true"
-        app:iconGravity="textStart"
-        app:icon="@drawable/outline_arrow_back_2_24"
-        app:iconTint="@android:color/white"
-        android:backgroundTint="#99000000"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FEF7FF"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back_button"
+            style="@style/Widget.AppTheme.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back_button"
+            android:padding="@dimen/common_spacing"
+            app:icon="@drawable/outline_arrow_back_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/enter_name"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
-        android:layout_width="240dp"
-        android:layout_height="58dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_register"
-        android:inputType="text"
-        android:imeOptions="actionDone"
-        android:hint="Name"
-        app:backgroundTint="#000000"
-
-        />
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:text="Registration"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/back_button"
+            app:layout_constraintStart_toEndOf="@+id/back_button"
+            app:layout_constraintTop_toTopOf="@id/back_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/enter_login"
         android:layout_width="240dp"
-        android:layout_height="58dp"
+        android:layout_height="56dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enter_name"
-        android:inputType="text"
-        android:imeOptions="actionDone"
+        android:background="#E6E0E9"
+        android:gravity="center"
         android:hint="Login"
-        app:backgroundTint="#000000"
-        />
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@id/take_photo"
+        app:layout_constraintStart_toStartOf="@id/take_photo"
+        app:layout_constraintTop_toBottomOf="@id/take_photo" />
+
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/enter_pass"
+        android:id="@+id/enter_name"
         android:layout_width="240dp"
-        android:layout_height="58dp"
+        android:layout_height="56dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
+        android:background="#E6E0E9"
+        android:gravity="center"
+        android:hint="Name"
+        android:imeOptions="actionDone"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enter_login"
-        android:inputType="text"
-        android:imeOptions="actionDone"
-        android:hint="Password"
-        app:backgroundTint="#000000"
-        />
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/enter_pass_again"
+        app:layout_constraintTop_toBottomOf="@id/enter_login" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/show_pass"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="240dp"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
+        app:boxBackgroundColor="#E6E0E9"
+        app:endIconMode="password_toggle"
+        app:endIconTint="#6750A4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enter_pass"
-        android:inputType="text"
-        android:imeOptions="actionDone"
-        android:hint="Password again"
-        app:backgroundTint="#000000"
-        />
+        app:layout_constraintTop_toBottomOf="@id/enter_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_pass"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:hint="Password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/show_pass_again"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:boxBackgroundColor="#E6E0E9"
+        app:endIconMode="password_toggle"
+        app:endIconTint="#6750A4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/show_pass">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_pass_again"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:hint="Password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_enter"
-        android:layout_width="60dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@id/enter_pass_again"
-        app:layout_constraintTop_toTopOf="@id/enter_pass_again"
-        android:text="Ok"
+        android:layout_width="240dp"
+        android:layout_height="56dp"
         android:clickable="true"
-        app:backgroundTint="#000000"
-        />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/pickPhoto"
-        style="@style/Widget.AppTheme.IconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/description_select_photo"
-        app:icon="@drawable/outline_add_photo_alternate_24"
-        app:layout_constraintStart_toEndOf="@id/enter_name"
-        app:layout_constraintBottom_toBottomOf="@id/enter_name"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/takePhoto"
-        style="@style/Widget.AppTheme.IconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/description_take_photo"
-        app:icon="@drawable/baseline_camera_alt_24"
-        app:layout_constraintStart_toEndOf="@id/pickPhoto"
-        app:layout_constraintBottom_toBottomOf="@id/pickPhoto"/>
+        android:text="Login"
+        android:background="#6750A4"
+        app:layout_constraintEnd_toEndOf="@id/show_pass_again"
+        app:layout_constraintStart_toStartOf="@id/show_pass_again"
+        app:layout_constraintTop_toBottomOf="@id/show_pass_again" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

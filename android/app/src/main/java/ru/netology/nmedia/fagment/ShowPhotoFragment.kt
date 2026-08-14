@@ -27,7 +27,7 @@ class ShowPhotoFragment : Fragment() {
             .timeout(6_000)
             .into(binding.showPhoto)
 
-        binding.btnBack.setOnClickListener {
+        binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
         return binding.root

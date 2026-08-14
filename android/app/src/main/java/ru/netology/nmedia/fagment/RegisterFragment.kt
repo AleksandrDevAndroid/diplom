@@ -50,7 +50,7 @@ class RegisterFragment : Fragment() {
         val binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
 
-        binding.pickPhoto.setOnClickListener {
+      /*  binding.pickPhoto.setOnClickListener {
             ImagePicker.with(this)
                 .crop()
                 .compress(2048)
@@ -58,7 +58,7 @@ class RegisterFragment : Fragment() {
                 .galleryMimeTypes(arrayOf("image/png", "image/jpeg"))
                 .createIntent { intent -> startForProfileImageResult.launch(intent) }
         }
-
+*/
         binding.takePhoto.setOnClickListener {
             ImagePicker.with(this)
                 .crop()
@@ -93,7 +93,7 @@ class RegisterFragment : Fragment() {
 
 
 
-        binding.btnBack.setOnClickListener {
+        binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
         return binding.root

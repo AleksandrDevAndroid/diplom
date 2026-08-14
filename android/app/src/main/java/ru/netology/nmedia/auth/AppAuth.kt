@@ -17,8 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import ru.netology.nmedia.api.PostsApiService
-import ru.netology.nmedia.dto.PushToken
-import ru.netology.nmedia.repository.PostRepositoryImpl
+import ru.netology.nmedia.dto.  PushToken
 import javax.inject.Inject
 import javax.inject.Singleton
 

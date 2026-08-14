@@ -17,14 +17,15 @@ import javax.inject.Singleton
 @Module
 class ApiModule {
     companion object {
-        private const val BASE_URL = "${BuildConfig.BASE_URL}/api/slow/"
+        private const val BASE_URL = "${BuildConfig.BASE_URL}/api/"
     }
+
     @Provides
     @Singleton
     fun provideLogging(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         if (BuildConfig.DEBUG) {
             level = HttpLoggingInterceptor.Level.BODY
-        }
+       }
     }
 
     @Singleton
@@ -32,11 +33,11 @@ class ApiModule {
     fun provideOkhttp(logging: HttpLoggingInterceptor, appAuth: AppAuth): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor { chain ->
-                appAuth.authState.value.takeIf { !it.token.isNullOrEmpty() }?.let {
-                    val newRequest = chain.request().newBuilder()
-                        .addHeader("Authorization", requireNotNull(it.token))
-                        .build()
-                    return@addInterceptor chain.proceed(newRequest)
+                val requestBuilder = chain.request().newBuilder()
+                requestBuilder.header("Api-Key", BuildConfig.API_KEY)
+                val token = appAuth.authState.value.token
+                if (!token.isNullOrEmpty()) {
+                    requestBuilder.header("Authorization", token)
                 }
                 chain.proceed(chain.request())
             }
