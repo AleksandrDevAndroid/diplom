@@ -24,6 +24,7 @@ import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewmodel.PostViewModel
+
 @AndroidEntryPoint
 class NewPostFragment : Fragment() {
 
@@ -42,9 +43,11 @@ class NewPostFragment : Fragment() {
                 val fileUri = data?.data!!
                 viewModel.changePhoto(fileUri, fileUri.toFile())
             } else {
-                Toast.makeText(requireContext(), R.string.error_task_cancelled, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.error_task_cancelled, Toast.LENGTH_SHORT)
+                    .show()
             }
         }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,17 +71,17 @@ class NewPostFragment : Fragment() {
         }
 
         binding.removePhoto.setOnClickListener {
-            viewModel.changePhoto(null,null)
+            viewModel.changePhoto(null, null)
         }
 
         activity?.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(ru.netology.nmedia.R.menu.menu_new_post, menu)
+                menuInflater.inflate(R.menu.menu_new_post, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    ru.netology.nmedia.R.id.save -> {
+                    R.id.save -> {
                         viewModel.changeContent(binding.edit.text.toString())
                         viewModel.save()
                         AndroidUtils.hideKeyboard(requireView())
@@ -97,7 +100,7 @@ class NewPostFragment : Fragment() {
                 .compress(2048)
                 .galleryOnly()
                 .galleryMimeTypes(arrayOf("image/png", "image/jpeg"))
-                .createIntent {intent -> startForProfileImageResult.launch(intent)}
+                .createIntent { intent -> startForProfileImageResult.launch(intent) }
         }
 
         binding.takePhoto.setOnClickListener {
@@ -105,7 +108,11 @@ class NewPostFragment : Fragment() {
                 .crop()
                 .compress(2048)
                 .cameraOnly()
-                .createIntent { intent -> startForProfileImageResult.launch(intent)}
+                .createIntent { intent -> startForProfileImageResult.launch(intent) }
+        }
+
+        binding.pickUsers.setOnClickListener {
+            findNavController().navigate(R.id.action_newPostFragment_to_chooseUsers2)
         }
 
         return binding.root

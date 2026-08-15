@@ -49,16 +49,6 @@ class RegisterFragment : Fragment() {
     ): View {
         val binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
-
-      /*  binding.pickPhoto.setOnClickListener {
-            ImagePicker.with(this)
-                .crop()
-                .compress(2048)
-                .galleryOnly()
-                .galleryMimeTypes(arrayOf("image/png", "image/jpeg"))
-                .createIntent { intent -> startForProfileImageResult.launch(intent) }
-        }
-*/
         binding.takePhoto.setOnClickListener {
             ImagePicker.with(this)
                 .crop()
@@ -76,28 +66,30 @@ class RegisterFragment : Fragment() {
 
             if (name.isEmpty() || login.isEmpty() || pass.isEmpty() || pass.isEmpty()) {
                 Toast.makeText(context, R.string.emptyLoginOrPass, LENGTH_LONG).show()
+                return@setOnClickListener
             }
 
             if (!pass.equals(passAgain)) {
                 Toast.makeText(context, R.string.incorrect_pass, LENGTH_LONG).show()
+                return@setOnClickListener
             }
 
             viewModelRegister.signUp(login, pass, name, avatar)
+            return@setOnClickListener
         }
 
         viewModelRegister.dataState.observe(viewLifecycleOwner) { state ->
             if (state.successes) {
                 findNavController().navigateUp()
-            } else Toast.makeText(context, R.string.something_wrong, LENGTH_LONG).show()
+            }
+            if (state.error) {
+                Toast.makeText(context, R.string.something_wrong, LENGTH_LONG).show()
+            }
         }
-
-
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
         return binding.root
-
     }
-
 }

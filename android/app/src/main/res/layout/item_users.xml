@@ -58,7 +58,7 @@
             tools:text="aleksper_android" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/save_button"
+            android:id="@+id/checkbox"
             style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
             android:layout_width="48dp"
             android:layout_height="48dp"

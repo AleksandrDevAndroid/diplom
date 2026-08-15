@@ -197,13 +197,14 @@ class PostRepositoryImpl @Inject constructor(
     ) {
         try {
             val part = if (media != null && media.exists()) {
-                MultipartBody.Part.createFormData("file", media.name, media.asRequestBody())
+                MultipartBody.Part.createFormData("file", media!!.name, media.asRequestBody())
             } else null
             val nameReg = name?.toRequestBody("text/plain".toMediaTypeOrNull())
             val passReg = pass?.toRequestBody("text/plain".toMediaTypeOrNull())
             val loginReg = login.toRequestBody("text/plain".toMediaTypeOrNull())
 
-            val response = apiService.singUpWithPhoto(loginReg, passReg, nameReg, part)
+            val response = apiService.singUp(loginReg, passReg, nameReg, part)
+
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }

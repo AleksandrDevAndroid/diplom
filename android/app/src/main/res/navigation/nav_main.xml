@@ -57,10 +57,21 @@
         android:id="@+id/newPostFragment"
         android:name="ru.netology.nmedia.fagment.NewPostFragment"
         android:label="fragment_new_post"
-        tools:layout="@layout/fragment_new_post" />
+        tools:layout="@layout/fragment_new_post" >
+        <action
+            android:id="@+id/action_newPostFragment_to_chooseUsers2"
+            app:destination="@id/chooseUsers" />
+    </fragment>
     <fragment
         android:id="@+id/showPhotoFragment"
         android:name="ru.netology.nmedia.fagment.ShowPhotoFragment"
         android:label="fragment_show_photo"
         tools:layout="@layout/fragment_show_photo"/>
+    <fragment
+        android:id="@+id/chooseUsers"
+        android:name="ru.netology.nmedia.fagment.ChooseUsers"
+        android:label="show_post_fragment"
+        tools:layout="@layout/fragment_choose_users">
+
+    </fragment>
 </navigation>

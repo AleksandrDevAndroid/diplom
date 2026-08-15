@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:app="http://android.com"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/handler"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -42,5 +49,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_users" />
+
+</LinearLayout>

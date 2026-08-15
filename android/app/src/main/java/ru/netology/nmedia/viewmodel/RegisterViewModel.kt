@@ -41,4 +41,8 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
+
+    fun stateClean() {
+        _state.value = FeedModelAuth()
+    }
 }
