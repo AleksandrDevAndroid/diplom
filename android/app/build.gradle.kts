@@ -79,7 +79,6 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.7.1")
     implementation("com.github.LottieFiles:dotlottie-android:0.5.0")
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.ui.test)
     implementation(libs.appcompat)
     implementation(libs.firebase.appdistribution.gradle)
     implementation(libs.hilt.android)

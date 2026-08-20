@@ -53,7 +53,6 @@ class RegisterFragment : Fragment() {
             ImagePicker.with(this)
                 .crop()
                 .compress(2048)
-                .cameraOnly()
                 .createIntent { intent -> startForProfileImageResult.launch(intent) }
         }
 

@@ -60,7 +60,6 @@ ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 firebase-appdistribution-gradle = { group = "com.google.firebase", name = "firebase-appdistribution-gradle", version.ref = "firebaseAppdistributionGradle" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
-androidx-ui-test = { group = "androidx.compose.ui", name = "ui-test", version.ref = "uiTest" }
 
 [plugins]
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

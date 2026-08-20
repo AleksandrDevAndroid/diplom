@@ -39,7 +39,7 @@ class ApiModule {
                 if (!token.isNullOrEmpty()) {
                     requestBuilder.header("Authorization", token)
                 }
-                chain.proceed(chain.request())
+                chain.proceed(requestBuilder.build())
             }
             .addInterceptor(logging)
             .build()

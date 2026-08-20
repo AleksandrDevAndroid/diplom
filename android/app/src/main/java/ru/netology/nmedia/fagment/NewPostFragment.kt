@@ -74,28 +74,9 @@ class NewPostFragment : Fragment() {
             viewModel.changePhoto(null, null)
         }
 
-        activity?.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_new_post, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.save -> {
-                        viewModel.changeContent(binding.edit.text.toString())
-                        viewModel.save()
-                        AndroidUtils.hideKeyboard(requireView())
-                        true
-                    }
-
-                    else -> false
-
-                }
-            }
-        }, viewLifecycleOwner)
 
         binding.pickPhoto.setOnClickListener {
-            ImagePicker.Companion.with(this)
+            ImagePicker.with(this)
                 .crop()
                 .compress(2048)
                 .galleryOnly()
@@ -104,7 +85,7 @@ class NewPostFragment : Fragment() {
         }
 
         binding.takePhoto.setOnClickListener {
-            ImagePicker.Companion.with(this)
+            ImagePicker.with(this)
                 .crop()
                 .compress(2048)
                 .cameraOnly()
@@ -113,6 +94,13 @@ class NewPostFragment : Fragment() {
 
         binding.pickUsers.setOnClickListener {
             findNavController().navigate(R.id.action_newPostFragment_to_chooseUsers2)
+        }
+
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        binding.saveButton.setOnClickListener {
+            viewModel.save()
         }
 
         return binding.root

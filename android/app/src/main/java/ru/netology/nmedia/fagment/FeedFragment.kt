@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -33,15 +34,14 @@ class FeedFragment : Fragment() {
     private val authViewModel: AuthViewModel by activityViewModels()
 
     private fun showDialog() {
-        AlertDialog.Builder(context)
-            .setTitle("Don't enter in app")
-            .setMessage("Please authorized in app")
-            .setIcon(R.drawable.ic_dialog_alert)
-            .setPositiveButton("Yes") { dialog, _ ->
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Authentication Required")
+            .setMessage("Please sign in to access this feature.")
+            .setPositiveButton("Sign In") { dialog, _ ->
                 findNavController().navigate(ru.netology.nmedia.R.id.login_fragment)
                 dialog.dismiss()
             }
-            .setNegativeButton("No") { dialog, _ ->
+            .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
             }
             .show()
