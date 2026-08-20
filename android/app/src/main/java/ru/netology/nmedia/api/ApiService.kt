@@ -23,8 +23,7 @@ interface PostsApiService {
 
 
 
-    @POST("posts")
-    suspend fun save(@Body post: Post): Response<Post>
+
 
     @DELETE("posts/{id}")
     suspend fun removeById(@Path("id") id: Long): Response<Unit>
@@ -35,29 +34,4 @@ interface PostsApiService {
     @DELETE("posts/{id}/likes")
     suspend fun dislikeById(@Path("id") id: Long): Response<Post>
 
-    @Multipart
-    @POST("media")
-    suspend fun upload(@Part file: MultipartBody.Part): Response<Media>
-
-    @FormUrlEncoded
-    @POST("users/authentication")
-    suspend fun singIn(
-        @Part("login") login: String,
-        @Part("pass") pass: String?
-    ): Response<AuthState>
-
-    @Multipart
-    @POST("users/registration")
-    suspend fun singUp(
-        @Part("login") login: RequestBody,
-        @Part("pass") pass: RequestBody?,
-        @Part("name") name: RequestBody?,
-        @Part media: MultipartBody.Part?
-    ): Response<AuthState>
-
-    @POST("users/push-tokens")
-    suspend fun pushToken(@Body token: PushToken)
-
-    @GET("users")
-    suspend fun getUsers(): Response<List<Users>>
 }
