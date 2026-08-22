@@ -25,7 +25,7 @@ class ApiModule {
     fun provideLogging(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         if (BuildConfig.DEBUG) {
             level = HttpLoggingInterceptor.Level.BODY
-       }
+        }
     }
 
     @Singleton
@@ -54,6 +54,30 @@ class ApiModule {
 
     @Singleton
     @Provides
-    fun apiService(retrofit: Retrofit): PostsApiService = retrofit.create()
+    fun wallService(retrofit: Retrofit): WallService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun userService(retrofit: Retrofit): UserService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun postService(retrofit: Retrofit): PostService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun myWallService(retrofit: Retrofit): MyWallService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun jobMediaService(retrofit: Retrofit): JobMediaService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun eventsService(retrofit: Retrofit): EventsService = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun commentsService(retrofit: Retrofit): CommentsService = retrofit.create()
 
 }

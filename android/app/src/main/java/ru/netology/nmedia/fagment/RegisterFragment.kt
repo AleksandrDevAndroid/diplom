@@ -23,7 +23,7 @@ import java.io.File
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private val viewModelRegister: RegisterViewModel by activityViewModels()
-    private var avatar: File? = null
+    lateinit  var avatar: File
 
     val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->

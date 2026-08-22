@@ -16,15 +16,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import ru.netology.nmedia.api.PostsApiService
-import ru.netology.nmedia.dto.  PushToken
+import ru.netology.nmedia.api.UserService
+import ru.netology.nmedia.dto.PushToken
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AppAuth @Inject constructor(
     @ApplicationContext
-   private val context: Context
+    private val context: Context
 ) {
 
     private val KEY_ID = "id"
@@ -69,13 +69,14 @@ class AppAuth @Inject constructor(
     @InstallIn(SingletonComponent::class)
     @EntryPoint
     interface AppAuthEntryPoint {
-        fun getPostApiService(): PostsApiService
+        fun getPostApiService(): UserService
     }
 
     fun sendPushToken(token: String? = null) {
         CoroutineScope(Dispatchers.Default).launch {
             runCatching {
-              val entryPoint =  EntryPointAccessors.fromApplication(context, AppAuthEntryPoint::class.java)
+                val entryPoint =
+                    EntryPointAccessors.fromApplication(context, AppAuthEntryPoint::class.java)
                 entryPoint.getPostApiService().pushToken(
                     PushToken(
                         token ?: Firebase.messaging.token.await()

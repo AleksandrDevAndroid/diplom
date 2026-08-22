@@ -9,12 +9,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.model.FeedModelAuth
-import ru.netology.nmedia.repository.PostRepositoryImpl
+import ru.netology.nmedia.repository.interfaceRepository.UserRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val repository: PostRepositoryImpl,
+    private val repository: UserRepository,
     appAuth: AppAuth
 ) :
     ViewModel() {
@@ -27,11 +27,11 @@ class AuthViewModel @Inject constructor(
     val dataState: LiveData<FeedModelAuth>
         get() = _state
 
-    fun signIn(login: String, pass: String?) {
+    fun signIn(login: String, pass: String) {
         data.value.let {
             viewModelScope.launch {
                 try {
-                    repository.singIn(login, pass)
+                    repository.signIn(login, pass)
                     _state.value = FeedModelAuth(successes = true)
                 } catch (_: Exception) {
                     _state.value = FeedModelAuth(error = true)

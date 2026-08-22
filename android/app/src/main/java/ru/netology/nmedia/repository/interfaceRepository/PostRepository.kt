@@ -1,11 +1,9 @@
-package ru.netology.nmedia.repository
+package ru.netology.nmedia.repository.interfaceRepository
 
-import androidx.paging.Pager
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.entity.PostEntity
 import java.io.File
 
 interface PostRepository {

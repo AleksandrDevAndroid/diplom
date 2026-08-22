@@ -18,6 +18,7 @@ import ru.netology.nmedia.databinding.CardAdBinding
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Ad
 import ru.netology.nmedia.dto.DateSeparator
+import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.view.load
@@ -72,7 +73,6 @@ class PostsAdapter(
             is Post -> (holder as? PostViewHolder)?.bind(item)
             null -> error("unknow type item ${getItem(position)}")
             is DateSeparator -> (holder as? DateSeparatorViewHolder)?.bind(item.text)
-
         }
     }
 

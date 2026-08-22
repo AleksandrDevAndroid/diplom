@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ru.netology.nmedia.repository.AuthRepository
-import ru.netology.nmedia.repository.PostRepositoryImpl
+import ru.netology.nmedia.repository.interfaceRepository.UserRepository
+import ru.netology.nmedia.repository.repositoriImp.UserRepositoryImp
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -13,5 +13,5 @@ import javax.inject.Singleton
 interface AuthRepositoryModule {
     @Singleton
     @Binds
-    fun bindsAuthRepository(iml : PostRepositoryImpl) : AuthRepository
+    fun bindsAuthRepository(iml : UserRepositoryImp) : UserRepository
 }

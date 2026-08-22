@@ -32,7 +32,7 @@ interface UserService {
     ): Response<AuthState>
 
     @POST("users/push-tokens")
-    suspend fun pushToken(@Body token: PushToken)
+    suspend fun pushToken(@Body token: PushToken) : Response<Unit>
 
     @GET("users")
     suspend fun getUsers(): Response<List<Users>>

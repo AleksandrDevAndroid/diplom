@@ -1,26 +1,23 @@
-package ru.netology.nmedia.repository
+package ru.netology.nmedia.repository.remoteMediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
-import androidx.paging.LoadType.*
-import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import kotlinx.coroutines.CancellationException
-import ru.netology.nmedia.api.PostsApiService
+import ru.netology.nmedia.api.PostService
 import ru.netology.nmedia.dao.PostDao
 import ru.netology.nmedia.dao.PostRemoteKeyDao
 import ru.netology.nmedia.db.AppDb
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.entity.PostEntity
 import ru.netology.nmedia.entity.PostRemoteKeyEntity
 import ru.netology.nmedia.entity.toEntity
 import ru.netology.nmedia.error.ApiError
 
 @OptIn(ExperimentalPagingApi::class)
-class PostRemoteMediator(
-    private val service: PostsApiService,
+class PostWallRemoteMediator(
+    private val service: PostService,
     private val dao: PostDao,
     private val postRemoteKeyDao: PostRemoteKeyDao,
     private val appDb: AppDb
@@ -32,18 +29,18 @@ class PostRemoteMediator(
 
         try {
             val response = when (loadType) {
-                REFRESH -> {
+                LoadType.REFRESH -> {
                     val id = postRemoteKeyDao.max()
                     if (id != null && id != 0L) {
-                        service.getAfter(id, state.config.pageSize)
+                        service.getAfter(id,state.config.pageSize)
                     } else service.getLatest(state.config.pageSize)
                 }
 
-                PREPEND -> {
+                LoadType.PREPEND -> {
                     return MediatorResult.Success(true)
                 }
 
-                APPEND -> {
+                LoadType.APPEND -> {
                     val id = postRemoteKeyDao.min()
                     service.getBefore(id, state.config.pageSize)
                 }
@@ -60,7 +57,7 @@ class PostRemoteMediator(
 
             appDb.withTransaction {
                 when (loadType) {
-                    REFRESH -> {
+                    LoadType.REFRESH -> {
                         if (postRemoteKeyDao.max() == null) {
                             postRemoteKeyDao.inset(
                                 listOf(
@@ -82,11 +79,11 @@ class PostRemoteMediator(
                         )
                     }
 
-                    PREPEND -> {
+                    LoadType.PREPEND -> {
                         MediatorResult.Success(true)
                     }
 
-                    APPEND -> {
+                    LoadType.APPEND -> {
                         postRemoteKeyDao.inset(
                             PostRemoteKeyEntity(PostRemoteKeyEntity.KeyType.BEFORE, body.last().id)
                         )

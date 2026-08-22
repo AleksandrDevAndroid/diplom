@@ -9,7 +9,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.dto.Users
 
 interface EventsService {
     @GET("events")

@@ -28,7 +28,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.fagment.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.databinding.ActivityAppBinding
-import ru.netology.nmedia.repository.PostRepositoryImpl
+import ru.netology.nmedia.repository.repositoriImp.PostRepositoryImpl
 import ru.netology.nmedia.service.di.FirebaseModule
 import ru.netology.nmedia.viewmodel.AuthViewModel
 import ru.netology.nmedia.viewmodel.PostViewModel

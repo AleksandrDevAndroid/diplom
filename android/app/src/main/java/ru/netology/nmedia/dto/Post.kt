@@ -44,7 +44,7 @@ enum class EventType {
 }
 
 data class Event(
-    override val id: Long,
+    val id: Long,
     val authorId: Long,
     val author: String,
     val authorAvatar: String?,
@@ -57,7 +57,5 @@ data class Event(
     val ownedByMe: Boolean,
     val link: String?,
     val attachment: Attachment? = null
-) : FeedItem {
-    val likesCount: Int
-        get() = likeOwnerIds.size
-}
+)
+
