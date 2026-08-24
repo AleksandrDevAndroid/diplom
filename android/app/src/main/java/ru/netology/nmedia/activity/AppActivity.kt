@@ -19,19 +19,12 @@ import androidx.navigation.findNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.messaging.FirebaseMessaging
-import dagger.Module
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.components.SingletonComponent
 import ru.netology.nmedia.R
 import ru.netology.nmedia.auth.AppAuth
-import ru.netology.nmedia.fagment.NewPostFragment.Companion.textArg
+import ru.netology.nmedia.fragment.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.databinding.ActivityAppBinding
-import ru.netology.nmedia.repository.repositoriImp.PostRepositoryImpl
-import ru.netology.nmedia.service.di.FirebaseModule
 import ru.netology.nmedia.viewmodel.AuthViewModel
-import ru.netology.nmedia.viewmodel.PostViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -89,8 +82,6 @@ class AppActivity : AppCompatActivity() {
         checkGoogleApiAvailability()
 
         addMenuProvider(object : MenuProvider {
-
-
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_main, menu)
             }
@@ -104,31 +95,32 @@ class AppActivity : AppCompatActivity() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
 
-                    R.id.signin -> {
+                    R.id.singin -> {
                         findNavController(R.id.nav_host_fragment).navigate(R.id.login_fragment)
                         appAuth.authState
                         true
                     }
 
-                    R.id.signup -> {
-                        findNavController(R.id.nav_host_fragment).navigate(R.id.registr_fragment)
+                    R.id.singup -> {
+                        findNavController(R.id.nav_host_fragment).navigate(R.id.register_fragment)
                         appAuth.authState
                         true
                     }
 
-                    R.id.signout -> {
+                    R.id.singout -> {
                         appAuth.removeAuth()
-
                         true
                     }
 
+                    R.id.viewProfile -> {
+                        findNavController(R.id.nav_host_fragment).navigate(R.id.viewProfile)
+                        true
+                    }
                     else -> false
                 }
             }
-
         })
         appAuth.authState
-
     }
 
     private fun requestNotificationsPermission() {
@@ -141,7 +133,6 @@ class AppActivity : AppCompatActivity() {
         if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
             return
         }
-
         requestPermissions(arrayOf(permission), 1)
     }
 

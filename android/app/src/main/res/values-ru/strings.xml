@@ -52,4 +52,8 @@
     <string name="post">Post</string>
     <string name="likers">Likers\n</string>
     <string name="mentioned">Mentioned</string>
+    <string name="my_profile">Profile</string>
+    <string name="you">You</string>
+    <string name="wall">Wall</string>
+    <string name="jobs">Jobs</string>
 </resources>

@@ -28,14 +28,12 @@ class AuthViewModel @Inject constructor(
         get() = _state
 
     fun signIn(login: String, pass: String) {
-        data.value.let {
             viewModelScope.launch {
                 try {
                     repository.signIn(login, pass)
                     _state.value = FeedModelAuth(successes = true)
                 } catch (_: Exception) {
                     _state.value = FeedModelAuth(error = true)
-                }
             }
         }
     }

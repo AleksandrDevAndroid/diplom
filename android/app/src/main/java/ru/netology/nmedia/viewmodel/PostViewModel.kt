@@ -32,7 +32,7 @@ private val empty = Post(
     author = "",
     authorAvatar = "",
     content = "",
-    published = 0,
+    published = "",
     likedByMe = false,
     likes = 0,
     status = false,
@@ -80,6 +80,7 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
     fun refreshPosts() = viewModelScope.launch {
         try {
             _dataState.value = FeedModelState(refreshing = true)
+            repository.updateStatus()
             _dataState.value = FeedModelState()
         } catch (e: Exception) {
             _dataState.value = FeedModelState(error = true)

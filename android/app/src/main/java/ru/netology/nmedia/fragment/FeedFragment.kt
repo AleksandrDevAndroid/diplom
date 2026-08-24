@@ -1,7 +1,5 @@
-package ru.netology.nmedia.fagment
+package ru.netology.nmedia.fragment
 
-import android.R
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater

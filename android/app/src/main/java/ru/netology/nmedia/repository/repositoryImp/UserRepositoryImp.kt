@@ -1,4 +1,4 @@
-package ru.netology.nmedia.repository.repositoriImp
+package ru.netology.nmedia.repository.repositoryImp
 
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody

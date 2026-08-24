@@ -1,24 +1,18 @@
-package ru.netology.nmedia.enum
+package ru.netology.nmedia.extensions
 
-enum class DatePublished(val day: String) {
-    TODAY("Сегодня"),
-    YESTERDAY("Вчера"),
-    WEEK("На прошлой недели");
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
-    companion object {
-        fun getTime(published: Long): DatePublished {
-            val currentTimeSeconds = System.currentTimeMillis() / 1000L
-            val diffSeconds = currentTimeSeconds - published
-            val oneDaySeconds = 24 * 60 * 60L
-            val twoDaysSeconds = 48 * 60 * 60L
+fun String.formatDate(): String {
+    return try {
+        val instant = Instant.parse(this)
+        val zonedDateTime = instant.atZone(ZoneId.systemDefault())
 
-            return when {
-                diffSeconds < oneDaySeconds ->TODAY
-                diffSeconds < twoDaysSeconds -> YESTERDAY
-                else -> WEEK
-            }
-
-        }
+        zonedDateTime.format(
+            DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")
+        )
+    } catch (e: Exception) {
+        this
     }
 }
-

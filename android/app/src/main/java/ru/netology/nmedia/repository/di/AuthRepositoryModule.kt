@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.netology.nmedia.repository.interfaceRepository.UserRepository
-import ru.netology.nmedia.repository.repositoriImp.UserRepositoryImp
+import ru.netology.nmedia.repository.repositoryImp.UserRepositoryImp
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)

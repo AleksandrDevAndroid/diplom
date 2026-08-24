@@ -14,14 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
-import ru.netology.nmedia.databinding.CardAdBinding
 import ru.netology.nmedia.databinding.CardPostBinding
-import ru.netology.nmedia.dto.Ad
 import ru.netology.nmedia.dto.DateSeparator
-import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.view.load
+import ru.netology.nmedia.extensions.formatDate
 import ru.netology.nmedia.view.loadCircleCrop
 
 interface OnInteractionListener {
@@ -38,12 +35,10 @@ class PostsAdapter(
 
     override fun getItemViewType(position: Int): Int =
         when (getItem(position)) {
-            is Ad -> R.layout.card_ad
             is Post -> R.layout.card_post
             null -> error("unknow type item")
             is DateSeparator -> R.layout.item_date
         }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
@@ -52,30 +47,21 @@ class PostsAdapter(
                     CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 PostViewHolder(binding, onInteractionListener)
             }
-
-            R.layout.card_ad -> {
-                val binding =
-                    CardAdBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                AdViewHolder(binding)
-            }
             R.layout.item_date -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_date, parent, false)
                 DateSeparatorViewHolder(view)
             }
-
             else -> error("unknow type item $viewType")
         }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
-            is Ad -> (holder as? AdViewHolder)?.bind(item)
             is Post -> (holder as? PostViewHolder)?.bind(item)
             null -> error("unknow type item ${getItem(position)}")
             is DateSeparator -> (holder as? DateSeparatorViewHolder)?.bind(item.text)
         }
     }
-
 
 }
 class DateSeparatorViewHolder(view:View) : RecyclerView.ViewHolder(view) {
@@ -86,29 +72,22 @@ class DateSeparatorViewHolder(view:View) : RecyclerView.ViewHolder(view) {
     }
 }
 
-class AdViewHolder(private val binding: CardAdBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(ad: Ad) {
-        binding.image.load("${BuildConfig.BASE_URL}/media/${ad.image}")
-    }
-}
 
 class PostViewHolder(
-
     private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
             author.text = post.author
-            published.text = post.published.toString()
+            published.text = post.published.formatDate()
             content.text = post.content
-            avatar.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}")
+            avatar.loadCircleCrop(post.authorAvatar)
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
-
             binding.attachment.isVisible = post.attachment != null
 
-            val urlAttachment = "${BuildConfig.BASE_URL}/media/${post.attachment?.url}"
+            val urlAttachment = post.attachment?.url
             if (!urlAttachment.isNullOrEmpty()) {
                 Glide.with(binding.attachment)
                     .load(urlAttachment)

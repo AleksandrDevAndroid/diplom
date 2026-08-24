@@ -46,7 +46,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- КАРТОЧКА ПОСТА -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/post_card"
         android:layout_width="match_parent"

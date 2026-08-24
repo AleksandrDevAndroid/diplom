@@ -1,11 +1,10 @@
-package ru.netology.nmedia.repository.repositoriImp
+package ru.netology.nmedia.repository.repositoryImp
 
 import android.annotation.SuppressLint
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.insertSeparators
 import androidx.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -15,15 +14,12 @@ import ru.netology.nmedia.api.PostService
 import ru.netology.nmedia.dao.PostDao
 import ru.netology.nmedia.dao.PostRemoteKeyDao
 import ru.netology.nmedia.db.AppDb
-import ru.netology.nmedia.dto.Ad
 import ru.netology.nmedia.dto.Attachment
-import ru.netology.nmedia.dto.DateSeparator
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.entity.PostEntity
 import ru.netology.nmedia.enum.AttachmentType
-import ru.netology.nmedia.enum.DatePublished
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.UnknownError
@@ -31,9 +27,7 @@ import ru.netology.nmedia.repository.remoteMediator.PostWallRemoteMediator
 import ru.netology.nmedia.repository.interfaceRepository.PostRepository
 import java.io.File
 import java.io.IOException
-import java.util.UUID
 import javax.inject.Inject
-import kotlin.random.Random
 
 class PostRepositoryImpl @Inject constructor(
     private val dao: PostDao,
@@ -49,30 +43,7 @@ class PostRepositoryImpl @Inject constructor(
         pagingSourceFactory = { dao.getPagingSource() },
         remoteMediator = PostWallRemoteMediator(apiService, dao, postRemoteKeyDao, appDb)
     ).flow.map { pagingData ->
-        pagingData.map(PostEntity::toDto).insertSeparators { previous, next ->
-            if (previous == null && next != null) {
-                return@insertSeparators DateSeparator(
-                    id = UUID.randomUUID().mostSignificantBits,
-                    text = DatePublished.getTime(next.published).day
-                )
-            }
-            if (previous != null && next != null) {
-                val previousPeriod = DatePublished.getTime(previous.published)
-                val nextPeriod = DatePublished.getTime(next.published)
-
-                if (previousPeriod != nextPeriod) {
-                    return@insertSeparators DateSeparator(
-                        id = UUID.randomUUID().mostSignificantBits,
-                        text = nextPeriod.day
-                    )
-                }
-            }
-            if (previous?.id?.rem(5) == 0L) {
-                Ad(Random.nextLong(), "figma.jpg")
-            } else {
-                null
-            }
-        }
+        pagingData.map(PostEntity::toDto)
     }
 
     override suspend fun updateStatus() {
@@ -104,10 +75,10 @@ class PostRepositoryImpl @Inject constructor(
                 throw ApiError(response.code(), response.message())
             }
         } catch (e: IOException) {
-            dao.insert(PostEntity.Companion.fromDto(oldPost.toDto()))
+            dao.insert(PostEntity.fromDto(oldPost.toDto()))
             throw NetworkError
         } catch (e: Exception) {
-            dao.insert(PostEntity.Companion.fromDto(oldPost.toDto()))
+            dao.insert(PostEntity.fromDto(oldPost.toDto()))
             throw UnknownError
         }
     }
@@ -133,7 +104,7 @@ class PostRepositoryImpl @Inject constructor(
     override suspend fun dislikeById(id: Long) {
         val oldPost = dao.getId(id)
         val newPost = oldPost.copy(likedByMe = false, likes = 0)
-        dao.insert(PostEntity.Companion.fromDto(newPost.toDto(), status = true))
+        dao.insert(PostEntity.fromDto(newPost.toDto(), status = true))
         try {
             val response = apiService.dislikesById(id)
             if (!response.isSuccessful) {

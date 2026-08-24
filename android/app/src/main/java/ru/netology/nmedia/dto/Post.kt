@@ -12,7 +12,7 @@ data class Post(
     val author: String,
     val authorAvatar: String?,
     val content: String,
-    val published: Long,
+    val published: String,
     val likedByMe: Boolean,
     val likes: Int = 0,
     val status: Boolean,
@@ -26,16 +26,13 @@ data class Comment(
     val author: String,
     val authorAvatar: String?,
     val content: String,
-    val published: Long,
+    val published: String,
     val likedByMe: Boolean,
     val likes: Int = 0
 )
 
 data class Attachment(val url: String, val type: AttachmentType)
 data class Media(val id: String)
-
-data class Ad(override val id: Long, val image: String) : FeedItem
-
 data class DateSeparator(override val id: Long, val text: String) : FeedItem
 
 enum class EventType {
@@ -49,7 +46,7 @@ data class Event(
     val author: String,
     val authorAvatar: String?,
     val content: String,
-    val published: Long,
+    val published: String,
     val datetime: Long,
     val type: EventType,
     val likedByMe: Boolean,

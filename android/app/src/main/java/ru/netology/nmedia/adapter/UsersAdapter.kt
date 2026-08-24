@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.databinding.ItemUsersBinding
-import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.view.loadCircleCrop
 
@@ -34,7 +33,7 @@ class UserViewHolder (
         binding.apply {
             author.text = user.name
             nickname.text = user.nickname
-            avatar.loadCircleCrop("${BuildConfig.BASE_URL}/users/${user.avatar}")
+            avatar.loadCircleCrop("${BuildConfig.BASE_URL}/api/users/${user.avatar}")
 
             checkbox.isChecked = user.isSelected
             root.setOnClickListener {

@@ -1,4 +1,4 @@
-package ru.netology.nmedia.fagment
+package ru.netology.nmedia.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +19,7 @@ class ShowPhotoFragment : Fragment() {
     ): View {
         val binding = FragmentShowPhotoBinding.inflate(inflater, container, false)
         val url = arguments?.getString("url")
-        val urlAttachment = "${BuildConfig.BASE_URL}/media/${url}"
+        val urlAttachment = "${BuildConfig.BASE_URL}/api/media/${url}"
         Glide.with(binding.showPhoto)
             .load(urlAttachment)
             .placeholder(R.drawable.outline_arrow_cool_down_24)
