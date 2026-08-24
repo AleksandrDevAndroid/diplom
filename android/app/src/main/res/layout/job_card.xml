@@ -41,6 +41,7 @@
             <ImageButton
                 android:id="@+id/delete"
                 android:layout_width="24dp"
+                android:clickable="true"
                 android:layout_height="24dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/container" />
@@ -59,7 +60,7 @@
             app:layout_constraintTop_toBottomOf="@id/organization" />
 
         <TextView
-            android:id="@+id/job_title"
+            android:id="@+id/position"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.5"
@@ -79,7 +80,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/job_title" />
+            app:layout_constraintTop_toBottomOf="@id/position" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

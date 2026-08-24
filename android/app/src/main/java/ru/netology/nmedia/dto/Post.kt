@@ -56,3 +56,11 @@ data class Event(
     val attachment: Attachment? = null
 )
 
+data class Job(
+    val id : Long,
+    val name : String,
+    val timeWork : String,
+    val position : String,
+    val webSite : String,
+    val ownerId: Long
+)

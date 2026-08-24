@@ -30,11 +30,9 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
-                TODO("Not yet implemented")
             }
 
             override fun onTabReselected(p0: TabLayout.Tab?) {
-                TODO("Not yet implemented")
             }
         })
 
@@ -44,6 +42,9 @@ class ProfileFragment : Fragment() {
             binding.fab.show()
         }
 
+        binding.fab.setOnClickListener {
+            findNavController().navigate(ru.netology.nmedia.R.id.action_viewProfile_to_createJob)
+        }
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()

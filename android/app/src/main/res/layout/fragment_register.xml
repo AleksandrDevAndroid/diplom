@@ -130,7 +130,8 @@
         android:layout_height="56dp"
         android:clickable="true"
         android:text="Login"
-        android:background="#6750A4"
+        android:backgroundTint="#6750A4"
+        app:cornerRadius="150dp"
         app:layout_constraintEnd_toEndOf="@id/show_pass_again"
         app:layout_constraintStart_toStartOf="@id/show_pass_again"
         app:layout_constraintTop_toBottomOf="@id/show_pass_again" />

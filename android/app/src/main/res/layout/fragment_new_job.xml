@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/handler"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FEF7FF"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back_button"
+            style="@style/Widget.AppTheme.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back_button"
+            android:padding="@dimen/common_spacing"
+            app:icon="@drawable/outline_arrow_back_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:text="@string/new_job"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/back_button"
+            app:layout_constraintStart_toEndOf="@+id/back_button"
+            app:layout_constraintTop_toTopOf="@id/back_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/enter_name"
+        android:layout_width="379dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+
+        android:background="#E6E0E9"
+        android:gravity="start|center"
+        android:hint="Name"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@id/handler"
+        app:layout_constraintStart_toStartOf="@id/handler"
+        app:layout_constraintTop_toBottomOf="@id/handler" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/enter_position"
+        android:layout_width="379dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:background="#E6E0E9"
+        android:gravity="start|center"
+        android:hint="Position"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enter_name" />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/enter_link"
+        android:layout_width="379dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:background="#E6E0E9"
+        android:gravity="start|center"
+        android:hint="Link"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@id/enter_position"
+        app:layout_constraintStart_toStartOf="@id/enter_position"
+        app:layout_constraintTop_toBottomOf="@id/enter_position" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_enter"
+        android:layout_width="379dp"
+        android:layout_height="56dp"
+        app:cornerRadius="150dp"
+        android:clickable="true"
+        android:text="@string/Create"
+        android:backgroundTint="#6750A4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_date"
+        android:layout_width="140dp"
+        android:layout_height="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:hint="27.09.2023-"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enter_link">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
