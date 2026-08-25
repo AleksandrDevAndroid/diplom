@@ -6,6 +6,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import ru.netology.nmedia.api.UserService
 import ru.netology.nmedia.auth.AppAuth
+import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.UnknownError
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 class UserRepositoryImp @Inject constructor(
     private val apiService: UserService,
-    private val appAuth: AppAuth
+    private val appAuth: AppAuth,
+    private val appDb: AppDb
 ) : UserRepository {
 
     override suspend fun signIn(login: String, pass: String) {
@@ -34,7 +36,7 @@ class UserRepositoryImp @Inject constructor(
         }
     }
 
-    override suspend fun signUp(login: String, pass: String, name: String, media: File  ) {
+    override suspend fun signUp(login: String, pass: String, name: String, media: File) {
         try {
             val part = if (media.exists()) {
                 MultipartBody.Part.createFormData("file", media.name, media.asRequestBody())

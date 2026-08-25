@@ -58,4 +58,5 @@
     <string name="jobs">Jobs</string>
     <string name="new_job">New job</string>
     <string name="Create">Create</string>
+    <string name="emptyPositionOrName">"Emty position or name "</string>
 </resources>

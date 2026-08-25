@@ -58,7 +58,7 @@ class PostRepositoryImpl @Inject constructor(
             }
 
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-            dao.insert(PostEntity.Companion.fromDto(body, status = true))
+            dao.insert(PostEntity.fromDto(body, status = true))
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {

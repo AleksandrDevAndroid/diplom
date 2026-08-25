@@ -70,7 +70,7 @@ class ApiModule {
 
     @Singleton
     @Provides
-    fun jobMediaService(retrofit: Retrofit): JobMediaService = retrofit.create()
+    fun jobMediaService(retrofit: Retrofit): JobService = retrofit.create()
 
     @Singleton
     @Provides

@@ -5,11 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.databinding.FragmentViewProfileBinding
+import ru.netology.nmedia.viewmodel.AuthViewModel
+import javax.inject.Inject
 
-class ProfileFragment : Fragment() {
+class ProfileFragment (
+): Fragment() {
+    @Inject
+    lateinit var appAuth: AppAuth
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,6 +51,11 @@ class ProfileFragment : Fragment() {
 
         binding.fab.setOnClickListener {
             findNavController().navigate(ru.netology.nmedia.R.id.action_viewProfile_to_createJob)
+        }
+
+        binding.logout.setOnClickListener {
+            appAuth.removeAuth()
+            findNavController().navigateUp()
         }
 
         binding.backButton.setOnClickListener {
