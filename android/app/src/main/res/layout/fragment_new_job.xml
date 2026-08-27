@@ -95,14 +95,14 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_date"
         android:layout_width="140dp"
-        android:layout_height="16dp"
+        android:layout_height="32dp"
         android:gravity="end"
+        android:clickable="true"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
         android:hint="27.09.2023-"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/enter_link"
         app:layout_constraintTop_toBottomOf="@id/enter_link">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_date"
             android:gravity="center"

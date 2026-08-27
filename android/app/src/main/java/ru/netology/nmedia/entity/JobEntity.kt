@@ -10,17 +10,19 @@ data class JobEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val name: String,
-    val timeWork: String,
     val position: String,
-    val webSite: String,
+    val start: String,
+    val finish: String?,
+    val webSite: String?,
     val ownerId: Long
 ) {
 
     fun toDto() = Job(
         id,
         name,
-        timeWork,
         position,
+        start,
+        finish,
         webSite,
         ownerId
     )
@@ -31,9 +33,10 @@ data class JobEntity(
             JobEntity(
                 dto.id,
                 dto.name,
-                dto.timeWork,
                 dto.position,
-                dto.webSite,
+                dto.start,
+                dto.finish,
+                dto.link,
                 dto.ownerId
             )
     }

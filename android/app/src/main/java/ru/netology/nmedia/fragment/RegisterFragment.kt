@@ -23,7 +23,7 @@ import java.io.File
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private val viewModelRegister: RegisterViewModel by activityViewModels()
-    lateinit  var avatar: File
+    private var avatar: File? = null
 
     val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -63,7 +63,7 @@ class RegisterFragment : Fragment() {
             val pass = binding.enterPass.text.toString().trim()
             val passAgain = binding.enterPassAgain.text.toString().trim()
 
-            if (name.isEmpty() || login.isEmpty() || pass.isEmpty() || pass.isEmpty()) {
+            if (name.isEmpty() || login.isEmpty() || pass.isEmpty() || passAgain.isEmpty()) {
                 Toast.makeText(context, R.string.emptyLoginOrPass, LENGTH_LONG).show()
                 return@setOnClickListener
             }
@@ -73,8 +73,13 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            viewModelRegister.signUp(login, pass, name, avatar)
+            val finalAvatar = avatar ?: AvatarLetter.generateAsFile(requireContext(), name)
+            viewModelRegister.signUp(login, pass, name, finalAvatar)
             return@setOnClickListener
+        }
+
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
         }
 
         viewModelRegister.dataState.observe(viewLifecycleOwner) { state ->
@@ -86,9 +91,6 @@ class RegisterFragment : Fragment() {
             }
         }
 
-        binding.backButton.setOnClickListener {
-            findNavController().navigateUp()
-        }
         return binding.root
     }
 }

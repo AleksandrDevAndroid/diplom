@@ -57,10 +57,11 @@ data class Event(
 )
 
 data class Job(
-    val id : Long,
-    val name : String,
-    val timeWork : String,
-    val position : String,
-    val webSite : String,
+    val id: Long,
+    val name: String,
+    val position: String,
+    val start: String,
+    val finish: String?,
+    val link: String?,
     val ownerId: Long
 )

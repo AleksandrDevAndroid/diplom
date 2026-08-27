@@ -10,7 +10,7 @@
 
     interface JobService {
         @GET("my/jobs")
-        suspend fun getJobs(ownerId: Long): Response<List<Job>>
+        suspend fun getJobs(): Response<List<Job>>
 
         @POST("my/jobs")
         suspend fun saveJob(@Body job: Job): Response<Job>

@@ -19,7 +19,7 @@ class JobRepositoryImp @Inject constructor(
 
     override suspend fun getJobs(ownerId: Long): List<Job> {
         try {
-            val response = apiService.getJobs(ownerId)
+            val response = apiService.getJobs()
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }

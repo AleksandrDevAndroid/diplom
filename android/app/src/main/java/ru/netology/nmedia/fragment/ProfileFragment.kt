@@ -7,29 +7,81 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
+import ru.netology.nmedia.adapter.JobsAdapter
+import ru.netology.nmedia.adapter.OnInteractionListener
+import ru.netology.nmedia.adapter.OnJobInteractionListener
+import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.databinding.FragmentViewProfileBinding
-import ru.netology.nmedia.viewmodel.AuthViewModel
+import ru.netology.nmedia.dto.Job
+import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.viewmodel.JobViewModel
+import ru.netology.nmedia.viewmodel.PostViewModel
 import javax.inject.Inject
-
-class ProfileFragment (
-): Fragment() {
+@AndroidEntryPoint
+class ProfileFragment(
+) : Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
+    private val postViewModel: PostViewModel by activityViewModels()
+    private val jobViewModel: JobViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentViewProfileBinding.inflate(inflater, container, false)
 
+        val postAdapter = PostsAdapter(object : OnInteractionListener {
+            override fun onLike(post: Post) {
+                postViewModel.likeById(post.id, post.likedByMe)
+            }
+        })
+        val jobAdapter = JobsAdapter(object : OnJobInteractionListener {
+            override fun onRemove(job: Job) {
+                jobViewModel.deleteJob(job)
+            }
+        })
+
+        binding.jobRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = jobAdapter
+        }
+        binding.postRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = postAdapter
+        }
+
+        jobViewModel.job.observe(viewLifecycleOwner) { jobs ->
+            android.util.Log.d("ProfileFragment", "JOBS RECEIVED: ${jobs?.size}")
+            jobAdapter.submitList(jobs)
+        }
+
+        postViewModel.dataState.observe(viewLifecycleOwner) { state ->
+            if (state.error) {
+                Snackbar.make(
+                    binding.root,
+                    ru.netology.nmedia.R.string.error_loading,
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction(ru.netology.nmedia.R.string.retry_loading) { postViewModel.refreshPosts() }
+                    .show()
+            }
+        }
+        postViewModel.updateStatus()
+        jobViewModel.loadJobs()
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
                         binding.fab.hide()
                     }
+
                     1 -> {
                         binding.fab.show()
                     }
@@ -44,9 +96,15 @@ class ProfileFragment (
         })
 
         if (binding.tabLayout.selectedTabPosition == 0) {
+            binding.postRecyclerView.visibility = View.VISIBLE
+            binding.jobRecyclerView.visibility = View.GONE
             binding.fab.hide()
+            postViewModel.updateStatus()
         } else {
+            binding.postRecyclerView.visibility = View.GONE
+            binding.jobRecyclerView.visibility = View.VISIBLE
             binding.fab.show()
+            jobViewModel.loadJobs()
         }
 
         binding.fab.setOnClickListener {

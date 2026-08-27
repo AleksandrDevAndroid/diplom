@@ -59,4 +59,5 @@
     <string name="new_job">New job</string>
     <string name="Create">Create</string>
     <string name="emptyPositionOrName">"Emty position or name "</string>
+    <string name="choose_period">Select period</string>
 </resources>

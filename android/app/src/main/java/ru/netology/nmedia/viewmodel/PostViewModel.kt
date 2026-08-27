@@ -112,14 +112,6 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
         edited.value = post
     }
 
-    fun changeContent(content: String) {
-        val text = content.trim()
-        if (edited.value?.content == text) {
-            return
-        }
-        edited.value = edited.value?.copy(content = text)
-    }
-
     fun likeById(id: Long, likedByMe: Boolean) {
         viewModelScope.launch {
             try {
@@ -142,13 +134,11 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
         }
     }
 
-
     fun getNewPost() {
         viewModelScope.launch {
             val id = repository
         }
     }
-
 
     fun updateStatus() {
         viewModelScope.launch {

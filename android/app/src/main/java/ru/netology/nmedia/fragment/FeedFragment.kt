@@ -115,7 +115,6 @@ class FeedFragment : Fragment() {
             }
         }
 
-
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycleScope.launchWhenCreated {
                 viewModel.data.collectLatest {
@@ -130,10 +129,8 @@ class FeedFragment : Fragment() {
             }
         }
 
-
         binding.swiperefresh.setOnRefreshListener {
             adapter.refresh()
-
         }
 
         binding.updateList.setOnClickListener {

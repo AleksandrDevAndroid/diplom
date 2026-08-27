@@ -9,7 +9,6 @@ import ru.netology.nmedia.dto.Job
 
 interface OnJobInteractionListener {
     fun onRemove(job: Job)
-    fun onEdit(job: Job)
 }
 
 
@@ -20,9 +19,9 @@ class JobViewHolder(
     fun bind(job: Job) {
         binding.apply {
             nameOrganization.text = job.name
-            timeWorking.text = job.timeWork
             position.text = job.position
-            webSite.text = job.webSite
+            timeWorking.text = formatPeriod(job.start,job.finish)
+            webSite.text = job.link
             if (webSite.text.isNullOrEmpty()) {
                 webSite.isVisible = false
             }
@@ -62,4 +61,11 @@ class JobsAdapter(
         return jobs.size
     }
 
+}
+private fun formatPeriod(start: String, finish: String?): String {
+    return if (finish.isNullOrEmpty()) {
+        "$start – НВ"
+    } else {
+        "$start – $finish"
+    }
 }
