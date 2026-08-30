@@ -7,6 +7,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import ru.netology.nmedia.api.UserService
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.db.AppDb
+import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.UnknownError
@@ -61,11 +62,32 @@ class UserRepositoryImp @Inject constructor(
         }
     }
 
-    override suspend fun getUsers() {
-        TODO("Not yet implemented")
+    override suspend fun getUsers(): List<Users> {
+        try {
+            val response = apiService.getUsers()
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            return response.body() ?: throw ApiError(response.code(), "User not found")
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
 
-    override suspend fun getUser() {
-        TODO("Not yet implemented")
+    override suspend fun getUser(userId: Long): Users {
+        try {
+            val response = apiService.getUser(userId)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            return response.body() ?: throw ApiError(response.code(), "User not found")
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
 }

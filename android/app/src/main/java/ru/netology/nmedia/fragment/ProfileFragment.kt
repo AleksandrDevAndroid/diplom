@@ -19,16 +19,21 @@ import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.databinding.FragmentViewProfileBinding
 import ru.netology.nmedia.dto.Job
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.dto.Users
+import ru.netology.nmedia.view.loadCircleCrop
 import ru.netology.nmedia.viewmodel.JobViewModel
 import ru.netology.nmedia.viewmodel.PostViewModel
+import ru.netology.nmedia.viewmodel.RegisterViewModel
 import javax.inject.Inject
+
 @AndroidEntryPoint
-class ProfileFragment(
-) : Fragment() {
+class ProfileFragment: Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
     private val postViewModel: PostViewModel by activityViewModels()
     private val jobViewModel: JobViewModel by activityViewModels()
+    private val registerViewModel: RegisterViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,11 +42,23 @@ class ProfileFragment(
     ): View {
         val binding = FragmentViewProfileBinding.inflate(inflater, container, false)
 
+        fun updateUserInfo(user: Users) {
+            binding.apply {
+                name.text = user.name
+                avatar.loadCircleCrop(user.avatar)
+            }
+        }
+        val userId = appAuth.authState.value.id
+        if (userId != 0L) {
+            registerViewModel.getUser(userId)
+        }
+
         val postAdapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 postViewModel.likeById(post.id, post.likedByMe)
             }
         })
+
         val jobAdapter = JobsAdapter(object : OnJobInteractionListener {
             override fun onRemove(job: Job) {
                 jobViewModel.deleteJob(job)
@@ -58,8 +75,13 @@ class ProfileFragment(
         }
 
         jobViewModel.job.observe(viewLifecycleOwner) { jobs ->
-            android.util.Log.d("ProfileFragment", "JOBS RECEIVED: ${jobs?.size}")
             jobAdapter.submitList(jobs)
+        }
+
+        registerViewModel.user.observe(viewLifecycleOwner) { user ->
+            user?.let {
+                updateUserInfo(it)
+            }
         }
 
         postViewModel.dataState.observe(viewLifecycleOwner) { state ->
@@ -122,5 +144,6 @@ class ProfileFragment(
 
         return binding.root
     }
-
 }
+
+

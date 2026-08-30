@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
+import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.model.FeedModelAuth
 import ru.netology.nmedia.repository.interfaceRepository.UserRepository
 import java.io.File
@@ -20,6 +21,12 @@ class RegisterViewModel @Inject constructor(
 ) :
     ViewModel() {
     val data = appAuth.authState.asLiveData()
+    private val _user = MutableLiveData<Users>()
+    val user: LiveData<Users> = _user
+    private val _users = MutableLiveData<List<Users>>()
+    val users: LiveData<List<Users>> = _users
+
+
     val authenticated: Boolean
         get() = !data.value?.token.isNullOrEmpty()
 
@@ -40,4 +47,27 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
+
+    fun getUsers() {
+        viewModelScope.launch {
+            try {
+                val usersData = repository.getUsers()
+                _users.value = usersData
+            } catch (e: Exception) {
+                "${e.message}"
+            }
+        }
+    }
+
+    fun getUser(userId: Long) {
+        viewModelScope.launch {
+            try {
+                val userData = repository.getUser(userId)
+                _user.value = userData
+            } catch (e: Exception) {
+                "${e.message}"
+            }
+        }
+    }
+
 }
