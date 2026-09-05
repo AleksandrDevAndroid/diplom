@@ -1,5 +1,7 @@
 package ru.netology.nmedia.repository.repositoryImp
 
+import android.util.Log
+import kotlinx.coroutines.flow.first
 import ru.netology.nmedia.api.JobService
 import ru.netology.nmedia.dao.JobDao
 import ru.netology.nmedia.db.AppDb
@@ -18,22 +20,21 @@ class JobRepositoryImp @Inject constructor(
 ) : JobRepository {
 
     override suspend fun getJobs(ownerId: Long): List<Job> {
-        try {
+        return try {
             val response = apiService.getJobs()
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
-            val body = response.body() ?: throw ApiError(response.code(), response.message())
-            val entity = body.map { JobEntity.fromDto(it) }
-            dao.insertAll(entity)
-
+            val body = response.body() ?: emptyList()
+            val entities = body.map { JobEntity.fromDto(it) }
+            dao.insertAll(entities)
+            body
         } catch (e: IOException) {
-            throw UnknownError
+            dao.getJobs(ownerId).first().map { it.toDto() }
 
         } catch (e: Exception) {
             throw UnknownError
         }
-        return emptyList()
     }
 
     override suspend fun saveJob(job: Job): Job {

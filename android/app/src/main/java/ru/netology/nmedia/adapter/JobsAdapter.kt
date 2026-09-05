@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.databinding.JobCardBinding
 import ru.netology.nmedia.dto.Job
+import ru.netology.nmedia.extensions.formatDate
 
 interface OnJobInteractionListener {
     fun onRemove(job: Job)
@@ -20,7 +21,7 @@ class JobViewHolder(
         binding.apply {
             nameOrganization.text = job.name
             position.text = job.position
-            timeWorking.text = formatPeriod(job.start,job.finish)
+            timeWorking.text = formatPeriod(job.start,job.finish).formatDate()
             webSite.text = job.link
             if (webSite.text.isNullOrEmpty()) {
                 webSite.isVisible = false

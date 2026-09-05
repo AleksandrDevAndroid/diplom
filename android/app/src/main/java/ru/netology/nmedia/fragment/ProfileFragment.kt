@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.filter
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.netology.nmedia.adapter.JobsAdapter
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.OnJobInteractionListener
@@ -30,9 +33,9 @@ import javax.inject.Inject
 class ProfileFragment: Fragment() {
     @Inject
     lateinit var appAuth: AppAuth
-    private val postViewModel: PostViewModel by activityViewModels()
-    private val jobViewModel: JobViewModel by activityViewModels()
-    private val registerViewModel: RegisterViewModel by activityViewModels()
+    private val postViewModel: PostViewModel by viewModels()
+    private val jobViewModel: JobViewModel by viewModels()
+    private val registerViewModel: RegisterViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -74,37 +77,43 @@ class ProfileFragment: Fragment() {
             adapter = postAdapter
         }
 
-        jobViewModel.job.observe(viewLifecycleOwner) { jobs ->
-            jobAdapter.submitList(jobs)
-        }
-
         registerViewModel.user.observe(viewLifecycleOwner) { user ->
             user?.let {
                 updateUserInfo(it)
             }
         }
 
-        postViewModel.dataState.observe(viewLifecycleOwner) { state ->
-            if (state.error) {
-                Snackbar.make(
-                    binding.root,
-                    ru.netology.nmedia.R.string.error_loading,
-                    Snackbar.LENGTH_LONG
-                )
-                    .setAction(ru.netology.nmedia.R.string.retry_loading) { postViewModel.refreshPosts() }
-                    .show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycleScope.launchWhenCreated {
+                postViewModel.data.collectLatest { post ->
+                    val userId = appAuth.authState.value.id
+                    val filteredPagingData = post.filter { feedItem ->
+                        (feedItem as? Post)?.authorId == userId
+                    }
+                    postAdapter.submitData(filteredPagingData)
+                }
             }
         }
+
+        jobViewModel.job.observe(viewLifecycleOwner) { jobs ->
+            jobAdapter.submitList(jobs)
+        }
+
+
         postViewModel.updateStatus()
         jobViewModel.loadJobs()
+
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
                     0 -> {
+                        binding.postRecyclerView.visibility = View.VISIBLE
+                        binding.jobRecyclerView.visibility = View.GONE
                         binding.fab.hide()
                     }
-
                     1 -> {
+                        binding.postRecyclerView.visibility = View.GONE
+                        binding.jobRecyclerView.visibility = View.VISIBLE
                         binding.fab.show()
                     }
                 }

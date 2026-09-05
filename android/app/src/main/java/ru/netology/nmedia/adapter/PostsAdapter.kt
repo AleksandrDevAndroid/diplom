@@ -91,9 +91,12 @@ class PostViewHolder(
                 Glide.with(binding.attachment)
                     .load(urlAttachment)
                     .placeholder(R.drawable.outline_arrow_cool_down_24)
+                    .override(1200, 800)
+                    .centerCrop()
                     .error(R.drawable.error)
                     .into(binding.attachment)
             }
+
             menu.isVisible = post.ownerByMe
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
