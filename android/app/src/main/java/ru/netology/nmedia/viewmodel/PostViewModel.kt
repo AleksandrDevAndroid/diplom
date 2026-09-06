@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -13,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -66,12 +64,14 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
     val dataState: LiveData<FeedModelState>
         get() = _dataState
 
-    private val edited = MutableLiveData(empty)
-    private val _photo = MutableLiveData<PhotoModel>(noPhoto)
-    private val _photoCreated = SingleLiveEvent<Unit>()
+    private val _edited = MutableLiveData(empty)
+    val edited: LiveData<Post> = _edited
+    private val _photo = MutableLiveData(noPhoto)
     val photo: LiveData<PhotoModel>
         get() = _photo
 
+    private val _selectPost = MutableLiveData<Post>()
+    val selectPost: LiveData<Post> = _selectPost
 
     private val _postCreated = SingleLiveEvent<Unit>()
     val postCreated: LiveData<Unit>
@@ -105,12 +105,16 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
                 }
             }
         }
-        edited.value = empty
+        _edited.value = empty
         _photo.value = noPhoto
     }
 
     fun edit(post: Post) {
-        edited.value = post
+        _edited.value = post
+    }
+
+    fun selectPost(post: Post){
+        _selectPost.value = post
     }
 
     fun likeById(id: Long, likedByMe: Boolean) {
@@ -151,11 +155,25 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
         _photo.postValue(PhotoModel(uri, file))
     }
 
+    fun saveEdited() {
+        val post = _edited.value ?: return
+        val file = _photo.value?.file
+        viewModelScope.launch {
+            when {
+                _photo.value != noPhoto && _photo.value != null ->
+                    repository.saveWithAttachment(post, file)
+                else -> repository.save(post)
+            }
+            _postCreated.value = Unit
+            _edited.value = null
+        }
+    }
+
     fun changeContent(content: String) {
         val text = content.trim()
         if (edited.value?.content == text) {
             return
         }
-        edited.value = edited.value?.copy(content = text)
+        _edited.value = edited.value?.copy(content = text)
     }
 }

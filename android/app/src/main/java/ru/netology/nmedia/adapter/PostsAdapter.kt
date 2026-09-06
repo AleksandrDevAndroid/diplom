@@ -2,6 +2,7 @@ package ru.netology.nmedia.adapter
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
     fun onShare(post: Post) {}
     fun onOpen(post: Post) {}
+    fun showPost(post: Post) {}
 }
 
 class PostsAdapter(
@@ -46,11 +48,13 @@ class PostsAdapter(
                     CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 PostViewHolder(binding, onInteractionListener)
             }
+
             R.layout.item_date -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_date, parent, false)
                 DateSeparatorViewHolder(view)
             }
+
             else -> error("unknow type item $viewType")
         }
 
@@ -63,7 +67,8 @@ class PostsAdapter(
     }
 
 }
-class DateSeparatorViewHolder(view:View) : RecyclerView.ViewHolder(view) {
+
+class DateSeparatorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val textView: android.widget.TextView = view.findViewById(R.id.date_text)
 
     fun bind(text: String) {
@@ -76,6 +81,7 @@ class PostViewHolder(
     private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
+    @SuppressLint("SuspiciousIndentation")
     fun bind(post: Post) {
         binding.apply {
             author.text = post.author
@@ -98,6 +104,7 @@ class PostViewHolder(
             }
 
             menu.isVisible = post.ownerByMe
+
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
@@ -107,10 +114,12 @@ class PostViewHolder(
                                 onInteractionListener.onRemove(post)
                                 true
                             }
+
                             R.id.edit -> {
                                 onInteractionListener.onEdit(post)
                                 true
                             }
+
                             else -> false
                         }
                     }
@@ -120,19 +129,24 @@ class PostViewHolder(
             like.setOnClickListener {
                 val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1F, 1.25F, 1F)
                 val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1F, 1.25F, 1F)
-                    ObjectAnimator.ofPropertyValuesHolder(it, scaleX, scaleY).apply {
-                        duration = 500
-                        repeatCount = 100
-                        interpolator = BounceInterpolator()
-                    }.start()
+                ObjectAnimator.ofPropertyValuesHolder(it, scaleX, scaleY).apply {
+                    duration = 500
+                    repeatCount = 100
+                    interpolator = BounceInterpolator()
+                }.start()
                 onInteractionListener.onLike(post)
             }
 
             share.setOnClickListener {
                 onInteractionListener.onShare(post)
             }
+
             attachment.setOnClickListener {
                 onInteractionListener.onOpen(post)
+            }
+
+            content.setOnClickListener {
+                onInteractionListener.showPost(post)
             }
         }
     }

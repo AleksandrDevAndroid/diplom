@@ -30,6 +30,9 @@
             app:destination="@id/viewProfile" />
 
         <action
+            android:id="@+id/action_feedFragment_to_edite_post"
+            app:destination="@id/edite_post" />
+        <action
             android:id="@+id/action_feedFragment_to_showPostFragment"
             app:destination="@id/showPostFragment" />
 
@@ -40,7 +43,7 @@
         android:label="show_post_fragment"
         tools:layout="@layout/fragment_show_post">
         <action
-            android:id="@+id/action_showPostFragment_to_showPhotoFragment"
+            android:id="@+id/action_fr_to_showPhotoFragment"
             app:destination="@id/showPhotoFragment" />
     </fragment>
     <fragment
@@ -84,11 +87,17 @@
         tools:layout="@layout/fragment_view_profile">
         <action
             android:id="@+id/action_viewProfile_to_createJob"
-            app:destination="@id/createJob" />
+            app:destination="@id/create_job" />
     </fragment>
     <fragment
-        android:id="@+id/createJob"
+        android:id="@+id/create_job"
         android:name="ru.netology.nmedia.fragment.FragmentNewJob"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_new_job">
+    </fragment>
+    <fragment
+        android:id="@+id/edite_post"
+        android:name="ru.netology.nmedia.fragment.EditeFragment"
         android:label="view_profile"
         tools:layout="@layout/fragment_new_job">
     </fragment>

@@ -9,6 +9,7 @@ import androidx.paging.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import ru.netology.nmedia.api.PostService
 import ru.netology.nmedia.dao.PostDao
@@ -56,7 +57,6 @@ class PostRepositoryImpl @Inject constructor(
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
-
             val body = response.body() ?: throw ApiError(response.code(), response.message())
             dao.insert(PostEntity.fromDto(body, status = true))
         } catch (e: IOException) {
@@ -86,7 +86,7 @@ class PostRepositoryImpl @Inject constructor(
     override suspend fun likeById(id: Long) {
         val oldPost = dao.getId(id)
         val newPost = oldPost.copy(likedByMe = true, likes = +1)
-        dao.insert(PostEntity.Companion.fromDto(newPost.toDto(), status = true))
+        dao.insert(PostEntity.fromDto(newPost.toDto(), status = true))
         try {
             val response = apiService.likesById(id)
             if (!response.isSuccessful) {
@@ -119,18 +119,15 @@ class PostRepositoryImpl @Inject constructor(
         }
     }
 
-
-    override suspend fun saveWithAttachment(post: Post, file: File) {
+    override suspend fun saveWithAttachment(post: Post, file: File?) {
         val media = upload(file)
-        val copyPost = post.copy(attachment = Attachment(media.id, AttachmentType.IMAGE))
+        val copyPost = post.copy(attachment = Attachment(media.url, AttachmentType.IMAGE))
         save(copyPost)
-
     }
-
     private suspend fun upload(file: File?): Media {
         try {
             val part = MultipartBody.Part.createFormData(
-                "file", file!!.name, file.asRequestBody()
+                "file", file?.name, (file?.asRequestBody() ?: "") as RequestBody
             )
             val response = apiService.upload(part)
             if (!response.isSuccessful) {

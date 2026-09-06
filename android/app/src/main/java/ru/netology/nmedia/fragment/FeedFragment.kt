@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.R
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -55,6 +56,7 @@ class FeedFragment : Fragment() {
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
+                findNavController().navigate(ru.netology.nmedia.R.id.action_feedFragment_to_edite_post)
             }
 
             override fun onLike(post: Post) {
@@ -94,6 +96,11 @@ class FeedFragment : Fragment() {
                         putString("url", post.attachment?.url)
                     }
                 )
+            }
+
+            override fun showPost(post: Post) {
+                viewModel.selectPost(post)
+                findNavController().navigate(ru.netology.nmedia.R.id.showPostFragment)
             }
         })
 
@@ -141,6 +148,7 @@ class FeedFragment : Fragment() {
                 binding.list.smoothScrollToPosition(0)
             }
         }
+
 
         binding.fab.setOnClickListener {
             if (!authViewModel.authenticated) {

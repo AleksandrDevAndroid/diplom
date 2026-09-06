@@ -32,7 +32,7 @@ data class Comment(
 )
 
 data class Attachment(val url: String, val type: AttachmentType)
-data class Media(val id: String)
+data class Media(val url: String)
 data class DateSeparator(override val id: Long, val text: String) : FeedItem
 
 enum class EventType {
