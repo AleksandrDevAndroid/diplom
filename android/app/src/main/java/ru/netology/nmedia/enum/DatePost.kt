@@ -10,7 +10,7 @@ fun String.formatDate(): String {
         val zonedDateTime = instant.atZone(ZoneId.systemDefault())
 
         zonedDateTime.format(
-            DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")
+            DateTimeFormatter.ofPattern("d.M.yyyy HH:mm")
         )
     } catch (e: Exception) {
         this

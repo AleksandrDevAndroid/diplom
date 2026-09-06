@@ -1,5 +1,6 @@
 package ru.netology.nmedia.util
 
+import androidx.core.R
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
@@ -13,7 +14,7 @@ class DatePickerHelper(
 
     fun showDateRangePicker() {
         val dateRangePicker = MaterialDatePicker.Builder.dateRangePicker()
-            .setTitleText("Выберите период работы")
+            .setTitleText("")
             .build()
 
         dateRangePicker.addOnPositiveButtonClickListener { selection ->
