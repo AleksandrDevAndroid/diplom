@@ -7,6 +7,7 @@ import ru.netology.nmedia.dto.Post
 import java.io.File
 
 interface PostRepository {
+    suspend fun getPost(id: Long): Post
     suspend fun updateStatus()
     val data: Flow<PagingData<FeedItem>>
     suspend fun save(post: Post)

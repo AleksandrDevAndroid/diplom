@@ -24,12 +24,12 @@
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:contentDescription="@string/description_post_author_avatar"
-            app:layout_constraintBottom_toBottomOf="@id/header"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:srcCompat="@sample/posts.json/data/authorAvatar" />
 
         <TextView
@@ -40,11 +40,10 @@
             android:layout_marginEnd="@dimen/common_spacing"
             android:singleLine="true"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/published"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:text="Perov Alex" />
+            tools:text="Perov Alex"/>
 
         <TextView
             android:id="@+id/nickname"
@@ -56,18 +55,5 @@
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toBottomOf="@id/author"
             tools:text="aleksper_android" />
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox"
-            style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:contentDescription="@string/save_button"
-            android:gravity="center"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

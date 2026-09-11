@@ -111,7 +111,7 @@
                 app:constraint_referenced_ids="avatar,subhead" />
 
             <ImageView
-                android:id="@+id/attachment"
+                android:id="@+id/attachmentPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="12dp"
@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/attachment"
+                app:layout_constraintTop_toBottomOf="@id/attachmentPhoto"
                 tools:text="@sample/posts.json/data/published" />
 
             <TextView
@@ -161,61 +161,54 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/likers_title">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/like"
-                style="@style/Widget.AppTheme.LikeCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checkable="true"
-                android:contentDescription="@string/description_post_like"
-                app:icon="@drawable/ic_like_24dp"
-                app:iconTint="#6750A4"
-                tools:checked="@sample/posts.json/data/likedByMe"
-                tools:text="@sample/posts.json/data/likes" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/like"
+                    style="@style/Widget.AppTheme.LikeCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/description_post_like"
+                    app:icon="@drawable/ic_like_24dp"
+                    app:iconTint="#6750A4"
+                    tools:checked="@sample/posts.json/data/likedByMe"
+                    tools:text="@sample/posts.json/data/likes" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/likers_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_avatar" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/show_users"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:backgroundTint="#6750A4"
+                    android:clickable="true"
+                    android:contentDescription="@string/add_post"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_add_24dp" />
+            </LinearLayout>
+
 
             <TextView
-                android:id="@+id/like_count"
+                android:id="@+id/mentioned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
-                tools:text="15" />
+                android:layout_marginTop="12dp"
+                android:text="@string/mentioned"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/likes_users" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/likers_recycler"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:nestedScrollingEnabled="false"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/show_users"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/fab_margin"
-                android:backgroundTint="#6750A4"
-                android:clickable="true"
-                android:contentDescription="@string/add_post"
-                android:focusable="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_add_24dp" />
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/mentioned"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/mentioned"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/likes_users" />
-</androidx.constraintlayout.widget.ConstraintLayout></com.google.android.material.card.MaterialCardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.netology.nmedia.dto.Attachment
+import ru.netology.nmedia.dto.Coords
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.enum.AttachmentType
 
@@ -20,7 +21,7 @@ data class PostEntity(
     val likes: Int = 0,
     val status: Boolean,
     @Embedded
-    val attachment: AttachmentEmbeddable?
+    val attachment: AttachmentEmbeddable?,
 ) {
     fun toDto() = Post(
         id,
@@ -48,7 +49,7 @@ data class PostEntity(
                 dto.likedByMe,
                 dto.likes,
                 status = status,
-                AttachmentEmbeddable.fromDto(dto.attachment)
+                AttachmentEmbeddable.fromDto(dto.attachment),
             )
     }
 }

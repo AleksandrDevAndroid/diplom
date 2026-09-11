@@ -8,19 +8,25 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.loader.app.LoaderManager
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
+import ru.netology.nmedia.adapter.LikersAvatarAdapter
+import ru.netology.nmedia.adapter.UsersAdapter
 import ru.netology.nmedia.databinding.FragmentShowPostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.extensions.formatDate
 import ru.netology.nmedia.view.loadCircleCrop
 import ru.netology.nmedia.viewmodel.PostViewModel
 
-
+@AndroidEntryPoint
 class ShowPostFragment : Fragment() {
-    private val viewModel: PostViewModel by activityViewModels()
-
+    private val postViewModel: PostViewModel by activityViewModels()
+    private val userAdapter = UsersAdapter()
+    private val likersAdapter = LikersAvatarAdapter()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,34 +42,58 @@ class ShowPostFragment : Fragment() {
                 avatar.loadCircleCrop(post.authorAvatar)
                 like.isChecked = post.likedByMe
                 like.text = "${post.likes}"
-                binding.attachment.isVisible = post.attachment != null
+                binding.attachmentPhoto.isVisible = post.attachment != null
 
                 val urlAttachment = post.attachment?.url
                 if (!urlAttachment.isNullOrEmpty()) {
-                    Glide.with(binding.attachment)
+                    Glide.with(binding.attachmentPhoto)
                         .load(urlAttachment)
                         .placeholder(R.drawable.outline_arrow_cool_down_24)
                         .override(1200, 800)
                         .centerCrop()
                         .error(R.drawable.error)
-                        .into(binding.attachment)
+                        .into(binding.attachmentPhoto)
                 }
             }
         }
 
-        viewModel.selectPost.observe(viewLifecycleOwner) { post ->
-            post?.let { displayPost(it) }
+        binding.likersRecycler.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = likersAdapter
         }
-        viewModel.photo.observe(viewLifecycleOwner) {
-            binding.attachment.setImageURI(it.uri)
+
+        postViewModel.selectPost.observe(viewLifecycleOwner) { post ->
+            post?.let {
+                displayPost(it)
+                postViewModel.getLikers(it.id)
+            }
+        }
+
+        postViewModel.likers.observe(viewLifecycleOwner) { users ->
+            likersAdapter.submitList(users)
+        }
+
+        postViewModel.photo.observe(viewLifecycleOwner) {
+            binding.attachmentPhoto.setImageURI(it.uri)
+        }
+
+        postViewModel.likers.observe(viewLifecycleOwner) { users ->
+            userAdapter.submitList(users)
         }
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        return binding.root
+        binding.showUsers.setOnClickListener {
+            findNavController().navigate(R.id.action_showPostFragment_to_show_users)
+        }
 
+        return binding.root
     }
 
 }

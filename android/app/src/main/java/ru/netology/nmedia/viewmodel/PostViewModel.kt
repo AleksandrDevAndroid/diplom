@@ -19,9 +19,11 @@ import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
 import ru.netology.nmedia.repository.interfaceRepository.PostRepository
+import ru.netology.nmedia.repository.interfaceRepository.UserRepository
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
 import javax.inject.Inject
@@ -42,13 +44,17 @@ private val empty = Post(
 private val noPhoto = PhotoModel()
 
 @HiltViewModel
-class PostViewModel @Inject constructor(private val repository: PostRepository, appAuth: AppAuth) :
+class PostViewModel @Inject constructor(
+    private val postRepository: PostRepository,
+    private val userRepository: UserRepository,
+    appAuth: AppAuth
+) :
     ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val data: Flow<PagingData<FeedItem>> = appAuth.authState
         .flatMapLatest { (myId, _) ->
-            repository.data.map { posts ->
+            postRepository.data.map { posts ->
                 posts.map { post ->
                     if (post is Post) {
                         post.copy(ownerByMe = myId == post.authorId)
@@ -77,11 +83,12 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
     val postCreated: LiveData<Unit>
         get() = _postCreated
 
-
+    private val _likers = MutableLiveData<List<Users>>()
+    val likers: LiveData<List<Users>> = _likers
     fun refreshPosts() = viewModelScope.launch {
         try {
             _dataState.value = FeedModelState(refreshing = true)
-            repository.updateStatus()
+            postRepository.updateStatus()
             _dataState.value = FeedModelState()
         } catch (e: Exception) {
             _dataState.value = FeedModelState(error = true)
@@ -94,9 +101,9 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
             viewModelScope.launch {
                 try {
                     when (_photo.value) {
-                        noPhoto -> repository.save(it)
+                        noPhoto -> postRepository.save(it)
                         else -> _photo.value?.file?.let { file ->
-                            repository.saveWithAttachment(it, file)
+                            postRepository.saveWithAttachment(it, file)
                         }
                     }
                     _dataState.value = FeedModelState()
@@ -113,7 +120,7 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
         _edited.value = post
     }
 
-    fun selectPost(post: Post){
+    fun selectPost(post: Post) {
         _selectPost.value = post
     }
 
@@ -121,8 +128,8 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
         viewModelScope.launch {
             try {
                 if (!likedByMe) {
-                    repository.likeById(id)
-                } else repository.dislikeById(id)
+                    postRepository.likeById(id)
+                } else postRepository.dislikeById(id)
             } catch (e: Exception) {
                 FeedModelState(error = true)
             }
@@ -132,7 +139,7 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
     fun removeById(id: Long) {
         viewModelScope.launch {
             try {
-                repository.removeById(id)
+                postRepository.removeById(id)
             } catch (_: Exception) {
                 _dataState.value = FeedModelState(error = true)
             }
@@ -141,13 +148,13 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
 
     fun getNewPost() {
         viewModelScope.launch {
-            val id = repository
+            val id = postRepository
         }
     }
 
     fun updateStatus() {
         viewModelScope.launch {
-            repository.updateStatus()
+            postRepository.updateStatus()
         }
     }
 
@@ -161,8 +168,9 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
         viewModelScope.launch {
             when {
                 _photo.value != noPhoto && _photo.value != null ->
-                    repository.saveWithAttachment(post, file)
-                else -> repository.save(post)
+                    postRepository.saveWithAttachment(post, file)
+
+                else -> postRepository.save(post)
             }
             _postCreated.value = Unit
             _edited.value = null
@@ -175,5 +183,24 @@ class PostViewModel @Inject constructor(private val repository: PostRepository, 
             return
         }
         _edited.value = edited.value?.copy(content = text)
+    }
+
+    fun getLikers(postId: Long) {
+        viewModelScope.launch {
+            try {
+                val post = postRepository.getPost(postId)
+                val likers = post?.users?.map { (id, info) ->
+                    Users(
+                        id = id.toLongOrNull() ?: 0,
+                        login = info.name,
+                        name = info.name,
+                        avatar = info.avatar
+                    )
+                } ?: emptyList()
+                _likers.postValue(likers)
+            } catch (e: Exception) {
+                _likers.postValue(emptyList())
+            }
+        }
     }
 }

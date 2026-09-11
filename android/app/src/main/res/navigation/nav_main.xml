@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_fr_to_showPhotoFragment"
             app:destination="@id/showPhotoFragment" />
+        <action
+            android:id="@+id/action_showPostFragment_to_show_users"
+            app:destination="@id/show_users" />
     </fragment>
     <fragment
         android:id="@+id/register_fragment"
@@ -99,6 +102,12 @@
         android:id="@+id/edite_post"
         android:name="ru.netology.nmedia.fragment.EditeFragment"
         android:label="view_profile"
-        tools:layout="@layout/fragment_new_job">
+        tools:layout="@layout/fragment_edit_post">
+    </fragment>
+    <fragment
+        android:id="@+id/show_users"
+        android:name="ru.netology.nmedia.fragment.ShowUsersFragment"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_show_users">
     </fragment>
 </navigation>

@@ -65,7 +65,6 @@ class FeedFragment : Fragment() {
                     return
                 }
                 viewModel.likeById(post.id, post.likedByMe)
-                viewModel.refreshPosts()
             }
 
             override fun onRemove(post: Post) {
@@ -148,7 +147,6 @@ class FeedFragment : Fragment() {
                 binding.list.smoothScrollToPosition(0)
             }
         }
-
 
         binding.fab.setOnClickListener {
             if (!authViewModel.authenticated) {

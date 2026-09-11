@@ -86,7 +86,7 @@
             android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attachment"
+            app:layout_constraintTop_toBottomOf="@id/attachmentPhoto"
             tools:text="@sample/posts.json/data/content" />
 
         <androidx.constraintlayout.widget.Barrier
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="content"
-            app:layout_constraintTop_toBottomOf="@id/attachment" />
+            app:layout_constraintTop_toBottomOf="@id/attachmentPhoto" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/like"
@@ -124,11 +124,29 @@
             app:layout_constraintTop_toBottomOf="@id/footer" />
 
         <ImageView
-            android:id="@+id/attachment"
+            android:id="@+id/attachmentPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/content" />
+        <ImageView
+            android:id="@+id/attachmentVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/attachmentPhoto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/content" />
+        <ImageView
+            android:id="@+id/attachmentMusic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/attachmentVideo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/content" />

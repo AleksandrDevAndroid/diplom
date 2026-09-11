@@ -90,17 +90,19 @@ class PostViewHolder(
             avatar.loadCircleCrop(post.authorAvatar)
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
-            binding.attachment.isVisible = post.attachment != null
+            binding.attachmentPhoto.isVisible = post.attachment != null
+            binding.attachmentVideo.isVisible = post.attachment != null
+            binding.attachmentMusic.isVisible = post.attachment != null
 
             val urlAttachment = post.attachment?.url
             if (!urlAttachment.isNullOrEmpty()) {
-                Glide.with(binding.attachment)
+                Glide.with(binding.attachmentPhoto)
                     .load(urlAttachment)
                     .placeholder(R.drawable.outline_arrow_cool_down_24)
                     .override(1200, 800)
                     .centerCrop()
                     .error(R.drawable.error)
-                    .into(binding.attachment)
+                    .into(binding.attachmentPhoto)
             }
 
             menu.isVisible = post.ownerByMe
@@ -131,7 +133,6 @@ class PostViewHolder(
                 val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1F, 1.25F, 1F)
                 ObjectAnimator.ofPropertyValuesHolder(it, scaleX, scaleY).apply {
                     duration = 500
-                    repeatCount = 100
                     interpolator = BounceInterpolator()
                 }.start()
                 onInteractionListener.onLike(post)
@@ -141,7 +142,7 @@ class PostViewHolder(
                 onInteractionListener.onShare(post)
             }
 
-            attachment.setOnClickListener {
+            attachmentPhoto.setOnClickListener {
                 onInteractionListener.onOpen(post)
             }
 

@@ -15,7 +15,6 @@ import ru.netology.nmedia.databinding.FragmentShowPhotoBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
 @AndroidEntryPoint
 class ShowPhotoFragment : Fragment() {
-    val viewModel: PostViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

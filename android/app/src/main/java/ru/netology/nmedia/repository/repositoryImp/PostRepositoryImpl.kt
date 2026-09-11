@@ -1,6 +1,7 @@
 package ru.netology.nmedia.repository.repositoryImp
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -29,6 +30,7 @@ import ru.netology.nmedia.repository.interfaceRepository.PostRepository
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
+import kotlin.jvm.Throws
 
 class PostRepositoryImpl @Inject constructor(
     private val dao: PostDao,
@@ -45,6 +47,19 @@ class PostRepositoryImpl @Inject constructor(
         remoteMediator = PostWallRemoteMediator(apiService, dao, postRemoteKeyDao, appDb)
     ).flow.map { pagingData ->
         pagingData.map(PostEntity::toDto)
+    }
+
+    override suspend fun getPost(id: Long): Post {
+        try {
+            val response = apiService.getPost(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            return body
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
 
     override suspend fun updateStatus() {
@@ -85,7 +100,7 @@ class PostRepositoryImpl @Inject constructor(
 
     override suspend fun likeById(id: Long) {
         val oldPost = dao.getId(id)
-        val newPost = oldPost.copy(likedByMe = true, likes = +1)
+        val newPost = oldPost.copy(likedByMe = true, likes = oldPost.likes + 1)
         dao.insert(PostEntity.fromDto(newPost.toDto(), status = true))
         try {
             val response = apiService.likesById(id)
@@ -93,7 +108,9 @@ class PostRepositoryImpl @Inject constructor(
                 throw ApiError(response.code(), response.message())
             }
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-            dao.insert(PostEntity.fromDto(body, status = true))
+            val countLikes = body.likeOwnerIds?.size ?: 0
+            val post = body.copy(likes = countLikes)
+            dao.insert(PostEntity.fromDto(post, status = true))
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
@@ -103,7 +120,7 @@ class PostRepositoryImpl @Inject constructor(
 
     override suspend fun dislikeById(id: Long) {
         val oldPost = dao.getId(id)
-        val newPost = oldPost.copy(likedByMe = false, likes = 0)
+        val newPost = oldPost.copy(likedByMe = false, likes = oldPost.likes - 1)
         dao.insert(PostEntity.fromDto(newPost.toDto(), status = true))
         try {
             val response = apiService.dislikesById(id)
@@ -111,7 +128,9 @@ class PostRepositoryImpl @Inject constructor(
                 throw ApiError(response.code(), response.message())
             }
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-            dao.insert(PostEntity.fromDto(body, status = true))
+            val countLikes = body.likeOwnerIds?.size ?: 0
+            val post = body.copy(likes = countLikes)
+            dao.insert(PostEntity.fromDto(post, status = true))
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
@@ -124,6 +143,7 @@ class PostRepositoryImpl @Inject constructor(
         val copyPost = post.copy(attachment = Attachment(media.url, AttachmentType.IMAGE))
         save(copyPost)
     }
+
     private suspend fun upload(file: File?): Media {
         try {
             val part = MultipartBody.Part.createFormData(
@@ -141,4 +161,5 @@ class PostRepositoryImpl @Inject constructor(
             throw UnknownError
         }
     }
+
 }

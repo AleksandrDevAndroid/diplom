@@ -21,7 +21,7 @@ class JobViewHolder(
         binding.apply {
             nameOrganization.text = job.name
             position.text = job.position
-            timeWorking.text = formatPeriod(job.start,job.finish).formatDate()
+            timeWorking.text = formatPeriod(job.start, job.finish).formatDate()
             webSite.text = job.link
             if (webSite.text.isNullOrEmpty()) {
                 webSite.isVisible = false
@@ -63,6 +63,7 @@ class JobsAdapter(
     }
 
 }
+
 private fun formatPeriod(start: String, finish: String?): String {
     return if (finish.isNullOrEmpty()) {
         "$start – НВ"

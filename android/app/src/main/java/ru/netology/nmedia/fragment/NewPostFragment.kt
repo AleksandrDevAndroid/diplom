@@ -76,7 +76,7 @@ class NewPostFragment : Fragment() {
         }
 
 
-        binding.pickPhoto.setOnClickListener {
+        binding.pickFile.setOnClickListener {
             ImagePicker.with(this)
                 .crop()
                 .compress(2048)

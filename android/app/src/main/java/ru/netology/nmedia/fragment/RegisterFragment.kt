@@ -73,7 +73,7 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val finalAvatar = avatar ?: AvatarLetter.generateAsFile(requireContext(), name)
+            val finalAvatar = avatar ?: AvatarLetter.generateAsFile(requireContext(),name)
             viewModelRegister.signUp(login, pass, name, finalAvatar)
             return@setOnClickListener
         }

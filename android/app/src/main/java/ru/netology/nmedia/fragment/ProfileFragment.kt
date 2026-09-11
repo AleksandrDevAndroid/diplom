@@ -51,6 +51,7 @@ class ProfileFragment: Fragment() {
                 avatar.loadCircleCrop(user.avatar)
             }
         }
+
         val userId = appAuth.authState.value.id
         if (userId != 0L) {
             registerViewModel.getUser(userId)

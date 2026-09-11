@@ -11,9 +11,7 @@ import java.util.Locale
 class AvatarLetter {
 
     companion object {
-        // Метод генерирует Bitmap и сохраняет его в File
         fun generateAsFile(context: Context, name: String, size: Int = 200): File {
-            // 1. Создаем Bitmap с буквой
             val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
             val firstLetter = if (name.isNotEmpty()) name.substring(0, 1).uppercase(Locale.getDefault()) else "?"
@@ -36,7 +34,6 @@ class AvatarLetter {
             val yCenter = radius + (bounds.height() / 2f)
             canvas.drawText(firstLetter, radius, yCenter, textPaint)
 
-            // 2. Сохраняем в кэш и возвращаем File
             val file = File(context.cacheDir, "avatar_${name.hashCode()}.png")
             FileOutputStream(file).use { out ->
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)

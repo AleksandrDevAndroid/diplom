@@ -17,7 +17,12 @@ data class Post(
     val likes: Int = 0,
     val status: Boolean,
     val attachment: Attachment? = null,
-    val ownerByMe: Boolean
+    val ownerByMe: Boolean,
+    val authorJob: String? = null,
+    val mentionsId: List<Long>? = null,
+    val mentionedMe: Boolean = false,
+    val likeOwnerIds: List<Long>? = null,
+    val users: Map<String, UserInfo>? = null
 ) : FeedItem
 
 data class Comment(
@@ -65,3 +70,9 @@ data class Job(
     val link: String?,
     val ownerId: Long
 )
+
+data class Coords(
+    val lat: Double,
+    val long: Double
+)
+
