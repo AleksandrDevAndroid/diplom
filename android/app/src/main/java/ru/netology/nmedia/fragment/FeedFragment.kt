@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.R
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -22,6 +21,7 @@ import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.mediaPlayer.MediaLifecycleObserver
 import ru.netology.nmedia.viewmodel.AuthViewModel
 import ru.netology.nmedia.viewmodel.PostViewModel
 
@@ -31,6 +31,7 @@ class FeedFragment : Fragment() {
 
     private val viewModel: PostViewModel by activityViewModels()
     private val authViewModel: AuthViewModel by activityViewModels()
+    private lateinit var mediaObserver: MediaLifecycleObserver
 
     private fun showDialog() {
         MaterialAlertDialogBuilder(requireContext())
@@ -52,8 +53,10 @@ class FeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentFeedBinding.inflate(inflater, container, false)
+        mediaObserver = MediaLifecycleObserver(requireContext())
+        viewLifecycleOwner.lifecycle.addObserver(mediaObserver)
 
-        val adapter = PostsAdapter(object : OnInteractionListener {
+        val adapter = PostsAdapter(mediaObserver,object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
                 findNavController().navigate(ru.netology.nmedia.R.id.action_feedFragment_to_edite_post)
@@ -137,6 +140,10 @@ class FeedFragment : Fragment() {
 
         binding.swiperefresh.setOnRefreshListener {
             adapter.refresh()
+        }
+
+        binding.tabUsers.setOnClickListener {
+            findNavController().navigate(ru.netology.nmedia.R.id.action_feedFragment_to_show_users)
         }
 
         binding.updateList.setOnClickListener {

@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.loader.app.LoaderManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.LikersAvatarAdapter
-import ru.netology.nmedia.adapter.UsersAdapter
+import ru.netology.nmedia.adapter.LikersAdapter
 import ru.netology.nmedia.databinding.FragmentShowPostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.extensions.formatDate
@@ -25,7 +24,7 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 @AndroidEntryPoint
 class ShowPostFragment : Fragment() {
     private val postViewModel: PostViewModel by activityViewModels()
-    private val userAdapter = UsersAdapter()
+    private val userAdapter = LikersAdapter()
     private val likersAdapter = LikersAvatarAdapter()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,7 +89,7 @@ class ShowPostFragment : Fragment() {
         }
 
         binding.showUsers.setOnClickListener {
-            findNavController().navigate(R.id.action_showPostFragment_to_show_users)
+            findNavController().navigate(R.id.action_showPostFragment_to_show_likers)
         }
 
         return binding.root

@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_feedFragment_to_showPostFragment"
             app:destination="@id/showPostFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_show_users"
+            app:destination="@id/show_users" />
 
     </fragment>
     <fragment
@@ -46,8 +49,9 @@
             android:id="@+id/action_fr_to_showPhotoFragment"
             app:destination="@id/showPhotoFragment" />
         <action
-            android:id="@+id/action_showPostFragment_to_show_users"
-            app:destination="@id/show_users" />
+            android:id="@+id/action_showPostFragment_to_show_likers"
+            app:destination="@id/show_likers" />
+
     </fragment>
     <fragment
         android:id="@+id/register_fragment"
@@ -79,7 +83,7 @@
         tools:layout="@layout/fragment_show_photo"/>
     <fragment
         android:id="@+id/chooseUsers"
-        android:name="ru.netology.nmedia.fragment.ChooseUsers"
+        android:name="ru.netology.nmedia.fragment.ChooseUsersFragment"
         android:label="choose_users"
         tools:layout="@layout/fragment_choose_users">
     </fragment>
@@ -103,6 +107,12 @@
         android:name="ru.netology.nmedia.fragment.EditeFragment"
         android:label="view_profile"
         tools:layout="@layout/fragment_edit_post">
+    </fragment>
+    <fragment
+        android:id="@+id/show_likers"
+        android:name="ru.netology.nmedia.fragment.ShowLikersFragment"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_show_likers">
     </fragment>
     <fragment
         android:id="@+id/show_users"

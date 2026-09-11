@@ -3,13 +3,12 @@ package ru.netology.nmedia.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nmedia.databinding.ItemChooseUsersBinding
 import ru.netology.nmedia.databinding.ItemShowUsersBinding
 import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.view.loadCircleCrop
 
 
-class UsersViewHolder(
+class LikersViewHolder(
     private val binding: ItemShowUsersBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(user: Users) {
@@ -21,7 +20,7 @@ class UsersViewHolder(
     }
 }
 
-class UsersAdapter () : RecyclerView.Adapter<UsersViewHolder>() {
+class LikersAdapter() : RecyclerView.Adapter<LikersViewHolder>() {
     private var users = listOf<Users>()
 
     fun submitList(user: List<Users>) {
@@ -29,18 +28,13 @@ class UsersAdapter () : RecyclerView.Adapter<UsersViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun getSelectedUsers(): List<Users> {
-        return users.filter { it.isSelected }
-    }
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LikersViewHolder {
         val binding =
             ItemShowUsersBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UsersViewHolder(binding)
+        return LikersViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: LikersViewHolder, position: Int) {
         holder.bind(users[position])
     }
 

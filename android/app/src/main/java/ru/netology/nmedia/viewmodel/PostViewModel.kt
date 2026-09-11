@@ -1,5 +1,6 @@
 package ru.netology.nmedia.viewmodel
 
+import android.media.MediaPlayer
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,7 +24,6 @@ import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
 import ru.netology.nmedia.repository.interfaceRepository.PostRepository
-import ru.netology.nmedia.repository.interfaceRepository.UserRepository
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
 import javax.inject.Inject
@@ -46,11 +46,9 @@ private val noPhoto = PhotoModel()
 @HiltViewModel
 class PostViewModel @Inject constructor(
     private val postRepository: PostRepository,
-    private val userRepository: UserRepository,
     appAuth: AppAuth
 ) :
     ViewModel() {
-
     @OptIn(ExperimentalCoroutinesApi::class)
     val data: Flow<PagingData<FeedItem>> = appAuth.authState
         .flatMapLatest { (myId, _) ->

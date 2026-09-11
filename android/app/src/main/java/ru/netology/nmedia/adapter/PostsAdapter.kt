@@ -18,7 +18,9 @@ import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.DateSeparator
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.enum.AttachmentType
 import ru.netology.nmedia.extensions.formatDate
+import ru.netology.nmedia.mediaPlayer.MediaLifecycleObserver
 import ru.netology.nmedia.view.loadCircleCrop
 
 interface OnInteractionListener {
@@ -31,6 +33,7 @@ interface OnInteractionListener {
 }
 
 class PostsAdapter(
+    private val mediaObserver: MediaLifecycleObserver,
     private val onInteractionListener: OnInteractionListener,
 ) : PagingDataAdapter<FeedItem, RecyclerView.ViewHolder>(PostDiffCallback()) {
 
@@ -46,7 +49,7 @@ class PostsAdapter(
             R.layout.card_post -> {
                 val binding =
                     CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                PostViewHolder(binding, onInteractionListener)
+                PostViewHolder(binding, onInteractionListener,mediaObserver)
             }
 
             R.layout.item_date -> {
@@ -80,6 +83,7 @@ class DateSeparatorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 class PostViewHolder(
     private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener,
+    private val mediaObserver: MediaLifecycleObserver,
 ) : RecyclerView.ViewHolder(binding.root) {
     @SuppressLint("SuspiciousIndentation")
     fun bind(post: Post) {
@@ -90,22 +94,43 @@ class PostViewHolder(
             avatar.loadCircleCrop(post.authorAvatar)
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
-            binding.attachmentPhoto.isVisible = post.attachment != null
-            binding.attachmentVideo.isVisible = post.attachment != null
-            binding.attachmentMusic.isVisible = post.attachment != null
+            attachmentPhoto.isVisible = false
+            attachmentVideo.isVisible = false
+            attachmentMusic.isVisible = false
 
             val urlAttachment = post.attachment?.url
-            if (!urlAttachment.isNullOrEmpty()) {
-                Glide.with(binding.attachmentPhoto)
-                    .load(urlAttachment)
-                    .placeholder(R.drawable.outline_arrow_cool_down_24)
-                    .override(1200, 800)
-                    .centerCrop()
-                    .error(R.drawable.error)
-                    .into(binding.attachmentPhoto)
+            menu.isVisible = post.ownerByMe
+
+            post.attachment?.let { attachment ->
+                when (attachment.type) {
+                    AttachmentType.IMAGE -> {
+                        attachmentPhoto.isVisible = true
+                        attachmentMusic.isVisible = false
+                        Glide.with(binding.attachmentPhoto)
+                            .load(urlAttachment)
+                            .placeholder(R.drawable.outline_arrow_cool_down_24)
+                            .override(1200, 800)
+                            .centerCrop()
+                            .error(R.drawable.error)
+                            .into(binding.attachmentPhoto)
+                    }
+                    AttachmentType.AUDIO -> {
+                        attachmentPhoto.isVisible = false
+                        attachmentMusic.isVisible = true
+                        attachmentMusic.setOnClickListener {
+                            mediaObserver.play(attachment.url)
+                        }
+                    }
+                    AttachmentType.VIDEO -> {
+                        attachmentPhoto.isVisible = false
+                        attachmentMusic.isVisible = false
+                    }
+                }
             }
 
-            menu.isVisible = post.ownerByMe
+            binding.attachmentMusic.setOnClickListener {
+                mediaObserver.play(post.attachment?.url)
+            }
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {

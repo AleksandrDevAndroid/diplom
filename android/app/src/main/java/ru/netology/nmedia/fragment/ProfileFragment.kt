@@ -23,6 +23,7 @@ import ru.netology.nmedia.databinding.FragmentViewProfileBinding
 import ru.netology.nmedia.dto.Job
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.Users
+import ru.netology.nmedia.mediaPlayer.MediaLifecycleObserver
 import ru.netology.nmedia.view.loadCircleCrop
 import ru.netology.nmedia.viewmodel.JobViewModel
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -36,6 +37,8 @@ class ProfileFragment: Fragment() {
     private val postViewModel: PostViewModel by viewModels()
     private val jobViewModel: JobViewModel by viewModels()
     private val registerViewModel: RegisterViewModel by viewModels()
+    private lateinit var mediaObserver: MediaLifecycleObserver
+
 
 
     override fun onCreateView(
@@ -57,7 +60,10 @@ class ProfileFragment: Fragment() {
             registerViewModel.getUser(userId)
         }
 
-        val postAdapter = PostsAdapter(object : OnInteractionListener {
+        mediaObserver = MediaLifecycleObserver(requireContext())
+        viewLifecycleOwner.lifecycle.addObserver(mediaObserver)
+
+        val postAdapter = PostsAdapter(mediaObserver,object : OnInteractionListener {
             override fun onLike(post: Post) {
                 postViewModel.likeById(post.id, post.likedByMe)
             }

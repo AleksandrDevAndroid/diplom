@@ -86,7 +86,7 @@
             android:clickable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attachmentPhoto"
+            app:layout_constraintTop_toBottomOf="@id/attachmentMusic"
             tools:text="@sample/posts.json/data/content" />
 
         <androidx.constraintlayout.widget.Barrier
@@ -132,24 +132,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/content" />
-        <ImageView
+        <VideoView
             android:id="@+id/attachmentVideo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
+            android:src="@drawable/play_circle_filled"
+            android:clickable="true"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/attachmentPhoto"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/content" />
+            app:layout_constraintBottom_toTopOf="@id/attachmentPhoto" />
         <ImageView
             android:id="@+id/attachmentMusic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clickable="true"
             android:visibility="gone"
+            android:src="@drawable/play_circle_filled"
             app:layout_constraintTop_toBottomOf="@id/attachmentVideo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/content" />
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@id/content"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

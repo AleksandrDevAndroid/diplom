@@ -9,19 +9,24 @@ import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.view.loadCircleCrop
 
 
-class UsersViewHolder(
-    private val binding: ItemShowUsersBinding
+class ChooseUserViewHolder(
+    private val binding: ItemChooseUsersBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(user: Users) {
         binding.apply {
             author.text = user.name
             nickname.text = user.login
             avatar.loadCircleCrop(user.avatar)
+            checkbox.setOnCheckedChangeListener(null)
+            checkbox.isChecked = user.isSelected
+            checkbox.setOnCheckedChangeListener { _, isChecked ->
+                user.isSelected = isChecked
+            }
         }
     }
 }
 
-class UsersAdapter () : RecyclerView.Adapter<UsersViewHolder>() {
+class ChooseUsersAdapter() : RecyclerView.Adapter<ChooseUserViewHolder>() {
     private var users = listOf<Users>()
 
     fun submitList(user: List<Users>) {
@@ -33,14 +38,17 @@ class UsersAdapter () : RecyclerView.Adapter<UsersViewHolder>() {
         return users.filter { it.isSelected }
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
-        val binding =
-            ItemShowUsersBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UsersViewHolder(binding)
+    fun getSelectedIds(): List<Long> {
+        return users.filter { it.isSelected }.map { it.id }
     }
 
-    override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChooseUserViewHolder {
+        val binding =
+            ItemChooseUsersBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ChooseUserViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ChooseUserViewHolder, position: Int) {
         holder.bind(users[position])
     }
 

@@ -76,6 +76,7 @@ kotlin {
 
 
 dependencies {
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation("com.airbnb.android:lottie:6.7.1")
     implementation("com.github.LottieFiles:dotlottie-android:0.5.0")
     implementation(libs.androidx.room.ktx)
