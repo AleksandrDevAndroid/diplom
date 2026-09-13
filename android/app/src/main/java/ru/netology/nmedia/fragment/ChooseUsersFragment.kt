@@ -8,33 +8,38 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.adapter.ChooseUsersAdapter
 import ru.netology.nmedia.databinding.FragmentChooseUsersBinding
+import ru.netology.nmedia.viewmodel.PostViewModel
 import ru.netology.nmedia.viewmodel.RegisterViewModel
 
+@AndroidEntryPoint
 class ChooseUsersFragment : Fragment() {
-    private val registerViewModel: RegisterViewModel by activityViewModels()
-    private val adapter = ChooseUsersAdapter()
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding = FragmentChooseUsersBinding.inflate(inflater,container,false)
+    private val postViewModel: PostViewModel by activityViewModels()
+    private val adapter = ChooseUsersAdapter { user, isChecked ->
+        user.isSelected = isChecked
+        postViewModel.selectedUsers()
+    }
 
-        registerViewModel.getUsers()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        val binding = FragmentChooseUsersBinding.inflate(inflater, container, false)
 
         binding.usersRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@ChooseUsersFragment.adapter
         }
 
-        registerViewModel.users.observe(viewLifecycleOwner) { users ->
+        postViewModel.getUsers()
+
+        postViewModel.allUsers.observe(viewLifecycleOwner) { users ->
             adapter.submitList(users)
         }
 
         binding.saveButton.setOnClickListener {
-            //TODO
+            postViewModel.selectedUsers()
             findNavController().navigateUp()
         }
         binding.backButton.setOnClickListener {

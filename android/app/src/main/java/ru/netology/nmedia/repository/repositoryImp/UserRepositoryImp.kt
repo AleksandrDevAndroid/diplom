@@ -11,7 +11,7 @@ import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.UnknownError
-import ru.netology.nmedia.repository.interfaceRepository.UserRepository
+import ru.netology.nmedia.repository.interfaceRepository.RegisterRepository
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class UserRepositoryImp @Inject constructor(
     private val apiService: UserService,
     private val appAuth: AppAuth,
     private val appDb: AppDb
-) : UserRepository {
+) : RegisterRepository {
 
     override suspend fun signIn(login: String, pass: String) {
         try {

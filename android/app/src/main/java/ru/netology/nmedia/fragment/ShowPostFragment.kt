@@ -14,9 +14,10 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.LikersAvatarAdapter
-import ru.netology.nmedia.adapter.LikersAdapter
+import ru.netology.nmedia.adapter.SelectedUsersAdapter
 import ru.netology.nmedia.databinding.FragmentShowPostBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.extensions.formatDate
 import ru.netology.nmedia.view.loadCircleCrop
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -24,14 +25,31 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 @AndroidEntryPoint
 class ShowPostFragment : Fragment() {
     private val postViewModel: PostViewModel by activityViewModels()
-    private val userAdapter = LikersAdapter()
-    private val likersAdapter = LikersAvatarAdapter()
+    private val likersAvatarsAdapter = LikersAvatarAdapter()
+    private val selectedUsersAvatarsAdapter = SelectedUsersAdapter()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentShowPostBinding.inflate(inflater, container, false)
+
+         fun displayMentioned(post: Post) {
+            val mentionIds = post.mentionIds ?: emptyList()
+            val usersMap = post.users ?: emptyMap()
+
+            val mentionedUsers = mentionIds.mapNotNull { id ->
+                usersMap[id.toString()]?.let { info ->
+                    Users(id, info.name, info.name, info.avatar)
+                }
+            }
+            binding.mentionedCount.text = mentionedUsers.size.toString()
+            binding.mentionedUsersAvatars.isVisible = mentionedUsers.isNotEmpty()
+
+            if (mentionedUsers.isNotEmpty()) {
+                selectedUsersAvatarsAdapter.submitList(mentionedUsers)
+            }
+        }
 
         fun displayPost(post: Post) {
             with(binding) {
@@ -62,18 +80,25 @@ class ShowPostFragment : Fragment() {
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
-            adapter = likersAdapter
+            adapter = likersAvatarsAdapter
+        }
+
+        binding.mentionedUsersAvatars.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = selectedUsersAvatarsAdapter
         }
 
         postViewModel.selectPost.observe(viewLifecycleOwner) { post ->
             post?.let {
                 displayPost(it)
+                displayMentioned(it)
                 postViewModel.getLikers(it.id)
+                postViewModel.getSelectedUsers(it.id)
             }
-        }
-
-        postViewModel.likers.observe(viewLifecycleOwner) { users ->
-            likersAdapter.submitList(users)
         }
 
         postViewModel.photo.observe(viewLifecycleOwner) {
@@ -81,7 +106,7 @@ class ShowPostFragment : Fragment() {
         }
 
         postViewModel.likers.observe(viewLifecycleOwner) { users ->
-            userAdapter.submitList(users)
+            likersAvatarsAdapter.submitList(users)
         }
 
         binding.backButton.setOnClickListener {

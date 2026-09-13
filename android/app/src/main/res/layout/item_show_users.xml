@@ -19,7 +19,7 @@
         android:layout_gravity="center_horizontal"
         android:background="#F3EDF7"
         android:padding="12dp"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="28dp">>
 
 
         <ImageView

@@ -19,9 +19,9 @@ data class Post(
     val attachment: Attachment? = null,
     val ownerByMe: Boolean,
     val authorJob: String? = null,
-    val mentionsId: List<Long>? = null,
+    val mentionIds: List<Long>? = null,
     val mentionedMe: Boolean = false,
-    val likeOwnerIds: List<Long>? = null,
+    val likeOwnerId: List<Long>? = null,
     val users: Map<String, UserInfo>? = null
 ) : FeedItem
 

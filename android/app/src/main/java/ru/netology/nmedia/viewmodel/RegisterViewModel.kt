@@ -10,13 +10,13 @@ import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.model.FeedModelAuth
-import ru.netology.nmedia.repository.interfaceRepository.UserRepository
+import ru.netology.nmedia.repository.interfaceRepository.RegisterRepository
 import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val repository: UserRepository,
+    private val repository: RegisterRepository,
     appAuth: AppAuth
 ) :
     ViewModel() {

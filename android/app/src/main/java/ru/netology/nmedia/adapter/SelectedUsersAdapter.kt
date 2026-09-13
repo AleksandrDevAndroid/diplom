@@ -3,39 +3,38 @@ package ru.netology.nmedia.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nmedia.databinding.ItemChooseUsersBinding
-import ru.netology.nmedia.databinding.ItemShowUsersBinding
+import ru.netology.nmedia.databinding.ItemAvatarBinding
 import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.view.loadCircleCrop
 
-
-class UsersViewHolder(
-    private val binding: ItemShowUsersBinding
+class SelectedUsersViewHolder(
+    private val binding: ItemAvatarBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(user: Users) {
         binding.apply {
-            author.text = user.name
-            nickname.text = user.login
             avatar.loadCircleCrop(user.avatar)
         }
     }
 }
 
-class UsersAdapter () : RecyclerView.Adapter<UsersViewHolder>() {
+class SelectedUsersAdapter : RecyclerView.Adapter<SelectedUsersViewHolder>() {
     private var users = listOf<Users>()
 
     fun submitList(user: List<Users>) {
-        users = user
+        users = user.take(5)
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): SelectedUsersViewHolder {
         val binding =
-            ItemShowUsersBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UsersViewHolder(binding)
+            ItemAvatarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SelectedUsersViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SelectedUsersViewHolder, position: Int) {
         holder.bind(users[position])
     }
 

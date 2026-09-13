@@ -1,6 +1,5 @@
 package ru.netology.nmedia.viewmodel
 
-import android.media.MediaPlayer
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +23,7 @@ import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
 import ru.netology.nmedia.repository.interfaceRepository.PostRepository
+import ru.netology.nmedia.repository.interfaceRepository.RegisterRepository
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
 import javax.inject.Inject
@@ -46,6 +46,7 @@ private val noPhoto = PhotoModel()
 @HiltViewModel
 class PostViewModel @Inject constructor(
     private val postRepository: PostRepository,
+    private val registerRepository: RegisterRepository,
     appAuth: AppAuth
 ) :
     ViewModel() {
@@ -77,6 +78,13 @@ class PostViewModel @Inject constructor(
     private val _selectPost = MutableLiveData<Post>()
     val selectPost: LiveData<Post> = _selectPost
 
+    val _selectUsers = MutableLiveData<List<Users>>()
+    val selectUsers: LiveData<List<Users>> = _selectUsers
+
+    val _allUsers = MutableLiveData<List<Users>>()
+    val allUsers: LiveData<List<Users>> = _allUsers
+
+
     private val _postCreated = SingleLiveEvent<Unit>()
     val postCreated: LiveData<Unit>
         get() = _postCreated
@@ -94,14 +102,16 @@ class PostViewModel @Inject constructor(
     }
 
     fun save() {
-        edited.value?.let {
+        edited.value?.let { post ->
             _postCreated.value = Unit
             viewModelScope.launch {
                 try {
+                    val mentionIds = getSelectedUsers()
+                    val postWithMentions = post.copy(mentionIds = mentionIds)
                     when (_photo.value) {
-                        noPhoto -> postRepository.save(it)
+                        noPhoto -> postRepository.save(postWithMentions)
                         else -> _photo.value?.file?.let { file ->
-                            postRepository.saveWithAttachment(it, file)
+                            postRepository.saveWithAttachment(postWithMentions, file)
                         }
                     }
                     _dataState.value = FeedModelState()
@@ -201,4 +211,45 @@ class PostViewModel @Inject constructor(
             }
         }
     }
+
+    fun getUsers() {
+        viewModelScope.launch {
+            try {
+                val allUsers = registerRepository.getUsers()
+                _allUsers.postValue(allUsers)
+            } catch (e: Exception) {
+                _allUsers.postValue(emptyList())
+            }
+        }
+    }
+
+    fun selectedUsers() {
+        val users = _allUsers.value?.filter { it.isSelected } ?: emptyList()
+        _selectUsers.postValue(users)
+    }
+
+    fun getSelectedUsers(postId: Long) {
+        viewModelScope.launch {
+            try {
+                val post = postRepository.getPost(postId)
+                val mentionIds = post.mentionIds ?: emptyList()
+                val usersMap = post?.users ?: emptyMap()
+                val selectedUsers = mentionIds.mapNotNull { id ->
+                    usersMap[id.toString()]?.let { info ->
+                        Users(
+                            id = id,
+                            login = info.name,
+                            name = info.name,
+                            avatar = info.avatar
+                        )
+                    }
+                }
+                _selectUsers.postValue(selectedUsers)
+            } catch (e: Exception) {
+                _selectUsers.postValue(emptyList())
+            }
+        }
+    }
 }
+
+

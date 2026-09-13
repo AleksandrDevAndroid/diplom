@@ -19,13 +19,13 @@
         android:layout_gravity="center_horizontal"
         android:background="#F3EDF7"
         android:padding="12dp"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="28dp">
 
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:contentDescription="@string/description_post_author_avatar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

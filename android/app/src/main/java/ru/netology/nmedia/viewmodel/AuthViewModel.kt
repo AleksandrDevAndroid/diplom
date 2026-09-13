@@ -9,12 +9,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.model.FeedModelAuth
-import ru.netology.nmedia.repository.interfaceRepository.UserRepository
+import ru.netology.nmedia.repository.interfaceRepository.RegisterRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val repository: UserRepository,
+    private val repository: RegisterRepository,
     appAuth: AppAuth
 ) :
     ViewModel() {
