@@ -95,7 +95,8 @@ class PostViewModel @Inject constructor(
     private val _loadedPost = MutableLiveData<Post>()
     val loadedPost: LiveData<Post> = _loadedPost
 
-
+    private val _mentioned = MutableLiveData<List<Users>>()
+    val mentioned: LiveData<List<Users>> = _mentioned
 
     fun loadPost(postId: Long) {
         viewModelScope.launch {
@@ -239,7 +240,28 @@ class PostViewModel @Inject constructor(
             }
         }
     }
-
+    fun getMentioned(postId: Long) {
+        viewModelScope.launch {
+            try {
+                val post = postRepository.getPost(postId)
+                val mentioneds = post?.mentionIds ?: emptyList()
+                val usersMap = post?.users ?: emptyMap()
+                val users = mentioneds.mapNotNull { id ->
+                    usersMap[id.toString()]?.let { info ->
+                        Users(
+                            id = id,
+                            login = info.name,
+                            name = info.name,
+                            avatar = info.avatar
+                        )
+                    }
+                }
+                _mentioned.postValue(users)
+            } catch (e: Exception) {
+                _mentioned.postValue(emptyList())
+            }
+        }
+    }
     fun getUsers() {
         viewModelScope.launch {
             try {

@@ -123,7 +123,7 @@ class ShowPostFragment : Fragment() {
         }
 
         binding.showUsersMentioned.setOnClickListener {
-
+            findNavController().navigate(R.id.action_showPostFragment_to_show_users_mentioned)
         }
 
         return binding.root

@@ -32,12 +32,11 @@ class ShowMentionedUsersFragment() : Fragment() {
             adapter = this@ShowMentionedUsersFragment.adapter
         }
 
-
         postViewModel.selectPost.observe(viewLifecycleOwner) { post ->
-            post?.let { postViewModel.getLikers(it.id) }
+            post?.let { postViewModel.getMentioned(it.id) }
         }
 
-        postViewModel.likers.observe(viewLifecycleOwner) { users ->
+        postViewModel.mentioned.observe(viewLifecycleOwner) { users ->
             adapter.submitList(users)
         }
 

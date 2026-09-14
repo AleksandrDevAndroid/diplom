@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_showPostFragment_to_show_likers"
             app:destination="@id/show_likers" />
+        <action
+            android:id="@+id/action_showPostFragment_to_show_users_mentioned"
+            app:destination="@id/show_users_mentioned" />
 
     </fragment>
     <fragment
@@ -122,5 +125,11 @@
         <action
             android:id="@+id/action_show_users_to_feedFragment"
             app:destination="@id/feedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/show_users_mentioned"
+        android:name="ru.netology.nmedia.fragment.ShowMentionedUsersFragment"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_show_mentioned_users">
     </fragment>
 </navigation>
