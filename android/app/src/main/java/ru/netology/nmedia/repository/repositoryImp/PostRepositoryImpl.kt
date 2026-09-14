@@ -108,7 +108,7 @@ class PostRepositoryImpl @Inject constructor(
                 throw ApiError(response.code(), response.message())
             }
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-            val countLikes = body.likeOwnerId?.size ?: 0
+            val countLikes = body.likeOwnerIds?.size ?: 0
             val post = body.copy(likes = countLikes)
             dao.insert(PostEntity.fromDto(post, status = true))
         } catch (e: IOException) {
@@ -128,7 +128,7 @@ class PostRepositoryImpl @Inject constructor(
                 throw ApiError(response.code(), response.message())
             }
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-            val countLikes = body.likeOwnerId?.size ?: 0
+            val countLikes = body.likeOwnerIds?.size ?: 0
             val post = body.copy(likes = countLikes)
             dao.insert(PostEntity.fromDto(post, status = true))
         } catch (e: IOException) {

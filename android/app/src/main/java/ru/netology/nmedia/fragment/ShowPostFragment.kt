@@ -34,10 +34,9 @@ class ShowPostFragment : Fragment() {
     ): View {
         val binding = FragmentShowPostBinding.inflate(inflater, container, false)
 
-         fun displayMentioned(post: Post) {
+        fun displayMentioned(post: Post) {
             val mentionIds = post.mentionIds ?: emptyList()
             val usersMap = post.users ?: emptyMap()
-
             val mentionedUsers = mentionIds.mapNotNull { id ->
                 usersMap[id.toString()]?.let { info ->
                     Users(id, info.name, info.name, info.avatar)
@@ -58,7 +57,8 @@ class ShowPostFragment : Fragment() {
                 content.text = post.content
                 avatar.loadCircleCrop(post.authorAvatar)
                 like.isChecked = post.likedByMe
-                like.text = "${post.likes}"
+                val countLikers = post.likeOwnerIds?.size
+                like.text = "${countLikers}"
                 binding.attachmentPhoto.isVisible = post.attachment != null
 
                 val urlAttachment = post.attachment?.url
@@ -94,10 +94,15 @@ class ShowPostFragment : Fragment() {
 
         postViewModel.selectPost.observe(viewLifecycleOwner) { post ->
             post?.let {
+                postViewModel.loadPost(it.id)
+                postViewModel.getLikers(it.id)
+            }
+        }
+
+        postViewModel.loadedPost.observe(viewLifecycleOwner) { post ->
+            post?.let {
                 displayPost(it)
                 displayMentioned(it)
-                postViewModel.getLikers(it.id)
-                postViewModel.getSelectedUsers(it.id)
             }
         }
 
@@ -117,7 +122,10 @@ class ShowPostFragment : Fragment() {
             findNavController().navigate(R.id.action_showPostFragment_to_show_likers)
         }
 
+        binding.showUsersMentioned.setOnClickListener {
+
+        }
+
         return binding.root
     }
-
 }

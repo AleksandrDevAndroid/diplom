@@ -223,13 +223,13 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/icon"
-                    app:layout_constraintStart_toStartOf="@id/mentioned"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/mentioned" />
 
                 <TextView
                     android:id="@+id/mentionedCount"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="4dp"
                     android:textSize="18sp"
@@ -247,9 +247,19 @@
                     android:nestedScrollingEnabled="false"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/item_avatar" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/show_users_mentioned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:backgroundTint="#6750A4"
+                    android:clickable="true"
+                    android:contentDescription="@string/add_post"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_add_24dp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

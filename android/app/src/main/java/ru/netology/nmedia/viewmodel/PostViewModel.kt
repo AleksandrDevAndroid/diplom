@@ -91,6 +91,22 @@ class PostViewModel @Inject constructor(
 
     private val _likers = MutableLiveData<List<Users>>()
     val likers: LiveData<List<Users>> = _likers
+
+    private val _loadedPost = MutableLiveData<Post>()
+    val loadedPost: LiveData<Post> = _loadedPost
+
+
+
+    fun loadPost(postId: Long) {
+        viewModelScope.launch {
+            try {
+                val post = postRepository.getPost(postId)
+                _loadedPost.postValue(post)
+            } catch (e: Exception) {
+                _loadedPost.postValue(_selectPost.value)
+            }
+        }
+    }
     fun refreshPosts() = viewModelScope.launch {
         try {
             _dataState.value = FeedModelState(refreshing = true)
@@ -101,12 +117,19 @@ class PostViewModel @Inject constructor(
         }
     }
 
+    fun getMentionedIds(): List<Long> {
+        return _allUsers.value
+            ?.filter { it.isSelected }
+            ?.map { it.id }
+            ?: emptyList()
+    }
+
     fun save() {
         edited.value?.let { post ->
             _postCreated.value = Unit
             viewModelScope.launch {
                 try {
-                    val mentionIds = getSelectedUsers()
+                    val mentionIds = getMentionedIds()
                     val postWithMentions = post.copy(mentionIds = mentionIds)
                     when (_photo.value) {
                         noPhoto -> postRepository.save(postWithMentions)
@@ -122,6 +145,7 @@ class PostViewModel @Inject constructor(
         }
         _edited.value = empty
         _photo.value = noPhoto
+        _selectUsers.value = emptyList()
     }
 
     fun edit(post: Post) {
@@ -197,14 +221,18 @@ class PostViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val post = postRepository.getPost(postId)
-                val likers = post?.users?.map { (id, info) ->
-                    Users(
-                        id = id.toLongOrNull() ?: 0,
-                        login = info.name,
-                        name = info.name,
-                        avatar = info.avatar
-                    )
-                } ?: emptyList()
+                val likeOwnerId = post?.likeOwnerIds ?: emptyList()
+                val usersMap = post?.users ?: emptyMap()
+                val likers = likeOwnerId.mapNotNull { id ->
+                    usersMap[id.toString()]?.let { info ->
+                        Users(
+                            id = id,
+                            login = info.name,
+                            name = info.name,
+                            avatar = info.avatar
+                        )
+                    }
+                }
                 _likers.postValue(likers)
             } catch (e: Exception) {
                 _likers.postValue(emptyList())
@@ -219,34 +247,6 @@ class PostViewModel @Inject constructor(
                 _allUsers.postValue(allUsers)
             } catch (e: Exception) {
                 _allUsers.postValue(emptyList())
-            }
-        }
-    }
-
-    fun selectedUsers() {
-        val users = _allUsers.value?.filter { it.isSelected } ?: emptyList()
-        _selectUsers.postValue(users)
-    }
-
-    fun getSelectedUsers(postId: Long) {
-        viewModelScope.launch {
-            try {
-                val post = postRepository.getPost(postId)
-                val mentionIds = post.mentionIds ?: emptyList()
-                val usersMap = post?.users ?: emptyMap()
-                val selectedUsers = mentionIds.mapNotNull { id ->
-                    usersMap[id.toString()]?.let { info ->
-                        Users(
-                            id = id,
-                            login = info.name,
-                            name = info.name,
-                            avatar = info.avatar
-                        )
-                    }
-                }
-                _selectUsers.postValue(selectedUsers)
-            } catch (e: Exception) {
-                _selectUsers.postValue(emptyList())
             }
         }
     }

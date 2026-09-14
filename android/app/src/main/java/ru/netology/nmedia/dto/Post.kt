@@ -21,7 +21,7 @@ data class Post(
     val authorJob: String? = null,
     val mentionIds: List<Long>? = null,
     val mentionedMe: Boolean = false,
-    val likeOwnerId: List<Long>? = null,
+    val likeOwnerIds: List<Long>? = null,
     val users: Map<String, UserInfo>? = null
 ) : FeedItem
 

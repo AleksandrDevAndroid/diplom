@@ -19,7 +19,6 @@ class ChooseUsersFragment : Fragment() {
     private val postViewModel: PostViewModel by activityViewModels()
     private val adapter = ChooseUsersAdapter { user, isChecked ->
         user.isSelected = isChecked
-        postViewModel.selectedUsers()
     }
 
     override fun onCreateView(
@@ -39,7 +38,6 @@ class ChooseUsersFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            postViewModel.selectedUsers()
             findNavController().navigateUp()
         }
         binding.backButton.setOnClickListener {
