@@ -49,7 +49,7 @@ data class PostEntity(
                 dto.likedByMe,
                 dto.likes,
                 status = status,
-                AttachmentEmbeddable.fromDto(dto.attachment),
+                AttachmentEmbeddable.fromDto(dto.attachment)
             )
     }
 }

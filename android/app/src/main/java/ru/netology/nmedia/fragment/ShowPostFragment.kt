@@ -60,6 +60,7 @@ class ShowPostFragment : Fragment() {
                 val countLikers = post.likeOwnerIds?.size
                 like.text = "${countLikers}"
                 binding.attachmentPhoto.isVisible = post.attachment != null
+                job.text = post.authorJob
 
                 val urlAttachment = post.attachment?.url
                 if (!urlAttachment.isNullOrEmpty()) {

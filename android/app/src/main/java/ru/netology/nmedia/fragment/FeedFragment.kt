@@ -3,6 +3,7 @@ package ru.netology.nmedia.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import ru.netology.nmedia.R
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -38,7 +39,7 @@ class FeedFragment : Fragment() {
             .setTitle("Authentication Required")
             .setMessage("Please sign in to access this feature.")
             .setPositiveButton("Sign In") { dialog, _ ->
-                findNavController().navigate(ru.netology.nmedia.R.id.login_fragment)
+                findNavController().navigate(R.id.login_fragment)
                 dialog.dismiss()
             }
             .setNegativeButton("Cancel") { dialog, _ ->
@@ -59,7 +60,7 @@ class FeedFragment : Fragment() {
         val adapter = PostsAdapter(mediaObserver,object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
-                findNavController().navigate(ru.netology.nmedia.R.id.action_feedFragment_to_edite_post)
+                findNavController().navigate(R.id.action_feedFragment_to_edite_post)
             }
 
             override fun onLike(post: Post) {
@@ -93,7 +94,7 @@ class FeedFragment : Fragment() {
 
             override fun onOpen(post: Post) {
                 findNavController().navigate(
-                    ru.netology.nmedia.R.id.action_feedFragment_to_showPhotoFragment2,
+                    R.id.action_feedFragment_to_showPhotoFragment2,
                     Bundle().apply {
                         putString("url", post.attachment?.url)
                     }
@@ -102,7 +103,7 @@ class FeedFragment : Fragment() {
 
             override fun showPost(post: Post) {
                 viewModel.selectPost(post)
-                findNavController().navigate(ru.netology.nmedia.R.id.showPostFragment)
+                findNavController().navigate(R.id.showPostFragment)
             }
         })
 
@@ -143,7 +144,7 @@ class FeedFragment : Fragment() {
         }
 
         binding.tabUsers.setOnClickListener {
-            findNavController().navigate(ru.netology.nmedia.R.id.action_feedFragment_to_show_users)
+            findNavController().navigate(R.id.action_feedFragment_to_show_users)
         }
 
         binding.updateList.setOnClickListener {
@@ -155,12 +156,16 @@ class FeedFragment : Fragment() {
             }
         }
 
+        binding.tabEvent.setOnClickListener {
+            findNavController().navigate(R.id.action_feedFragment_to_event_fee)
+        }
+
         binding.fab.setOnClickListener {
             if (!authViewModel.authenticated) {
                 showDialog()
                 return@setOnClickListener
             }
-            findNavController().navigate(ru.netology.nmedia.R.id.action_feedFragment_to_newPostFragment)
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
         return binding.root
     }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ru.netology.nmedia.R
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -31,6 +32,10 @@ class ShowUsersFragment : Fragment() {
 
         registerViewModel.users.observe(viewLifecycleOwner){ users ->
             adapter.submitList(users)
+        }
+
+        binding.tabEvent.setOnClickListener {
+            findNavController().navigate(R.id.action_show_users_to_event_feed)
         }
 
         binding.tabPosts.setOnClickListener {

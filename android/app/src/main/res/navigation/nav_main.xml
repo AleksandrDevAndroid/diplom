@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_feedFragment_to_show_users"
             app:destination="@id/show_users" />
+        <action
+            android:id="@+id/action_feedFragment_to_event_fee"
+            app:destination="@id/event_feed" />
 
     </fragment>
     <fragment
@@ -125,11 +128,41 @@
         <action
             android:id="@+id/action_show_users_to_feedFragment"
             app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_show_users_to_event_feed"
+            app:destination="@id/event_feed" />
     </fragment>
     <fragment
         android:id="@+id/show_users_mentioned"
         android:name="ru.netology.nmedia.fragment.ShowMentionedUsersFragment"
         android:label="view_profile"
         tools:layout="@layout/fragment_show_mentioned_users">
+    </fragment>
+    <fragment
+        android:id="@+id/event_feed"
+        android:name="ru.netology.nmedia.fragment.EventFeedFragment"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_feed_event">
+        <action
+            android:id="@+id/action_event_feed_to_new_event"
+            app:destination="@id/new_event" />
+        <action
+            android:id="@+id/action_event_feed_to_feedFragment5"
+            app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_event_feed_to_show_users3"
+            app:destination="@id/show_users" />
+    </fragment>
+        <action
+            android:id="@+id/action_event_feed_to_show_users"
+            app:destination="@id/show_users" />
+    <fragment
+        android:id="@+id/new_event"
+        android:name="ru.netology.nmedia.fragment.NewEventFragment"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_new_event">
+        <action
+            android:id="@+id/action_new_event_to_chooseUsers"
+            app:destination="@id/chooseUsers" />
     </fragment>
 </navigation>
