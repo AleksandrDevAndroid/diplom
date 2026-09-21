@@ -31,8 +31,6 @@ class NewPostFragment : Fragment() {
     companion object {
         var Bundle.textArg: String? by StringArg
     }
-
-
     private val viewModel: PostViewModel by activityViewModels()
     val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->

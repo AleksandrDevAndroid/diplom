@@ -5,13 +5,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import ru.netology.nmedia.auth.AuthState
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.entity.PostEntity
 
 @Dao

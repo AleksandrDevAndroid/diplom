@@ -4,7 +4,6 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.netology.nmedia.dto.Event
-import ru.netology.nmedia.dto.EventType
 
 @Entity
 data class EventEntity(
@@ -12,15 +11,17 @@ data class EventEntity(
     val id: Long,
     val authorId: Long,
     val author: String,
+    val authorJob: String?,
     val authorAvatar: String?,
     val content: String,
+    val datetime: String,
     val published: String,
-    val datetime: Long,
-    val type: EventType,
+    val typeEvent: String,
     val likedByMe: Boolean,
-    val likeOwnerIds: List<Long> = emptyList(),
-    val ownedByMe: Boolean,
+    val participatedByMe: Boolean,
     val link: String?,
+    val ownedByMe: Boolean = false,
+    val likes : Int,
     @Embedded
     val attachment: AttachmentEmbeddable?
 ) {
@@ -28,16 +29,18 @@ data class EventEntity(
         id,
         authorId,
         author,
+        authorJob,
         authorAvatar,
         content,
-        published,
         datetime,
-        type,
+        published,
+        typeEvent,
         likedByMe,
-        likeOwnerIds,
-        ownedByMe,
+        participatedByMe,
+        attachment?.toDto(),
         link,
-        attachment?.toDto()
+        ownedByMe,
+        likes
     )
 
     companion object {
@@ -46,15 +49,17 @@ data class EventEntity(
                 dto.id,
                 dto.authorId,
                 dto.author,
+                dto.authorJob,
                 dto.authorAvatar,
                 dto.content,
-                dto.published,
                 dto.datetime,
+                dto.published,
                 dto.type,
                 dto.likedByMe,
-                dto.likeOwnerIds,
-                dto.ownedByMe,
+                dto.participatedByMe,
                 dto.link,
+                dto.ownedByMe,
+                dto.likes,
                 AttachmentEmbeddable.fromDto(dto.attachment)
             )
     }

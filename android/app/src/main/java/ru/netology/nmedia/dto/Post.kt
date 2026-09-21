@@ -49,17 +49,20 @@ data class Event(
     val id: Long,
     val authorId: Long,
     val author: String,
+    val authorJob: String?,
     val authorAvatar: String?,
     val content: String,
+    val datetime: String,
     val published: String,
-    val datetime: Long,
-    val type: EventType,
+    val type: String,
     val likedByMe: Boolean,
-    val likeOwnerIds: List<Long> = emptyList(),
-    val ownedByMe: Boolean,
+    val participatedByMe: Boolean,
+    val attachment: Attachment?,
     val link: String?,
-    val attachment: Attachment? = null
+    val ownedByMe: Boolean = false,
+    val likes: Int
 )
+
 
 data class Job(
     val id: Long,

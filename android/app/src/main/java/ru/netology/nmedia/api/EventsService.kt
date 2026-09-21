@@ -9,8 +9,10 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.dto.Users
 
 interface EventsService {
+
     @GET("events")
     suspend fun getEvents(): Response<List<Event>>
 
@@ -18,16 +20,19 @@ interface EventsService {
     suspend fun createEvent(@Body event: Event): Response<Event>
 
     @GET("events/{id}/participants")
-    suspend fun getParticipants(@Path("id") id: Long): Response<Event>
+    suspend fun getParticipants(@Path("id") id: Long): Response<List<Users>>
 
     @DELETE("events/{id}/participants")
-    suspend fun deleteParticipants(@Path("id") id: Long): Response<Post>
+    suspend fun deleteParticipants(@Path("id") id: Long) : Response<List<Users>>
 
     @POST("events/{id}/likes")
     suspend fun likeEvent(@Path("id") id: Long): Response<Event>
 
     @DELETE("events/{id}/likes")
     suspend fun dislikeEvent(@Path("id") id: Long): Response<Event>
+
+    @POST("events/{id}/participants")
+    suspend fun participate(@Path("id") id: Long): Response<Event>
 
     @GET("events/{id}/newer")
     suspend fun getNewerEvent(
@@ -48,10 +53,10 @@ interface EventsService {
     ): Response<List<Event>>
 
     @GET("events/{id}")
-    suspend fun getEvent(@Path("id") id : Long) : Response<Unit>
+    suspend fun getEvent(@Path("id") id : Long) : Response<Event>
 
     @DELETE("events/{id}")
-    suspend fun deleteEvent(@Path("id") id : Long) : Response<Event>
+    suspend fun deleteEvent(@Path("id") id : Long) : Response<Unit>
 
     @GET("events/latest")
     suspend fun getLatestEvent(

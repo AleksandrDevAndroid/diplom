@@ -86,7 +86,7 @@
             android:paddingBottom="@dimen/common_spacing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attachmentMusic"
+            app:layout_constraintTop_toBottomOf="@id/dateTime"
             tools:text="@sample/posts.json/data/content" />
 
         <androidx.constraintlayout.widget.Barrier
@@ -154,29 +154,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header" />
 
-        <VideoView
-            android:id="@+id/attachmentVideo"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:clickable="true"
-            android:src="@drawable/play_circle_filled"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/attachmentPhoto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attachmentPhoto" />
+        <TextView
+            android:id="@+id/typeEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/attachmentPhoto"
+            android:textStyle="bold"
+            tools:text="type"/>
+        <TextView
+            android:id="@+id/dateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/typeEvent"
+            tools:text="dateTime"/>
 
-        <ImageView
-            android:id="@+id/attachmentMusic"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="16dp"
-            android:clickable="true"
-            android:src="@drawable/play_circle_filled"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attachmentVideo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

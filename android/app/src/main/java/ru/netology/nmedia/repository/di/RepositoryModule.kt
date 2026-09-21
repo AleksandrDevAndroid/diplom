@@ -4,8 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ru.netology.nmedia.repository.interfaceRepository.EventRepository
 import ru.netology.nmedia.repository.interfaceRepository.JobRepository
 import ru.netology.nmedia.repository.interfaceRepository.PostRepository
+import ru.netology.nmedia.repository.repositoryImp.EventRepositoryImp
 import ru.netology.nmedia.repository.repositoryImp.JobRepositoryImp
 import ru.netology.nmedia.repository.repositoryImp.PostRepositoryImpl
 import javax.inject.Singleton
@@ -15,11 +17,14 @@ import javax.inject.Singleton
 interface RepositoryModule {
     @Binds
     @Singleton
-     fun bindJobRepository(
-        impl: JobRepositoryImp
-    ): JobRepository
+    fun bindJobRepository(impl: JobRepositoryImp): JobRepository
 
     @Singleton
     @Binds
     fun bindsPostRepository(imp: PostRepositoryImpl): PostRepository
+
+    @Singleton
+    @Binds
+    fun bindEventRepository(imp : EventRepositoryImp) : EventRepository
+
 }

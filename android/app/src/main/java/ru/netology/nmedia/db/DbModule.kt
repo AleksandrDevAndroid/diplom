@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import ru.netology.nmedia.dao.EventDao
 import ru.netology.nmedia.dao.JobDao
 import ru.netology.nmedia.dao.PostDao
 import ru.netology.nmedia.dao.PostRemoteKeyDao
@@ -32,5 +33,8 @@ class DbModule {
     fun providePostRemoteKeyDao(appDb: AppDb): PostRemoteKeyDao  = appDb.postRemoteKeyDao()
     @Provides
     fun provideJobDao(appDb: AppDb): JobDao = appDb.jobDao()
+
+    @Provides
+    fun provideEventDao(appDb: AppDb) : EventDao = appDb.eventDao()
 
 }

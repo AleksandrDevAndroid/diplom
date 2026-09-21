@@ -1,27 +1,105 @@
 package ru.netology.nmedia.fragment
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
+import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewEventBinding
+import ru.netology.nmedia.databinding.FragmentNewPostBinding
+import ru.netology.nmedia.util.AndroidUtils
+import ru.netology.nmedia.util.StringArg
+import ru.netology.nmedia.viewmodel.EventViewModel
+import kotlin.getValue
+
 @AndroidEntryPoint
 class NewEventFragment : Fragment() {
+    companion object {
+        var Bundle.textArg: String? by StringArg
+    }
+
+    private val eventViewModel: EventViewModel by activityViewModels()
+    val startForProfileImageResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val resultCode = result.resultCode
+            val data = result.data
+
+            if (resultCode == Activity.RESULT_OK) {
+                val fileUri = data?.data!!
+                eventViewModel.changePhoto(fileUri, fileUri.toFile())
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.error_task_cancelled,
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding = FragmentNewEventBinding.inflate(inflater,container,false)
+    ): View {
+        val binding = FragmentNewEventBinding.inflate(inflater, container, false)
+
+        arguments?.textArg
+            ?.let(binding.edit::setText)
+        eventViewModel.eventCreated.observe(viewLifecycleOwner) {
+            findNavController().navigateUp()
+        }
+
+
+        eventViewModel.photo.observe(viewLifecycleOwner) {
+            binding.photo.setImageURI(it.uri)
+            binding.removePhoto.isVisible = it.uri != null
+        }
+
+        binding.removePhoto.setOnClickListener {
+            eventViewModel.changePhoto(null, null)
+        }
+
+        binding.pickFile.setOnClickListener {
+            ImagePicker.with(this)
+                .crop()
+                .compress(2048)
+                .galleryOnly()
+                .galleryMimeTypes(arrayOf("image/png", "image/jpeg"))
+                .createIntent { intent -> startForProfileImageResult.launch(intent) }
+        }
+
+        binding.takePhoto.setOnClickListener {
+            ImagePicker.with(this)
+                .crop()
+                .compress(2048)
+                .cameraOnly()
+                .createIntent { intent -> startForProfileImageResult.launch(intent) }
+        }
+
+        binding.pickUsers.setOnClickListener {
+            findNavController().navigate(R.id.action_new_event_to_chooseUsers)
+        }
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
-
+        }
+        binding.saveButton.setOnClickListener {
+            eventViewModel.changeContent(binding.edit.text.toString())
+            eventViewModel.save()
+            AndroidUtils.hideKeyboard(requireView())
         }
         return binding.root
     }
-
 }
