@@ -60,4 +60,9 @@
     <string name="Create">Create</string>
     <string name="emptyPositionOrName">"Emty position or name "</string>
     <string name="choose_period">Select period</string>
+    <string name="date">Date</string>
+    <string name="format">Format</string>
+    <string name="accept">Accept</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
 </resources>

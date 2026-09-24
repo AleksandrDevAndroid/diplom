@@ -16,13 +16,13 @@ import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
-import ru.netology.nmedia.databinding.FragmentEditPostBinding
-import ru.netology.nmedia.viewmodel.PostViewModel
+import ru.netology.nmedia.databinding.FragmentEditEventBinding
+import ru.netology.nmedia.viewmodel.EventViewModel
 import kotlin.getValue
 
 @AndroidEntryPoint
-class EditeFragment : Fragment() {
-    private val viewModel: PostViewModel by activityViewModels()
+class EditeEventFragment : Fragment() {
+    private val eventViewModel: EventViewModel by activityViewModels()
     val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             val resultCode = result.resultCode
@@ -30,7 +30,7 @@ class EditeFragment : Fragment() {
 
             if (resultCode == Activity.RESULT_OK) {
                 val fileUri = data?.data!!
-                viewModel.changePhoto(fileUri, fileUri.toFile())
+                eventViewModel.changePhoto(fileUri, fileUri.toFile())
             } else {
                 Toast.makeText(requireContext(), R.string.error_task_cancelled, Toast.LENGTH_SHORT)
                     .show()
@@ -42,21 +42,21 @@ class EditeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentEditPostBinding.inflate(layoutInflater, container, false)
+        val binding = FragmentEditEventBinding.inflate(layoutInflater, container, false)
 
-        viewModel.edited.observe(viewLifecycleOwner) { post ->
+        eventViewModel.edited.observe(viewLifecycleOwner) { post ->
             post?.let {
                 binding.edit.setText(it.content)
             }
         }
 
-        viewModel.photo.observe(viewLifecycleOwner) {
+        eventViewModel.photo.observe(viewLifecycleOwner) {
             binding.photo.setImageURI(it.uri)
             binding.removePhoto.isVisible = it.uri != null
         }
 
         binding.removePhoto.setOnClickListener {
-            viewModel.changePhoto(null, null)
+            eventViewModel.changePhoto(null, null)
         }
 
         binding.pickPhoto.setOnClickListener {
@@ -77,16 +77,16 @@ class EditeFragment : Fragment() {
         }
 
         binding.pickUsers.setOnClickListener {
-            findNavController().navigate(R.id.action_newPostFragment_to_chooseUsers2)
+            findNavController().navigate(R.id.action_edit_event_to_chooseUsers)
         }
 
         binding.saveButton.setOnClickListener {
             val newContent = binding.edit.text.toString().trim()
             if (newContent.isNotEmpty()) {
-                viewModel.edited.value?.let { post ->
-                    viewModel.edit(post.copy(content = newContent))
+                eventViewModel.edited.value?.let { post ->
+                    eventViewModel.edit(post.copy(content = newContent))
                 }
-                viewModel.saveEdited()
+                eventViewModel.saveEdited()
                 findNavController().navigateUp()
             }
         }

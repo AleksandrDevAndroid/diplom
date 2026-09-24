@@ -34,7 +34,7 @@ class DbModule {
     @Provides
     fun provideJobDao(appDb: AppDb): JobDao = appDb.jobDao()
 
-    @Provides
+   /* @Provides
     fun provideEventDao(appDb: AppDb) : EventDao = appDb.eventDao()
-
+*/
 }

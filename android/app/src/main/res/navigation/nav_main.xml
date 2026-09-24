@@ -110,9 +110,12 @@
     </fragment>
     <fragment
         android:id="@+id/edite_post"
-        android:name="ru.netology.nmedia.fragment.EditeFragment"
+        android:name="ru.netology.nmedia.fragment.EditePostFragment"
         android:label="view_profile"
         tools:layout="@layout/fragment_edit_post">
+        <action
+            android:id="@+id/action_edite_post_to_chooseUsers"
+            app:destination="@id/chooseUsers" />
     </fragment>
     <fragment
         android:id="@+id/show_likers"
@@ -152,6 +155,9 @@
         <action
             android:id="@+id/action_event_feed_to_show_users3"
             app:destination="@id/show_users" />
+        <action
+            android:id="@+id/action_event_feed_to_edit_event"
+            app:destination="@id/edit_event" />
     </fragment>
         <action
             android:id="@+id/action_event_feed_to_show_users"
@@ -163,6 +169,15 @@
         tools:layout="@layout/fragment_new_event">
         <action
             android:id="@+id/action_new_event_to_chooseUsers"
+            app:destination="@id/chooseUsers" />
+    </fragment>
+    <fragment
+        android:id="@+id/edit_event"
+        android:name="ru.netology.nmedia.fragment.EditeEventFragment"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_edit_event">
+        <action
+            android:id="@+id/action_edit_event_to_chooseUsers"
             app:destination="@id/chooseUsers" />
     </fragment>
 </navigation>

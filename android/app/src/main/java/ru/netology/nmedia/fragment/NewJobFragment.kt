@@ -12,7 +12,9 @@ import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewJobBinding
 import ru.netology.nmedia.dto.Job
+import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.util.DatePickerHelper
+import ru.netology.nmedia.util.FormatDate
 import ru.netology.nmedia.viewmodel.JobViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -59,8 +61,8 @@ class FragmentNewJob : Fragment() {
             val startDate = dates[0]
             val finishDate = if (dates.size > 1) dates[1] else null
 
-            val startFormatted = formatDateForServer(startDate)
-            val finishFormatted = if (finishDate != null) formatDateForServer(finishDate) else null
+            val startFormatted = FormatDate.formatDateForServer(startDate)
+            val finishFormatted = if (finishDate != null) FormatDate.formatDateForServer(finishDate) else null
 
             val job = Job(
                 id = 0,
@@ -81,13 +83,4 @@ class FragmentNewJob : Fragment() {
     }
 
 }
-private fun formatDateForServer(dateString: String): String {
-    val inputFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-    val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-    return try {
-        val date = inputFormat.parse(dateString)
-        outputFormat.format(date ?: Date())
-    } catch (e: Exception) {
-        dateString
-    }
-}
+

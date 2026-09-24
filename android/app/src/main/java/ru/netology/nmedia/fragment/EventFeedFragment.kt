@@ -1,5 +1,6 @@
 package ru.netology.nmedia.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -21,11 +23,26 @@ import ru.netology.nmedia.adapter.OnEventInteractionListener
 import ru.netology.nmedia.databinding.FragmentFeedEventBinding
 import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.viewmodel.EventViewModel
+import ru.netology.nmedia.viewmodel.RegisterViewModel
 
 @AndroidEntryPoint
 class EventFeedFragment : Fragment() {
 
     private val eventViewModel: EventViewModel by activityViewModels()
+    private val authViewModel : RegisterViewModel by activityViewModels()
+    private fun showDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Authentication Required")
+            .setMessage("Please sign in to access this feature.")
+            .setPositiveButton("Sign In") { dialog, _ ->
+                findNavController().navigate(R.id.login_fragment)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.cancel()
+            }
+            .show()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,19 +53,35 @@ class EventFeedFragment : Fragment() {
 
         val adapter = EventAdapter(object : OnEventInteractionListener {
             override fun onLike(event: Event) {
+                if (!authViewModel.authenticated) {
+                    showDialog()
+                    return
+                }
                 eventViewModel.likeById(event.id, event.likedByMe)
             }
 
             override fun onEdit(event: Event) {
                 eventViewModel.edit(event)
-                findNavController().navigate(R.id.action_event_feed_to_new_event)
+                findNavController().navigate(R.id.action_event_feed_to_edit_event)
             }
 
             override fun onRemove(event: Event) {
                 eventViewModel.removeById(event.id)
+                eventViewModel.refreshEvent()
             }
 
             override fun onShare(event: Event) {
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, event.content)
+                    type = "text/plain"
+                }
+                val shareIntent =
+                    Intent.createChooser(
+                        intent,
+                        getString(ru.netology.nmedia.R.string.chooser_share_post)
+                    )
+                startActivity(shareIntent)
             }
         })
 

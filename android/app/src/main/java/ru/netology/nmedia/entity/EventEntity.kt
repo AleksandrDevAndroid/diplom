@@ -21,7 +21,6 @@ data class EventEntity(
     val participatedByMe: Boolean,
     val link: String?,
     val ownedByMe: Boolean = false,
-    val likes : Int,
     @Embedded
     val attachment: AttachmentEmbeddable?
 ) {
@@ -40,7 +39,6 @@ data class EventEntity(
         attachment?.toDto(),
         link,
         ownedByMe,
-        likes
     )
 
     companion object {
@@ -59,7 +57,6 @@ data class EventEntity(
                 dto.participatedByMe,
                 dto.link,
                 dto.ownedByMe,
-                dto.likes,
                 AttachmentEmbeddable.fromDto(dto.attachment)
             )
     }

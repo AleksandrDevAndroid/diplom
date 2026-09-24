@@ -36,7 +36,7 @@ class EventViewHolder(
             content.text = event.content
             avatar.loadCircleCrop(event.authorAvatar)
             like.isChecked = event.likedByMe
-            like.text = "${event.likes}"
+            like.text = "${event.likeOwnerIds.size}"
             dateTime.text = event.datetime.formatDate()
             typeEvent.text = event.type
             attachmentPhoto.isVisible = false

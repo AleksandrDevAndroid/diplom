@@ -1,10 +1,12 @@
 package ru.netology.nmedia.fragment
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,7 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewEventBinding
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
+import ru.netology.nmedia.dto.EventType
 import ru.netology.nmedia.util.AndroidUtils
+import ru.netology.nmedia.util.DatePickerHelper
+import ru.netology.nmedia.util.FormatDate
 import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewmodel.EventViewModel
 import kotlin.getValue
@@ -27,6 +32,24 @@ import kotlin.getValue
 class NewEventFragment : Fragment() {
     companion object {
         var Bundle.textArg: String? by StringArg
+    }
+
+    private var selectedType: String = "ONLINE"
+
+    private fun showFormatDialog() {
+        val options = arrayOf("ONLINE", "OFFLINE")
+        val current = options.indexOf(selectedType).coerceAtLeast(0)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.format)
+            .setSingleChoiceItems(options, current) { dialog, which ->
+                selectedType = options[which]
+                eventViewModel.changeType(selectedType)
+                Toast.makeText(requireContext(), "Формат: $selectedType", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private val eventViewModel: EventViewModel by activityViewModels()
@@ -95,11 +118,46 @@ class NewEventFragment : Fragment() {
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
+
         binding.saveButton.setOnClickListener {
             eventViewModel.changeContent(binding.edit.text.toString())
             eventViewModel.save()
             AndroidUtils.hideKeyboard(requireView())
         }
+
+        binding.fab.setOnClickListener {
+            PopupMenu(requireContext(), binding.fab).apply {
+                inflate(R.menu.menu_event)
+                setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.date -> {
+                            val helper = DatePickerHelper(
+                                fragmentManager = childFragmentManager,
+                                onDateSelected = { display ->
+                                    binding.date.text = display
+                                    binding.date.isVisible = false
+                                    eventViewModel.changeDatetime(
+                                        FormatDate.formatDateForServer(
+                                            display
+                                        )
+                                    )
+                                }
+                            )
+                            helper.showDateTime()
+                            true
+                        }
+
+                        R.id.format -> {
+                            showFormatDialog()
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+            }.show()
+        }
         return binding.root
     }
 }
+

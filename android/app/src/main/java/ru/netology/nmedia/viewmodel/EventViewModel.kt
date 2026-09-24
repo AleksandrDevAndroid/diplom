@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.Event
+import ru.netology.nmedia.dto.EventType
 import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
@@ -33,7 +34,6 @@ private val empty = Event(
     datetime = "",
     type = "",
     likedByMe = false,
-    likes = 0,
     ownedByMe = false,
     link = "",
     authorJob = "",
@@ -103,7 +103,7 @@ class EventViewModel @Inject constructor(
             eventRepository.getAll()
             _dataState.value = FeedModelState()
         } catch (e: Exception) {
-            _dataState.value = FeedModelState(error = true)
+            _dataState.value = FeedModelState(error = true, refreshing = false)
         }
     }
 
@@ -173,6 +173,30 @@ class EventViewModel @Inject constructor(
         }
         _edited.value = edited.value?.copy(content = text)
     }
+
+    fun saveEdited() {
+        val post = _edited.value ?: return
+        val file = _photo.value?.file
+        viewModelScope.launch {
+            when {
+                _photo.value != noPhoto && _photo.value != null ->
+                    eventRepository.saveWithAttachment(post, file)
+
+                else -> eventRepository.save(post)
+            }
+            _eventCreated.value = Unit
+            _edited.value = null
+        }
+    }
+
+    fun changeDatetime(datetime: String) {
+        _edited.value = _edited.value?.copy(datetime = datetime)
+    }
+
+    fun changeType(type: String) {
+        _edited.value = _edited.value?.copy(type = type)
+    }
+
 }
 
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.NewEventFragment">
+    tools:context=".fragment.NewPostFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/handler"
@@ -29,10 +29,10 @@
             android:id="@+id/title_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
             android:text="@string/event"
             android:textSize="22dp"
             android:textStyle="bold"
+            android:paddingStart="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/save_button"
             app:layout_constraintStart_toEndOf="@+id/back_button"
@@ -91,13 +91,13 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/removePhoto"
+                    android:textSize="14dp"
+                    android:textStyle="normal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:text="@string/remove"
-                    android:textSize="14dp"
-                    android:textStyle="normal"
-                    app:cornerRadius="150dp" />
+                    app:cornerRadius="150dp"
+                    android:text="@string/remove" />
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
@@ -115,7 +115,7 @@
 
     <LinearLayout
         android:id="@+id/buttonPanel"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -132,7 +132,7 @@
             app:icon="@drawable/baseline_camera_alt_24" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/pickFile"
+            android:id="@+id/pickPhoto"
             style="@style/Widget.AppTheme.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -157,27 +157,5 @@
             android:contentDescription="@string/description_select_photo"
             android:padding="@dimen/common_spacing"
             app:icon="@drawable/location_pin" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#EADDFF"
-            android:clickable="true"
-            android:contentDescription="@string/add_post"
-            android:focusable="true"
-            app:srcCompat="@drawable/ic_add_24dp" />
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="12sp"
-            android:visibility="gone" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

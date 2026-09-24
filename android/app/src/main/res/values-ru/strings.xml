@@ -60,4 +60,7 @@
     <string name="Create">Создать</string>
     <string name="emptyPositionOrName">"Пустое место работы или имя "</string>
     <string name="choose_period">Выбрать период</string>
+    <string name="accept">Accept</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
 </resources>

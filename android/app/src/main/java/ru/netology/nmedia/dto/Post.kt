@@ -56,11 +56,13 @@ data class Event(
     val published: String,
     val type: String,
     val likedByMe: Boolean,
+    val likeOwnerIds: List<Long> = emptyList(),
+    val speakerIds: List<Long> = emptyList(),
+    val participantsIds: List<Long> = emptyList(),
     val participatedByMe: Boolean,
     val attachment: Attachment?,
     val link: String?,
-    val ownedByMe: Boolean = false,
-    val likes: Int
+    val ownedByMe: Boolean = false
 )
 
 

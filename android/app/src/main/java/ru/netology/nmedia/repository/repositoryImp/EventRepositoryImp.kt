@@ -2,15 +2,22 @@ package ru.netology.nmedia.repository.repositoryImp
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import ru.netology.nmedia.api.EventsService
 import ru.netology.nmedia.dao.EventDao
+import ru.netology.nmedia.dto.Attachment
 import ru.netology.nmedia.dto.Event
+import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.entity.EventEntity
+import ru.netology.nmedia.enum.AttachmentType
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.error.UnknownError
 import ru.netology.nmedia.repository.interfaceRepository.EventRepository
+import java.io.File
 import java.io.IOException
 import javax.inject.Inject
 
@@ -92,7 +99,7 @@ class EventRepositoryImp @Inject constructor(
                 throw ApiError(response.code(), response.message())
             }
 
-            val body = response.body() ?: throw ApiError(response.code(), "Response body is null")
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
             dao.insert(EventEntity.fromDto(body))
             return body
         } catch (e: IOException) {
@@ -107,6 +114,33 @@ class EventRepositoryImp @Inject constructor(
             val response = apiService.getParticipants(eventId)
             if (!response.isSuccessful) throw ApiError(response.code(), response.message())
             return response.body() ?: emptyList()
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun saveWithAttachment(
+        event: Event,
+        file: File?
+    ) {
+        val media = upload(file)
+        val copyPost = event.copy(attachment = Attachment(media.url, AttachmentType.IMAGE))
+        save(copyPost)
+    }
+
+    private suspend fun upload(file: File?): Media {
+        try {
+            val part = MultipartBody.Part.createFormData(
+                "file", file?.name, (file?.asRequestBody() ?: "") as RequestBody
+            )
+            val response = apiService.upload(part)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+            return response.body() ?: throw ApiError(response.code(), response.message())
+
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
