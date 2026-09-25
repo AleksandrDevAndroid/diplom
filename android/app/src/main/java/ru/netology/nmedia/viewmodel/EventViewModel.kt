@@ -100,7 +100,7 @@ class EventViewModel @Inject constructor(
     fun refreshEvent() = viewModelScope.launch {
         try {
             _dataState.value = FeedModelState(refreshing = true)
-            eventRepository.getAll()
+            eventRepository.refresh()
             _dataState.value = FeedModelState()
         } catch (e: Exception) {
             _dataState.value = FeedModelState(error = true, refreshing = false)

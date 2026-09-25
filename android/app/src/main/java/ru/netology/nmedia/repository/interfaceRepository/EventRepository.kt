@@ -9,7 +9,8 @@ import java.io.File
 interface EventRepository {
     val data: Flow<List<Event>>
 
-    suspend fun getAll()
+    suspend fun refresh()
+
     suspend fun getById(id: Long): Event
     suspend fun save(event: Event)
 
