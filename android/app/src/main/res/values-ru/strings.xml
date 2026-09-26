@@ -63,4 +63,6 @@
     <string name="accept">Accept</string>
     <string name="online">Online</string>
     <string name="offline">Offline</string>
+    <string name="choose_type">Please choose format event</string>
+    <string name="choose_date">Please choose date event</string>
 </resources>

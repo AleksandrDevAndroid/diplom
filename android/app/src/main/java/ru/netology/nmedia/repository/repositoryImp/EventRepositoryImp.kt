@@ -7,11 +7,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import ru.netology.nmedia.api.EventsService
 import ru.netology.nmedia.dto.Attachment
 import ru.netology.nmedia.dto.Event
 import ru.netology.nmedia.dto.Media
+import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.enum.AttachmentType
 import ru.netology.nmedia.error.ApiError

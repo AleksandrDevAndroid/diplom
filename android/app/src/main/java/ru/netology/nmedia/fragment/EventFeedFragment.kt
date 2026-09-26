@@ -58,6 +58,7 @@ class EventFeedFragment : Fragment() {
                     return
                 }
                 eventViewModel.likeById(event.id, event.likedByMe)
+                eventViewModel.refreshEvent()
             }
 
             override fun onEdit(event: Event) {
@@ -89,6 +90,7 @@ class EventFeedFragment : Fragment() {
 
         eventViewModel.dataState.observe(viewLifecycleOwner) { state ->
             binding.progress.isVisible = state.loading
+            binding.swiperefresh.isRefreshing = state.refreshing
 
             if (state.error) {
                 Snackbar.make(

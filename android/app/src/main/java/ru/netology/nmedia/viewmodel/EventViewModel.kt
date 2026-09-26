@@ -103,7 +103,7 @@ class EventViewModel @Inject constructor(
             eventRepository.refresh()
             _dataState.value = FeedModelState()
         } catch (e: Exception) {
-            _dataState.value = FeedModelState(error = true, refreshing = false)
+            _dataState.value = FeedModelState(error = true)
         }
     }
 
@@ -119,7 +119,12 @@ class EventViewModel @Inject constructor(
             _eventCreated.value = Unit
             viewModelScope.launch {
                 try {
-                    eventRepository.save(event)
+                    when (_photo.value) {
+                        noPhoto -> eventRepository.save(event)
+                        else -> _photo.value?.file?.let { file ->
+                            eventRepository.saveWithAttachment(event, file)
+                        }
+                    }
                     _dataState.value = FeedModelState()
                 } catch (e: Exception) {
                     _dataState.value = FeedModelState(error = true)
@@ -196,7 +201,6 @@ class EventViewModel @Inject constructor(
     fun changeType(type: String) {
         _edited.value = _edited.value?.copy(type = type)
     }
-
 }
 
 

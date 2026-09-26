@@ -120,6 +120,14 @@ class NewEventFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
+            if (eventViewModel.edited.value?.type.isNullOrEmpty()) {
+                Toast.makeText(context, R.string.choose_type, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (eventViewModel.edited.value?.datetime.isNullOrEmpty()) {
+                Toast.makeText(context, R.string.choose_date, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             eventViewModel.changeContent(binding.edit.text.toString())
             eventViewModel.save()
             AndroidUtils.hideKeyboard(requireView())
@@ -146,12 +154,10 @@ class NewEventFragment : Fragment() {
                             helper.showDateTime()
                             true
                         }
-
                         R.id.format -> {
                             showFormatDialog()
                             true
                         }
-
                         else -> false
                     }
                 }
