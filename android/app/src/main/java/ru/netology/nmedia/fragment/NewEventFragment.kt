@@ -19,8 +19,6 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewEventBinding
-import ru.netology.nmedia.databinding.FragmentNewPostBinding
-import ru.netology.nmedia.dto.EventType
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.util.DatePickerHelper
 import ru.netology.nmedia.util.FormatDate

@@ -67,4 +67,6 @@
     <string name="offline">Offline</string>
     <string name="choose_type">Please choose format event</string>
     <string name="choose_date">Please choose date event</string>
+    <string name="speakers">Speakers</string>
+    <string name="participants">Participants</string>
 </resources>

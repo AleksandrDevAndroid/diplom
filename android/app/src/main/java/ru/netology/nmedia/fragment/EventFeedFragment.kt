@@ -84,6 +84,12 @@ class EventFeedFragment : Fragment() {
                     )
                 startActivity(shareIntent)
             }
+
+            override fun onShow(event: Event) {
+                eventViewModel.selectEvent(event)
+                findNavController().navigate(R.id.action_event_feed_to_show_event)
+            }
+
         })
 
         binding.listEvent.adapter = adapter

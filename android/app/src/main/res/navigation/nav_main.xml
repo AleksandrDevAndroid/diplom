@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/feedFragment"
-        android:name="ru.netology.nmedia.fragment.FeedFragment"
+        android:name="ru.netology.nmedia.fragment.PostFeedFragment"
         android:label="fragment_feed"
         tools:layout="@layout/fragment_feed">
         <action
@@ -89,7 +89,7 @@
         tools:layout="@layout/fragment_show_photo"/>
     <fragment
         android:id="@+id/chooseUsers"
-        android:name="ru.netology.nmedia.fragment.ChooseUsersFragment"
+        android:name="ru.netology.nmedia.fragment.ChoosePostUsersFragment"
         android:label="choose_users"
         tools:layout="@layout/fragment_choose_users">
     </fragment>
@@ -158,6 +158,9 @@
         <action
             android:id="@+id/action_event_feed_to_edit_event"
             app:destination="@id/edit_event" />
+        <action
+            android:id="@+id/action_event_feed_to_show_event"
+            app:destination="@id/show_event" />
     </fragment>
         <action
             android:id="@+id/action_event_feed_to_show_users"
@@ -180,4 +183,9 @@
             android:id="@+id/action_edit_event_to_chooseUsers"
             app:destination="@id/chooseUsers" />
     </fragment>
+    <fragment
+        android:id="@+id/show_event"
+        android:name="ru.netology.nmedia.fragment.ShowEventFragment"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_show_event"/>
 </navigation>

@@ -22,6 +22,8 @@ interface OnEventInteractionListener {
     fun onEdit(event: Event) {}
     fun onRemove(event: Event) {}
     fun onShare(event: Event) {}
+
+    fun onShow(event: Event) {}
 }
 
 class EventViewHolder(
@@ -90,6 +92,9 @@ class EventViewHolder(
             }
             share.setOnClickListener {
                 onEventInteractionListener.onShare(event)
+            }
+            content.setOnClickListener {
+                onEventInteractionListener.onShow(event)
             }
         }
     }

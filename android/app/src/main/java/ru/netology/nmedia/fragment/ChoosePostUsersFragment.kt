@@ -12,10 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.adapter.ChooseUsersAdapter
 import ru.netology.nmedia.databinding.FragmentChooseUsersBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
-import ru.netology.nmedia.viewmodel.RegisterViewModel
 
 @AndroidEntryPoint
-class ChooseUsersFragment : Fragment() {
+class ChoosePostUsersFragment : Fragment() {
     private val postViewModel: PostViewModel by activityViewModels()
     private val adapter = ChooseUsersAdapter { user, isChecked ->
         user.isSelected = isChecked
@@ -28,7 +27,7 @@ class ChooseUsersFragment : Fragment() {
 
         binding.usersRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@ChooseUsersFragment.adapter
+            adapter = this@ChoosePostUsersFragment.adapter
         }
 
         postViewModel.getUsers()

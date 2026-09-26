@@ -40,10 +40,6 @@ data class Attachment(val url: String, val type: AttachmentType)
 data class Media(val url: String)
 data class DateSeparator(override val id: Long, val text: String) : FeedItem
 
-enum class EventType {
-    ONLINE,
-    OFFLINE
-}
 
 data class Event(
     val id: Long,
@@ -62,9 +58,10 @@ data class Event(
     val participatedByMe: Boolean,
     val attachment: Attachment?,
     val link: String?,
-    val ownedByMe: Boolean = false
-)
+    val ownedByMe: Boolean = false,
+    val users: Map<String, UserInfo>? = null
 
+)
 
 data class Job(
     val id: Long,
@@ -74,10 +71,5 @@ data class Job(
     val finish: String?,
     val link: String?,
     val ownerId: Long
-)
-
-data class Coords(
-    val lat: Double,
-    val long: Double
 )
 

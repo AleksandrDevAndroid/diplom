@@ -28,7 +28,7 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 
 @AndroidEntryPoint
 
-class FeedFragment : Fragment() {
+class PostFeedFragment : Fragment() {
 
     private val viewModel: PostViewModel by activityViewModels()
     private val authViewModel: AuthViewModel by activityViewModels()
@@ -144,6 +144,10 @@ class FeedFragment : Fragment() {
         }
 
         binding.tabUsers.setOnClickListener {
+            if (!authViewModel.authenticated) {
+                showDialog()
+                return@setOnClickListener
+            }
             findNavController().navigate(R.id.action_feedFragment_to_show_users)
         }
 
@@ -157,6 +161,10 @@ class FeedFragment : Fragment() {
         }
 
         binding.tabEvent.setOnClickListener {
+            if (!authViewModel.authenticated) {
+                showDialog()
+                return@setOnClickListener
+            }
             findNavController().navigate(R.id.action_feedFragment_to_event_fee)
         }
 

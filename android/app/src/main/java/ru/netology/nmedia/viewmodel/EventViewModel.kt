@@ -15,11 +15,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.Event
-import ru.netology.nmedia.dto.EventType
 import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
 import ru.netology.nmedia.repository.interfaceRepository.EventRepository
+import ru.netology.nmedia.repository.interfaceRepository.RegisterRepository
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
 import javax.inject.Inject
@@ -46,6 +46,7 @@ private val noPhoto = PhotoModel()
 @HiltViewModel
 class EventViewModel @Inject constructor(
     private val eventRepository: EventRepository,
+    private val registerRepository: RegisterRepository,
     appAuth: AppAuth
 ) :
     ViewModel() {
@@ -76,8 +77,8 @@ class EventViewModel @Inject constructor(
     private val _selectUsers = MutableLiveData<List<Users>>()
     val selectUsers: LiveData<List<Users>> = _selectUsers
 
-    private val _allUsers = MutableLiveData<List<Users>>()
-    val allUsers: LiveData<List<Users>> = _allUsers
+    private val _speakers = MutableLiveData<List<Users>>()
+    val speakers: LiveData<List<Users>> = _speakers
 
     private val _eventCreated = SingleLiveEvent<Unit>()
     val eventCreated: LiveData<Unit>
@@ -85,17 +86,6 @@ class EventViewModel @Inject constructor(
 
     private val _loadedEvent = MutableLiveData<Event>()
     val loadedEvent: LiveData<Event> = _loadedEvent
-
-    fun loadEvent(eventId: Long) {
-        viewModelScope.launch {
-            try {
-                val event = eventRepository.getById(eventId)
-                _loadedEvent.postValue(event)
-            } catch (e: Exception) {
-                _loadedEvent.postValue(_selectEvent.value)
-            }
-        }
-    }
 
     fun refreshEvent() = viewModelScope.launch {
         try {
@@ -107,8 +97,8 @@ class EventViewModel @Inject constructor(
         }
     }
 
-    fun getParticipantIds(): List<Long> {
-        return _allUsers.value
+    fun getSpeakersIds(): List<Long> {
+        return _speakers.value
             ?.filter { it.isSelected }
             ?.map { it.id }
             ?: emptyList()
@@ -119,10 +109,12 @@ class EventViewModel @Inject constructor(
             _eventCreated.value = Unit
             viewModelScope.launch {
                 try {
+                    val speakersId = getSpeakersIds()
+                    val eventWithParticipant = event.copy(speakerIds = speakersId)
                     when (_photo.value) {
-                        noPhoto -> eventRepository.save(event)
+                        noPhoto -> eventRepository.save(eventWithParticipant)
                         else -> _photo.value?.file?.let { file ->
-                            eventRepository.saveWithAttachment(event, file)
+                            eventRepository.saveWithAttachment(eventWithParticipant, file)
                         }
                     }
                     _dataState.value = FeedModelState()
@@ -141,9 +133,6 @@ class EventViewModel @Inject constructor(
         _edited.value = event
     }
 
-    fun selectEvet(event: Event) {
-        _selectEvent.value = event
-    }
 
     fun likeById(id: Long, likedByMe: Boolean) {
         viewModelScope.launch {
@@ -200,6 +189,31 @@ class EventViewModel @Inject constructor(
 
     fun changeType(type: String) {
         _edited.value = _edited.value?.copy(type = type)
+    }
+
+    fun selectEvent(event: Event) {
+        _selectEvent.value = event
+    }
+
+    fun loadEvent(eventId: Long) {
+        viewModelScope.launch {
+            try {
+                val post = eventRepository.getById(eventId)
+                _loadedEvent.postValue(post)
+            } catch (e: Exception) {
+                _loadedEvent.postValue(_selectEvent.value)
+            }
+        }
+    }
+    fun getSpeakers() {
+        viewModelScope.launch {
+            try {
+                val allUsers = registerRepository.getUsers()
+                _speakers.postValue(allUsers)
+            } catch (e: Exception) {
+                _speakers.postValue(emptyList())
+            }
+        }
     }
 }
 
