@@ -89,7 +89,7 @@
         tools:layout="@layout/fragment_show_photo"/>
     <fragment
         android:id="@+id/chooseUsers"
-        android:name="ru.netology.nmedia.fragment.ChoosePostUsersFragment"
+        android:name="ru.netology.nmedia.fragment.SelectPostUsersFragment"
         android:label="choose_users"
         tools:layout="@layout/fragment_choose_users">
     </fragment>
@@ -119,7 +119,7 @@
     </fragment>
     <fragment
         android:id="@+id/show_likers"
-        android:name="ru.netology.nmedia.fragment.ShowLikersFragment"
+        android:name="ru.netology.nmedia.fragment.ShowLikersPostFragment"
         android:label="view_profile"
         tools:layout="@layout/fragment_show_likers">
     </fragment>

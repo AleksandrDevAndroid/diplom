@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.LikersAvatarAdapter
+import ru.netology.nmedia.adapter.SelectedSpeakersAdapter
 import ru.netology.nmedia.adapter.SelectedUsersAdapter
 import ru.netology.nmedia.databinding.FragmentShowEventBinding
 import ru.netology.nmedia.dto.Event
@@ -26,23 +27,30 @@ import ru.netology.nmedia.viewmodel.EventViewModel
 class ShowEventFragment : Fragment() {
     private val eventViewModel: EventViewModel by activityViewModels()
 
-    private val speakersAdapter = SelectedUsersAdapter()
+    private val speakersAdapter = SelectedSpeakersAdapter()
     private val likersAdapter = LikersAvatarAdapter()
     private val participantsAdapter = SelectedUsersAdapter()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val binding = FragmentShowEventBinding.inflate(inflater, container, false)
 
-        fun mapIdsToUsers(ids: List<Long>, users: Map<String, UserInfo>?): List<Users> =
-            ids.mapNotNull { id ->
-                users?.get(id.toString())?.let { info ->
-                    Users(id, info.name, info.name, info.avatar)
+        fun mapIdsToUsers(ids: List<Long>, users: Map<String, UserInfo>?): List<Users> {
+            if (users == null) return emptyList()
+            return ids.mapNotNull { id ->
+                val userInfo = users[id.toString()]
+                    ?: users.values.elementAtOrNull(id.toInt())
+                userInfo?.let { info ->
+                    Users(
+                        id = id,
+                        name = info.name,
+                        login = info.name,
+                        avatar = info.avatar
+                    )
                 }
             }
+        }
 
         fun displayEvent(event: Event) = with(binding) {
             author.text = event.author
@@ -59,13 +67,9 @@ class ShowEventFragment : Fragment() {
             val urlAttachment = event.attachment?.url
             attachmentPhoto.isVisible = !urlAttachment.isNullOrEmpty()
             if (!urlAttachment.isNullOrEmpty()) {
-                Glide.with(binding.attachmentPhoto)
-                    .load(urlAttachment)
-                    .placeholder(R.drawable.outline_arrow_cool_down_24)
-                    .override(1200, 800)
-                    .centerCrop()
-                    .error(R.drawable.error)
-                    .into(binding.attachmentPhoto)
+                Glide.with(binding.attachmentPhoto).load(urlAttachment)
+                    .placeholder(R.drawable.outline_arrow_cool_down_24).override(1200, 800)
+                    .centerCrop().error(R.drawable.error).into(binding.attachmentPhoto)
             }
         }
 
@@ -85,21 +89,30 @@ class ShowEventFragment : Fragment() {
             participantsAdapter.submitList(participants)
         }
 
-        binding.speakersRecycler.apply {
+        binding.speakersRecyclerAvatars.apply {
             layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.HORIZONTAL, false
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
             )
             adapter = speakersAdapter
         }
+
         binding.likersRecycler.apply {
             layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.HORIZONTAL, false
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
             )
             adapter = likersAdapter
         }
+
+
         binding.participantsUsersAvatars.apply {
             layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.HORIZONTAL, false
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
             )
             adapter = participantsAdapter
         }

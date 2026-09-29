@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
@@ -50,9 +51,20 @@ class EditeEventFragment : Fragment() {
             }
         }
 
-        eventViewModel.photo.observe(viewLifecycleOwner) {
-            binding.photo.setImageURI(it.uri)
-            binding.removePhoto.isVisible = it.uri != null
+        eventViewModel.photo.observe(viewLifecycleOwner) { photo ->
+            val uri = photo.uri
+            if (uri != null) {
+                Glide.with(binding.photo)
+                    .load(uri)
+                    .placeholder(R.drawable.outline_arrow_cool_down_24)
+                    .error(R.drawable.error)
+                    .into(binding.photo)
+                binding.removePhoto.isVisible = true
+            } else {
+                binding.photo.setImageDrawable(null)
+                binding.removePhoto.isVisible = false
+            }
+            binding.removePhoto.isVisible = photo.uri != null
         }
 
         binding.removePhoto.setOnClickListener {

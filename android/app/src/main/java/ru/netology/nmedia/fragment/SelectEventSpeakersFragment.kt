@@ -9,15 +9,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import ru.netology.nmedia.adapter.ChooseUsersAdapter
+import ru.netology.nmedia.adapter.SelectSpeakersAdapter
 import ru.netology.nmedia.databinding.FragmentChooseUsersBinding
 import ru.netology.nmedia.viewmodel.EventViewModel
 
 @AndroidEntryPoint
-class ChooseEventSpeakersFragment : Fragment() {
+class SelectEventSpeakersFragment : Fragment() {
     private val eventViewModel: EventViewModel by activityViewModels()
-    private val adapter = ChooseUsersAdapter { user, isChecked ->
+    private val adapter = SelectSpeakersAdapter { user, isChecked ->
         user.isSelected = isChecked
+
     }
 
     override fun onCreateView(
@@ -27,10 +28,10 @@ class ChooseEventSpeakersFragment : Fragment() {
 
         binding.usersRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@ChooseEventSpeakersFragment.adapter
+            adapter = this@SelectEventSpeakersFragment.adapter
         }
 
-        eventViewModel.getSpeakers()
+        eventViewModel.getUsers()
 
         eventViewModel.speakers.observe(viewLifecycleOwner) { speaker ->
             adapter.submitList(speaker)

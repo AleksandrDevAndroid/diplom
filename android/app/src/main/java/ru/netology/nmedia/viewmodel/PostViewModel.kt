@@ -126,7 +126,7 @@ class PostViewModel @Inject constructor(
     }
 
     fun save() {
-        edited.value?.let { post ->
+        _edited.value?.let { post ->
             _postCreated.value = Unit
             viewModelScope.launch {
                 try {

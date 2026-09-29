@@ -163,7 +163,8 @@
             android:focusable="true"
             app:layout_constraintBottom_toTopOf="@id/tabContainer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add_24dp" />
+            app:srcCompat="@drawable/ic_add_24dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

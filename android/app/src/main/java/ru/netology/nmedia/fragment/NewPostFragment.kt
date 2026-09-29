@@ -98,6 +98,7 @@ class NewPostFragment : Fragment() {
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
+
         binding.saveButton.setOnClickListener {
             viewModel.changeContent(binding.edit.text.toString())
             viewModel.save()

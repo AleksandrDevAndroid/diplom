@@ -8,7 +8,7 @@ import ru.netology.nmedia.dto.Users
 import ru.netology.nmedia.view.loadCircleCrop
 
 
-class ChooseUserViewHolder(
+class SelectSpeakersViewHolder(
     private val onChecked: (Users, Boolean) -> Unit,
     private val binding: ItemChooseUsersBinding
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -32,9 +32,9 @@ class ChooseUserViewHolder(
     }
 }
 
-class ChooseUsersAdapter(
+class SelectSpeakersAdapter(
     private val onChecked: (Users, Boolean) -> Unit
-) : RecyclerView.Adapter<ChooseUserViewHolder>() {
+) : RecyclerView.Adapter<SelectSpeakersViewHolder>() {
     private var users = listOf<Users>()
 
 
@@ -44,13 +44,13 @@ class ChooseUsersAdapter(
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChooseUserViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectSpeakersViewHolder {
         val binding =
             ItemChooseUsersBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ChooseUserViewHolder(onChecked, binding)
+        return SelectSpeakersViewHolder(onChecked, binding)
     }
 
-    override fun onBindViewHolder(holder: ChooseUserViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SelectSpeakersViewHolder, position: Int) {
         holder.bind(users[position])
     }
 

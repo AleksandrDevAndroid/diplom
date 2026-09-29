@@ -165,17 +165,13 @@
                 app:layout_constraintTop_toBottomOf="@id/content" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/speakers_recycler"
+                android:id="@+id/speakers_recycler_avatars"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:nestedScrollingEnabled="false"
-                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/speakers_title"
+                tools:layout_height="40dp"
                 tools:listitem="@layout/item_avatar" />
 
             <TextView
@@ -185,7 +181,7 @@
                 android:text="@string/likers"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/speakers_recycler" />
+                app:layout_constraintTop_toBottomOf="@id/speakers_recycler_avatars" />
 
             <LinearLayout
                 android:id="@+id/likes_users"
@@ -220,18 +216,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/item_avatar" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/show_users"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_margin"
-                    android:backgroundTint="#6750A4"
-                    android:clickable="true"
-                    android:contentDescription="@string/add_post"
-                    android:focusable="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@drawable/ic_add_24dp" />
             </LinearLayout>
 
 
@@ -286,18 +270,6 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_avatar" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/show_users_mentioned"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_margin"
-                    android:backgroundTint="#6750A4"
-                    android:clickable="true"
-                    android:contentDescription="@string/add_post"
-                    android:focusable="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@drawable/ic_add_24dp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

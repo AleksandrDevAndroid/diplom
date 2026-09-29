@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.LikersAvatarAdapter
+import ru.netology.nmedia.adapter.SelectUsersAdapter
 import ru.netology.nmedia.adapter.SelectedUsersAdapter
 import ru.netology.nmedia.databinding.FragmentShowPostBinding
 import ru.netology.nmedia.dto.Post
@@ -33,6 +34,8 @@ class ShowPostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentShowPostBinding.inflate(inflater, container, false)
+
+
 
         fun displayMentioned(post: Post) {
             val mentionIds = post.mentionIds ?: emptyList()

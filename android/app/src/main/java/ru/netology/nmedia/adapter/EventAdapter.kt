@@ -41,6 +41,7 @@ class EventViewHolder(
             like.text = "${event.likeOwnerIds.size}"
             dateTime.text = event.datetime.formatDate()
             typeEvent.text = event.type
+            participantsCount.text = event.participantsIds.size.toString()
             attachmentPhoto.isVisible = false
 
 

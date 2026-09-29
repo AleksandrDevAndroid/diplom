@@ -74,8 +74,9 @@ class EventViewModel @Inject constructor(
     private val _selectEvent = MutableLiveData<Event>()
     val selectEvent: LiveData<Event> = _selectEvent
 
-    private val _selectUsers = MutableLiveData<List<Users>>()
-    val selectUsers: LiveData<List<Users>> = _selectUsers
+    val _allUsers = MutableLiveData<List<Users>>()
+    val allUsers: LiveData<List<Users>> = _allUsers
+
 
     private val _speakers = MutableLiveData<List<Users>>()
     val speakers: LiveData<List<Users>> = _speakers
@@ -125,7 +126,7 @@ class EventViewModel @Inject constructor(
         }
         _edited.value = empty
         _photo.value = noPhoto
-        _selectUsers.value = emptyList()
+        _speakers.value = emptyList()
     }
 
 
@@ -198,14 +199,15 @@ class EventViewModel @Inject constructor(
     fun loadEvent(eventId: Long) {
         viewModelScope.launch {
             try {
-                val post = eventRepository.getById(eventId)
-                _loadedEvent.postValue(post)
+                val event = eventRepository.getById(eventId)
+                _loadedEvent.postValue(event)
             } catch (e: Exception) {
                 _loadedEvent.postValue(_selectEvent.value)
             }
         }
     }
-    fun getSpeakers() {
+
+    fun getUsers() {
         viewModelScope.launch {
             try {
                 val allUsers = registerRepository.getUsers()

@@ -14,7 +14,7 @@ import ru.netology.nmedia.databinding.FragmentShowLikersBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 @AndroidEntryPoint
-class ShowLikersFragment() : Fragment() {
+class ShowLikersPostFragment() : Fragment() {
     private val postViewModel: PostViewModel by activityViewModels()
     private val adapter = LikersAdapter()
 
@@ -29,7 +29,7 @@ class ShowLikersFragment() : Fragment() {
 
         binding.usersRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@ShowLikersFragment.adapter
+            adapter = this@ShowLikersPostFragment.adapter
         }
 
 
