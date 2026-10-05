@@ -94,6 +94,11 @@
         tools:layout="@layout/fragment_choose_users">
     </fragment>
     <fragment
+        android:id="@+id/selectEventSpeakers"
+        android:name="ru.netology.nmedia.fragment.SelectEventSpeakersFragment"
+        android:label="select_event_speakers"
+        tools:layout="@layout/fragment_choose_users" />
+    <fragment
         android:id="@+id/viewProfile"
         android:name="ru.netology.nmedia.fragment.ProfileFragment"
         android:label="view_profile"
@@ -172,7 +177,7 @@
         tools:layout="@layout/fragment_new_event">
         <action
             android:id="@+id/action_new_event_to_chooseUsers"
-            app:destination="@id/chooseUsers" />
+            app:destination="@id/selectEventSpeakers" />
     </fragment>
     <fragment
         android:id="@+id/edit_event"
@@ -181,7 +186,7 @@
         tools:layout="@layout/fragment_edit_event">
         <action
             android:id="@+id/action_edit_event_to_chooseUsers"
-            app:destination="@id/chooseUsers" />
+            app:destination="@id/selectEventSpeakers" />
     </fragment>
     <fragment
         android:id="@+id/show_event"

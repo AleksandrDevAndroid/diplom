@@ -25,7 +25,6 @@ class SelectEventSpeakersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val binding = FragmentChooseUsersBinding.inflate(inflater, container, false)
-
         binding.usersRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@SelectEventSpeakersFragment.adapter

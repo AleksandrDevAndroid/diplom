@@ -82,7 +82,6 @@ class NewEventFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-
         eventViewModel.photo.observe(viewLifecycleOwner) {
             binding.photo.setImageURI(it.uri)
             binding.removePhoto.isVisible = it.uri != null
@@ -126,6 +125,7 @@ class NewEventFragment : Fragment() {
                 Toast.makeText(context, R.string.choose_date, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
             eventViewModel.changeContent(binding.edit.text.toString())
             eventViewModel.save()
             AndroidUtils.hideKeyboard(requireView())

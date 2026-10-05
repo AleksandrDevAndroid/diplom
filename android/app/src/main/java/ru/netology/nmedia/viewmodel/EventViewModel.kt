@@ -75,7 +75,6 @@ class EventViewModel @Inject constructor(
     val selectEvent: LiveData<Event> = _selectEvent
 
     val _allUsers = MutableLiveData<List<Users>>()
-    val allUsers: LiveData<List<Users>> = _allUsers
 
 
     private val _speakers = MutableLiveData<List<Users>>()
@@ -105,6 +104,7 @@ class EventViewModel @Inject constructor(
             ?: emptyList()
     }
 
+
     fun save() {
         _edited.value?.let { event ->
             _eventCreated.value = Unit
@@ -129,11 +129,9 @@ class EventViewModel @Inject constructor(
         _speakers.value = emptyList()
     }
 
-
     fun edit(event: Event) {
         _edited.value = event
     }
-
 
     fun likeById(id: Long, likedByMe: Boolean) {
         viewModelScope.launch {

@@ -21,7 +21,6 @@ class SelectSpeakersViewHolder(
             checkbox.setOnCheckedChangeListener(null)
             checkbox.isChecked = user.isSelected
             checkbox.setOnCheckedChangeListener { _, isChecked ->
-                user.isSelected = isChecked
                 onChecked(user, isChecked)
             }
             root.setOnClickListener {
