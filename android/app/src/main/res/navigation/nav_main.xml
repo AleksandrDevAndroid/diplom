@@ -192,5 +192,22 @@
         android:id="@+id/show_event"
         android:name="ru.netology.nmedia.fragment.ShowEventFragment"
         android:label="view_profile"
-        tools:layout="@layout/fragment_show_event"/>
+        tools:layout="@layout/fragment_show_event">
+        <action
+            android:id="@+id/action_show_event_to_show_event_participants"
+            app:destination="@id/show_event_participants" />
+        <action
+            android:id="@+id/action_show_event_to_show_event_likers"
+            app:destination="@id/show_event_likers" />
+    </fragment>
+    <fragment
+        android:id="@+id/show_event_participants"
+        android:name="ru.netology.nmedia.fragment.ShowEventParticipantsFragment"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_show_participants_event"/>
+    <fragment
+        android:id="@+id/show_event_likers"
+        android:name="ru.netology.nmedia.fragment.ShowEventLikersFragment"
+        android:label="view_profile"
+        tools:layout="@layout/fragment_show_likers_event"/>
 </navigation>

@@ -4,6 +4,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Multipart
@@ -18,8 +19,8 @@ interface UserService {
     @FormUrlEncoded
     @POST("users/authentication")
     suspend fun singIn(
-        @Part("login") login: String,
-        @Part("pass") pass: String?
+        @Field("login") login: String,
+        @Field("pass") pass: String?
     ): Response<AuthState>
 
     @Multipart

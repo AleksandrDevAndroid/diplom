@@ -73,19 +73,66 @@ class EventViewModel @Inject constructor(
 
     private val _selectEvent = MutableLiveData<Event>()
     val selectEvent: LiveData<Event> = _selectEvent
-
-    val _allUsers = MutableLiveData<List<Users>>()
-
-
     private val _speakers = MutableLiveData<List<Users>>()
     val speakers: LiveData<List<Users>> = _speakers
-
     private val _eventCreated = SingleLiveEvent<Unit>()
     val eventCreated: LiveData<Unit>
         get() = _eventCreated
 
     private val _loadedEvent = MutableLiveData<Event>()
     val loadedEvent: LiveData<Event> = _loadedEvent
+
+    private val _likers = MutableLiveData<List<Users>>()
+    val likers: LiveData<List<Users>> = _likers
+
+    private val _participants = MutableLiveData<List<Users>>()
+    val participants: LiveData<List<Users>> = _participants
+
+    fun getLikers(eventId: Long) {
+        viewModelScope.launch {
+            try {
+                val event = eventRepository.getById(eventId)
+                val likeOwnerId = event?.likeOwnerIds ?: emptyList()
+                val usersMap = event?.users ?: emptyMap()
+                val likers = likeOwnerId.mapNotNull { id ->
+                    usersMap[id.toString()]?.let { info ->
+                        Users(
+                            id = id,
+                            login = info.name,
+                            name = info.name,
+                            avatar = info.avatar
+                        )
+                    }
+                }
+                _likers.postValue(likers)
+            } catch (e: Exception) {
+                _likers.postValue(emptyList())
+            }
+        }
+    }
+
+    fun getParticipants(eventId: Long) {
+        viewModelScope.launch {
+            try {
+                val event = eventRepository.getById(eventId)
+                val likeOwnerId = event?.participantsIds ?: emptyList()
+                val usersMap = event?.users ?: emptyMap()
+                val likers = likeOwnerId.mapNotNull { id ->
+                    usersMap[id.toString()]?.let { info ->
+                        Users(
+                            id = id,
+                            login = info.name,
+                            name = info.name,
+                            avatar = info.avatar
+                        )
+                    }
+                }
+                _likers.postValue(likers)
+            } catch (e: Exception) {
+                _likers.postValue(emptyList())
+            }
+        }
+    }
 
     fun refreshEvent() = viewModelScope.launch {
         try {

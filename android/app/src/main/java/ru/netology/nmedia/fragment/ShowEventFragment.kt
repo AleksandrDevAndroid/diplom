@@ -148,6 +148,14 @@ class ShowEventFragment : Fragment() {
             }
         }
 
+        binding.showLikersEventFab.setOnClickListener {
+            findNavController().navigate(R.id.show_event_likers)
+        }
+
+        binding.showParticipantsEventFab.setOnClickListener {
+            findNavController().navigate(R.id.show_event_participants)
+        }
+
         return binding.root
     }
 }
