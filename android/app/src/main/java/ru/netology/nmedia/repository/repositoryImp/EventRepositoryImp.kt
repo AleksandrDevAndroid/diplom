@@ -90,6 +90,34 @@ class EventRepositoryImp @Inject constructor(
         }
     }
 
+    override suspend fun joinEvent(eventId: Long): Event {
+        try {
+            val response = apiService.joinEvent(eventId)
+            if (!response.isSuccessful) throw ApiError(response.code(), response.message())
+            val updated = response.body() ?: throw ApiError(response.code(), response.message())
+            _data.value = _data.value.map { if (it.id == eventId) updated else it }
+            return updated
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun leaveEvent(eventId: Long): Event {
+        try {
+            val response = apiService.leaveEvent(eventId)
+            if (!response.isSuccessful) throw ApiError(response.code(), response.message())
+            val updated = response.body() ?: throw ApiError(response.code(), response.message())
+            _data.value = _data.value.map { if (it.id == eventId) updated else it }
+            return updated
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
     override suspend fun getParticipants(eventId: Long): List<Users> {
         try {
             val response = apiService.getParticipants(eventId)

@@ -104,6 +104,30 @@ class EventViewModel @Inject constructor(
             ?: emptyList()
     }
 
+    fun joinEvent() {
+        val eventId = _selectEvent.value?.id ?: return
+        viewModelScope.launch {
+            try {
+                eventRepository.joinEvent(eventId)
+                loadEvent(eventId)
+            } catch (e: Exception) {
+                _dataState.value = FeedModelState(error = true)
+            }
+        }
+    }
+
+    fun leaveEvent() {
+        val eventId = _selectEvent.value?.id ?: return
+        viewModelScope.launch {
+            try {
+                eventRepository.leaveEvent(eventId)
+                loadEvent(eventId)
+            } catch (e: Exception) {
+                _dataState.value = FeedModelState(error = true)
+            }
+        }
+    }
+
 
     fun save() {
         _edited.value?.let { event ->

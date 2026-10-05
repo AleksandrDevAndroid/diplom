@@ -62,6 +62,11 @@ class ShowEventFragment : Fragment() {
             job.text = event.authorJob
             typeEvent.text = event.type
             participantsCount.text = event.participantsIds.size.toString()
+            joinEvent.text = if (!event.participatedByMe){
+                getString(R.string.join)
+            } else {
+                getString(R.string.leave)
+            }
 
 
             val urlAttachment = event.attachment?.url
@@ -132,6 +137,15 @@ class ShowEventFragment : Fragment() {
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+        binding.joinEvent.setOnClickListener {
+            val event = eventViewModel.loadedEvent.value ?: return@setOnClickListener
+            if (event.participatedByMe) {
+                eventViewModel.leaveEvent()
+            } else {
+                eventViewModel.joinEvent()
+            }
         }
 
         return binding.root

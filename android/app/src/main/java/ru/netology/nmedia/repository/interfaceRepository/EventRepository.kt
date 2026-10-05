@@ -19,6 +19,9 @@ interface EventRepository {
     suspend fun likeById(id: Long): Event
 
     suspend fun dislikeById(id: Long): Event
+    suspend fun joinEvent(eventId: Long): Event
+
+    suspend fun leaveEvent(eventId: Long): Event
     suspend fun getParticipants(eventId: Long): List<Users>
     suspend fun saveWithAttachment(event: Event, file: File?)
 

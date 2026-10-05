@@ -164,6 +164,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/content" />
 
+            <LinearLayout
+                android:id="@+id/speakers_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/speakers_title">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/speakers_recycler_avatars"
                 android:layout_width="wrap_content"
@@ -174,6 +184,23 @@
                 tools:layout_height="40dp"
                 tools:listitem="@layout/item_avatar" />
 
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/join_event"
+                android:textSize="14dp"
+                android:textStyle="normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:cornerRadius="150dp"
+                android:text="@string/join" />
+            </LinearLayout>
+
+
             <TextView
                 android:id="@+id/likers_title"
                 android:layout_width="wrap_content"
@@ -181,7 +208,8 @@
                 android:text="@string/likers"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/speakers_recycler_avatars" />
+                app:layout_constraintTop_toBottomOf="@id/speakers_event" />
+
 
             <LinearLayout
                 android:id="@+id/likes_users"

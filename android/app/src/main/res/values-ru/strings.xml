@@ -67,4 +67,6 @@
     <string name="choose_date">Please choose date event</string>
     <string name="speakers">Speakers</string>
     <string name="participants">Participants</string>
+    <string name="join">Join</string>
+    <string name="leave">Leave</string>
 </resources>

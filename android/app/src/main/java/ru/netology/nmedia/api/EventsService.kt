@@ -36,7 +36,10 @@ interface EventsService {
     suspend fun dislikeEvent(@Path("id") id: Long): Response<Event>
 
     @POST("events/{id}/participants")
-    suspend fun participate(@Path("id") id: Long): Response<Event>
+    suspend fun joinEvent(@Path("id") id: Long): Response<Event>
+
+    @DELETE("events/{id}/participants")
+    suspend fun leaveEvent(@Path("id") id: Long): Response<Event>
 
     @GET("events/{id}/newer")
     suspend fun getNewerEvent(
