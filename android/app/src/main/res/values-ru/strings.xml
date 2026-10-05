@@ -45,7 +45,7 @@
     <string name="image_ad">Добавить изображение</string>
     <string name="back_button">Назад</string>
     <string name="posts">Посты</string>
-    <string name="event">Эвенты</string>
+    <string name="event">События</string>
     <string name="users">Пользователи</string>
     <string name="save_button">Кнопка сохронить</string>
     <string name="choose_users">Выбрать пользователя</string>
@@ -60,13 +60,13 @@
     <string name="Create">Создать</string>
     <string name="emptyPositionOrName">"Пустое место работы или имя "</string>
     <string name="choose_period">Выбрать период</string>
-    <string name="accept">Accept</string>
+    <string name="accept">Принять</string>
     <string name="online">Online</string>
     <string name="offline">Offline</string>
-    <string name="choose_type">Please choose format event</string>
-    <string name="choose_date">Please choose date event</string>
-    <string name="speakers">Speakers</string>
-    <string name="participants">Participants</string>
-    <string name="join">Join</string>
-    <string name="leave">Leave</string>
+    <string name="choose_type">Выберите формат события</string>
+    <string name="choose_date">Выберите дату события</string>
+    <string name="speakers">Ведущие</string>
+    <string name="participants">Участники</string>
+    <string name="join">Участвовать</string>
+    <string name="leave">Покинуть</string>
 </resources>
