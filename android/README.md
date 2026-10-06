@@ -8,6 +8,9 @@
 
 !<img width="281" height="578" alt="Screenshot 2026-10-06 at 14 52 23" src="https://github.com/user-attachments/assets/eca17d3e-7a77-4a24-8416-4fe9d06198fd" />
 
-2) У нас есть отдельный фрагмент с авторизацией и регистрацией пользователя.
+2) На главном экране мы можем при нажатие на кнопку в правом верхнем углу выбрать , пройти авторизацию или зарегистрировать новый аккаунт.
+
+<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 03 24" src="https://github.com/user-attachments/assets/0c4f6198-16ce-4f74-b724-efb4271f1e93" />
+
    
 
