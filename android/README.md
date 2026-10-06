@@ -33,6 +33,12 @@
 <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 38 53" src="https://github.com/user-attachments/assets/a0a4bbd5-6ef3-4b9b-97a8-4aef54293307" />
 <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 38 35" src="https://github.com/user-attachments/assets/06592c14-87a4-402d-b75c-8e4f400ffcd5" />
 
+8)Вкладка работы, здесь пользователь может создавать места работы, период и место, в дальнейшем место работы будет отображаться в информации поста ,место работы.
+
+<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 40 52" src="https://github.com/user-attachments/assets/1c6d52de-05e0-450f-a792-f35b151933b8" />
+<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 51 27" src="https://github.com/user-attachments/assets/f06306d7-8975-4cd1-80e6-283a61383c06" />
+<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 46 33" src="https://github.com/user-attachments/assets/904e0a86-9ae1-4df7-b028-d99d0345f751" />![Uploading Screenshot 2026-10-06 at 15.51.27.png…]()
+
 
 
 
