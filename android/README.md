@@ -1,5 +1,5 @@
-Приложение социальные сети.
-![Screenshot 2026-10-06 at 14.04.53.png](../../../../../../var/folders/9n/hrjqfzzx24jf3mg4lwftrc740000gn/T/TemporaryItems/NSIRD_screencaptureui_qy2S9v/Screenshot%202026-10-06%20at%2014.04.53.png)
+Приложение социальные сети.<img width="281" height="578" alt="Screenshot 2026-10-06 at 14 43 32" src="https://github.com/user-attachments/assets/ca4b0269-02f9-4753-bce9-a2e4e1754b00" />
+
 1) Приложение встречает на основной лентее постов,у не авторизовоного пользователя есть возможность
 просмотра постов,при переходе на вкладки "События" или "Пользователи", приложение просит пройти авторизацию или регистрацию.![Screenshot 2026-10-06 at 14.06.47.png](../../../../../../var/folders/9n/hrjqfzzx24jf3mg4lwftrc740000gn/T/TemporaryItems/NSIRD_screencaptureui_rnV1Lp/Screenshot%202026-10-06%20at%2014.06.47.png)
 При нажатие на кнопку лайка или поделиться, так же всплывает окно с авторизацией.
