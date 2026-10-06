@@ -8,13 +8,6 @@
 
 !<img width="281" height="578" alt="Screenshot 2026-10-06 at 14 52 23" src="https://github.com/user-attachments/assets/eca17d3e-7a77-4a24-8416-4fe9d06198fd" />
 
-
-
 2) У нас есть отдельный фрагмент с авторизацией и регистрацией пользователя.
    
-<img width="281" height="578" alt="Screenshot 2026-10-06 at 14 59 37" src="https://github.com/user-attachments/assets/34a3326f-037c-4a91-8f46-0822398d8d11" />
 
-
-При выборе регистрации нас встречает окно где у пользователя есть возможность создать аккаунт,добавить фото,указать логин,пароль и никней![Screenshot 2026-10-06 at 14.11.03.png](../../../../../../var/folders/9n/hrjqfzzx24jf3mg4lwftrc740000gn/T/TemporaryItems/NSIRD_screencaptureui_1OV4ii/Screenshot%202026-10-06%20at%2014.11.03.png)
-При регистрации пользователь может воспользоваться камерой или выбрать уже имеющиеся фото с галереи для создания аватара профеля![Screenshot 2026-10-06 at 14.12.50.png](../../../../../../var/folders/9n/hrjqfzzx24jf3mg4lwftrc740000gn/T/TemporaryItems/NSIRD_screencaptureui_HIrop7/Screenshot%202026-10-06%20at%2014.12.50.png).
-Если пользователь не указал аватар,он будет сгенерирован исходя из его имени,первая буква и случайный цвет фона. 
