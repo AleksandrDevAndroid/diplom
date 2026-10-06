@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
@@ -47,16 +48,41 @@ class EditePostFragment : Fragment() {
         viewModel.edited.observe(viewLifecycleOwner) { post ->
             post?.let {
                 binding.edit.setText(it.content)
+                val hasPhoto = it.attachment != null || viewModel.photo.value?.uri != null
+                binding.removePhoto.isVisible = hasPhoto
+                if (!hasPhoto) {
+                    binding.photo.setImageURI(null)
+                    binding.photo.setImageDrawable(null)
+                }
             }
         }
 
-        viewModel.photo.observe(viewLifecycleOwner) {
-            binding.photo.setImageURI(it.uri)
-            binding.removePhoto.isVisible = it.uri != null
+        viewModel.edited.observe(viewLifecycleOwner) { post ->
+            post?.let {
+                binding.edit.setText(it.content)
+                if (it.attachment != null) {
+                    binding.photoContainer.isVisible = true
+                    binding.removePhoto.isVisible = true
+
+
+                    Glide.with(this)
+                        .load(it.attachment.url)
+                        .timeout(10_000)
+                        .into(binding.photo)
+                } else {
+                    if (viewModel.photo.value == null) {
+                        binding.removePhoto.isVisible = false
+                        binding.photo.setImageURI(null)
+                    }
+                }
+            }
         }
 
+
         binding.removePhoto.setOnClickListener {
-            viewModel.changePhoto(null, null)
+            viewModel.removePhoto()
+            binding.photo.setImageURI(null)
+            binding.removePhoto.isVisible = false
         }
 
         binding.pickPhoto.setOnClickListener {
@@ -89,6 +115,9 @@ class EditePostFragment : Fragment() {
                 viewModel.saveEdited()
                 findNavController().navigateUp()
             }
+        }
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
         }
         return binding.root
     }

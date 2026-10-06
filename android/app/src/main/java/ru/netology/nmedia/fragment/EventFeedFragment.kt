@@ -32,13 +32,13 @@ class EventFeedFragment : Fragment() {
     private val authViewModel : RegisterViewModel by activityViewModels()
     private fun showDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Authentication Required")
-            .setMessage("Please sign in to access this feature.")
-            .setPositiveButton("Sign In") { dialog, _ ->
+            .setTitle(R.string.please_auth)
+            .setMessage(R.string.set_msg_auth)
+            .setPositiveButton(R.string.sign_in) { dialog, _ ->
                 findNavController().navigate(R.id.login_fragment)
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.cancel()
             }
             .show()

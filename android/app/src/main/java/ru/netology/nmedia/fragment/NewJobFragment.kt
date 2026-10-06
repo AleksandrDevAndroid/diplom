@@ -12,13 +12,10 @@ import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewJobBinding
 import ru.netology.nmedia.dto.Job
-import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.util.DatePickerHelper
 import ru.netology.nmedia.util.FormatDate
 import ru.netology.nmedia.viewmodel.JobViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+
 
 class FragmentNewJob : Fragment() {
     private lateinit var datePickerHelper: DatePickerHelper

@@ -29,7 +29,7 @@
             android:id="@+id/title_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/new_post"
+            android:text="@string/edite"
             android:textSize="22dp"
             android:textStyle="bold"
             android:paddingStart="16dp"

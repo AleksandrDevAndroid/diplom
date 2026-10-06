@@ -1,5 +1,6 @@
 package ru.netology.nmedia.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -66,6 +67,25 @@ class ProfileFragment: Fragment() {
         val postAdapter = PostsAdapter(mediaObserver,object : OnInteractionListener {
             override fun onLike(post: Post) {
                 postViewModel.likeById(post.id, post.likedByMe)
+            }
+
+            override fun onRemove(post: Post) {
+                postViewModel.removeById(post.id)
+                postViewModel.refreshPosts()
+            }
+
+            override fun onShare(post: Post) {
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                    type = "text/plain"
+                }
+                val shareIntent =
+                    Intent.createChooser(
+                        intent,
+                        getString(ru.netology.nmedia.R.string.chooser_share_post)
+                    )
+                startActivity(shareIntent)
             }
         })
 

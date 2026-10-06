@@ -28,7 +28,7 @@ class ShowPhotoFragment : Fragment() {
             .load(urlAttachment)
             .placeholder(R.drawable.outline_arrow_cool_down_24)
             .error(R.drawable.error)
-            .timeout(6_000)
+            .timeout(5_000)
             .into(binding.showPhoto)
 
         binding.backButton.setOnClickListener {

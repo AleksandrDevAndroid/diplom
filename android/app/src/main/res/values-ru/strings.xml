@@ -70,4 +70,18 @@
     <string name="participants">Участники</string>
     <string name="join">Участвовать</string>
     <string name="leave">Покинуть</string>
+    <string name="please_auth">Пожалуйста войдите или зарегистрируйтесь</string>
+    <string name="set_msg_auth">Вам нужно авторизоваться</string>
+    <string name="cancel">Отмена</string>
+    <string name="login">Войти</string>
+    <string name="password">Пароль</string>
+    <string name="dont_have_acc">Если у вас нет аккаунта,пройти регестрацию?</string>
+    <string name="incorrect_pass_or_login">Неверный логин или пароль</string>
+    <string name="name">Имя</string>
+    <string name="possition">Позиция</string>
+    <string name="link">ссылка</string>
+    <string name="name_company">Компания</string>
+    <string name="new_post">Новый пост</string>
+    <string name="edite">Редактировать</string>
+    <string name="edit_event">Редактировать событие</string>
 </resources>

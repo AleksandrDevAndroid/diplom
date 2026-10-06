@@ -72,4 +72,17 @@
     <string name="participants">Participants</string>
     <string name="join">Join</string>
     <string name="leave">Leave</string>
+    <string name="please_auth">Please signin or signup</string>
+    <string name="set_msg_auth">You need auth your accaunt</string>
+    <string name="cancel">Cancel</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="dont_have_acc">Don\'t have an account? Register</string>
+    <string name="incorrect_pass_or_login">Incorrect pass or login</string>
+    <string name="name">Name</string>
+    <string name="possition">Possition</string>
+    <string name="link">Link</string>
+    <string name="name_company">Name organization</string>
+    <string name="edite">Edite</string>
+    <string name="edit_event">Edite event</string>
 </resources>

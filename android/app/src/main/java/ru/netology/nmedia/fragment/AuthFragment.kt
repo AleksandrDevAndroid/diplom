@@ -38,13 +38,18 @@ class AuthFragment : Fragment() {
             authViewModel.dataState.observe(viewLifecycleOwner) { state ->
                 if (state.successes) {
                     findNavController().navigateUp()
-                } else Toast.makeText(context, "Incorrect login or pass", LENGTH_LONG).show()
+                } else Toast.makeText(context, R.string.incorrect_pass_or_login, LENGTH_LONG).show()
             }
 
         }
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
+
+        binding.titleText.setOnClickListener {
+            findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+        }
+
         return binding.root
     }
 }

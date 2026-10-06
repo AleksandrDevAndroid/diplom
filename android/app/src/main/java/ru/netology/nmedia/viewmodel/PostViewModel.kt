@@ -188,21 +188,30 @@ class PostViewModel @Inject constructor(
     fun changePhoto(uri: Uri?, file: File?) {
         _photo.postValue(PhotoModel(uri, file))
     }
-
+    fun removePhoto() {
+        _photo.value = noPhoto
+        _edited.value?.let { post ->
+            _edited.value = post.copy(attachment = null)
+        }
+    }
     fun saveEdited() {
         val post = _edited.value ?: return
         val file = _photo.value?.file
+        val mentionIds = getMentionedIds()
+        val postWithMentions = post.copy(mentionIds = mentionIds)
         viewModelScope.launch {
             when {
                 _photo.value != noPhoto && _photo.value != null ->
-                    postRepository.saveWithAttachment(post, file)
+                    postRepository.saveWithAttachment(postWithMentions, file)
 
-                else -> postRepository.save(post)
+                else -> postRepository.save(postWithMentions)
             }
             _postCreated.value = Unit
             _edited.value = null
+            _selectUsers.value = emptyList()
         }
     }
+
 
     fun changeContent(content: String) {
         val text = content.trim()

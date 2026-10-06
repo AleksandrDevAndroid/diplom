@@ -55,7 +55,7 @@ class EventViewHolder(
                     .placeholder(R.drawable.outline_arrow_cool_down_24)
                     .override(1200, 800)
                     .centerCrop()
-                    .timeout(6_000)
+                    .timeout(5_000)
                     .error(R.drawable.error)
                     .into(binding.attachmentPhoto)
             }

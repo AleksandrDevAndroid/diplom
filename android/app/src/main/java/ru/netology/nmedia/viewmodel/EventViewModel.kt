@@ -239,14 +239,16 @@ class EventViewModel @Inject constructor(
     }
 
     fun saveEdited() {
-        val post = _edited.value ?: return
+        val event = _edited.value ?: return
         val file = _photo.value?.file
+        val speakers = getSpeakersIds()
+        val eventWithSpeakers = event.copy(speakerIds = speakers)
         viewModelScope.launch {
             when {
                 _photo.value != noPhoto && _photo.value != null ->
-                    eventRepository.saveWithAttachment(post, file)
+                    eventRepository.saveWithAttachment(eventWithSpeakers, file)
 
-                else -> eventRepository.save(post)
+                else -> eventRepository.save(eventWithSpeakers)
             }
             _eventCreated.value = Unit
             _edited.value = null

@@ -54,7 +54,7 @@
         android:layout_marginTop="8dp"
         android:background="#E6E0E9"
         android:gravity="center"
-        android:hint="Login"
+        android:hint="@string/login"
         android:imeOptions="actionDone"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="@id/take_photo"
@@ -68,7 +68,7 @@
         android:layout_marginTop="8dp"
         android:background="#E6E0E9"
         android:gravity="center"
-        android:hint="Name"
+        android:hint="@string/name"
         android:imeOptions="actionDone"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:gravity="center"
-            android:hint="Password"
+            android:hint="@string/password"
             android:imeOptions="actionDone"
             android:inputType="textPassword" />
 
@@ -117,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:gravity="center"
-            android:hint="Password"
+            android:hint="@string/password"
             android:imeOptions="actionDone"
             android:inputType="textPassword" />
 

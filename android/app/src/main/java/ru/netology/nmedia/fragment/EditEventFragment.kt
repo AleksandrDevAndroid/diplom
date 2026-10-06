@@ -45,27 +45,34 @@ class EditeEventFragment : Fragment() {
     ): View {
         val binding = FragmentEditEventBinding.inflate(layoutInflater, container, false)
 
-        eventViewModel.edited.observe(viewLifecycleOwner) { post ->
-            post?.let {
+        eventViewModel.edited.observe(viewLifecycleOwner) { event ->
+            event?.let {
                 binding.edit.setText(it.content)
+                val hasPhoto = it.attachment != null || eventViewModel.photo.value?.uri != null
+                binding.removePhoto.isVisible = hasPhoto
+                if (!hasPhoto) {
+                    binding.photo.setImageURI(null)
+                    binding.photo.setImageDrawable(null)
+                }
             }
         }
 
         eventViewModel.photo.observe(viewLifecycleOwner) { photo ->
             val uri = photo.uri
             if (uri != null) {
+                binding.photoContainer.isVisible = true
                 Glide.with(binding.photo)
                     .load(uri)
-                    .placeholder(R.drawable.outline_arrow_cool_down_24)
-                    .error(R.drawable.error)
-                    .timeout(6_000)
                     .into(binding.photo)
                 binding.removePhoto.isVisible = true
             } else {
-                binding.photo.setImageDrawable(null)
-                binding.removePhoto.isVisible = false
+                val attachment = eventViewModel.edited.value?.attachment
+                if (attachment == null) {
+                    binding.photo.setImageDrawable(null)
+                    binding.removePhoto.isVisible = false
+                    binding.photoContainer.isVisible = false
+                }
             }
-            binding.removePhoto.isVisible = photo.uri != null
         }
 
         binding.removePhoto.setOnClickListener {
