@@ -37,8 +37,21 @@
 
 <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 40 52" src="https://github.com/user-attachments/assets/1c6d52de-05e0-450f-a792-f35b151933b8" />
 <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 51 27" src="https://github.com/user-attachments/assets/f06306d7-8975-4cd1-80e6-283a61383c06" />
-<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 46 33" src="https://github.com/user-attachments/assets/904e0a86-9ae1-4df7-b028-d99d0345f751" />![Uploading Screenshot 2026-10-06 at 15.51.27.png…]()
+<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 46 33" src="https://github.com/user-attachments/assets/904e0a86-9ae1-4df7-b028-d99d0345f751" />
 
+9)Лента постов с нижним тулбаром для перехода между вкладками постов, событий и пользователей.Авторизованный пользователь может, создавать посты и переключаться между вкладками.
+<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 53 54" src="https://github.com/user-attachments/assets/d26042ab-2159-42c9-ad70-d9f6c5ad0ea7" />
+<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 55 18" src="https://github.com/user-attachments/assets/16c92f7b-c850-4941-b273-070048c74931" />
+<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 54 50" src="https://github.com/user-attachments/assets/98b1de74-ee49-4c66-8b65-dc106c86ecc0" />
+
+10) Создание и просмотр постов, при нажатие на + мы переходим на экран создания поста. Пользователь может набрать текст, добавить ссылки, фото, медиафайлы, отметить пользователя и оставить глоточку(в разработке),после создания поста он появляется в ленте постов и посты которые принадлежат пользователю, он может их редактировать или удалять из общей ленты.
+
+ <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 54 50" src="https://github.com/user-attachments/assets/a9c08856-82e4-47dd-9c97-ad4f297a6bab" />
+ <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 59 42" src="https://github.com/user-attachments/assets/aed73a52-c48b-4901-a4a2-22c54d9f1f42" />
+ <img width="281" height="578" alt="Screenshot 2026-10-06 at 16 00 21" src="https://github.com/user-attachments/assets/92022d58-bd49-48c4-88c7-7513552b3d62" />
+ <img width="281" height="578" alt="Screenshot 2026-10-06 at 16 03 01" src="https://github.com/user-attachments/assets/2f32f9dd-155d-416b-b131-a2cd1bff0df7" />
+
+ 
 
 
 
