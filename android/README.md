@@ -49,9 +49,42 @@
  <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 54 50" src="https://github.com/user-attachments/assets/a9c08856-82e4-47dd-9c97-ad4f297a6bab" />
  <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 59 42" src="https://github.com/user-attachments/assets/aed73a52-c48b-4901-a4a2-22c54d9f1f42" />
  <img width="281" height="578" alt="Screenshot 2026-10-06 at 16 00 21" src="https://github.com/user-attachments/assets/92022d58-bd49-48c4-88c7-7513552b3d62" />
- <img width="281" height="578" alt="Screenshot 2026-10-06 at 16 03 01" src="https://github.com/user-attachments/assets/2f32f9dd-155d-416b-b131-a2cd1bff0df7" />
 
+ 11) При выборе изменить, мы попадаем на фрагмент редактирования уже созданного поста , для изменения данных о посте, отметки пользователей и изменив вложений.
+ <img width="281" height="578" alt="Screenshot 2026-10-06 at 16 03 01" src="https://github.com/user-attachments/assets/2f32f9dd-155d-416b-b131-a2cd1bff0df7" />
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 12 11" src="https://github.com/user-attachments/assets/cc700e79-b8b7-4668-9006-b34d861addea" />
+
+После редактирования мы поменяли текст и отметили новых пользователей на посте.
+
+12) Детальный просмотр поста, отображается вся подробная информация, кто лайкнула,кого упомянули, при количестве больше 5 человек мы можем нажать на + чтобы увидеть всех пользователей кто лайкнула и кого упомянули.
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 14 18" src="https://github.com/user-attachments/assets/3c3ba53b-44d3-4a7a-af64-3e65d7be474d" />
+
+13) Вкладка событий на которой мы можем наблюдать все созданные события пользователями, формат проведения события, дату,количество участников, описание, вложение, дату создания и дату проведения мероприятия,кнопка + позволяет нам прейти на экран создания события.
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 15 25" src="https://github.com/user-attachments/assets/b1f17905-efdb-44d4-85a1-d87363473bf0" />
+
+14) Создание события, описание события, вложение файлов, кнопка отметки ведущих события, даты и формата онлайн или офлайн 
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 17 28" src="https://github.com/user-attachments/assets/bccc4b87-4d42-44f0-a32a-cb72822a9bb0" />
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 19 48" src="https://github.com/user-attachments/assets/74c68614-859e-4046-afed-107f57c8f879" />
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 20 10" src="https://github.com/user-attachments/assets/6ba2e995-cfe5-4c1b-b7fa-08b5bf9066af" />
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 20 31" src="https://github.com/user-attachments/assets/99e6b9e3-03ac-40c7-9359-bc461ed8e470" />
+
+15) Детальный просмотр события отображает всю информацию, кто лайкнула,кто ведет мероприятие и участников, кнопка принять участие или покинуть событие.
+
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 23 14" src="https://github.com/user-attachments/assets/0b730d5f-120c-41c4-a6ca-ffcd4f9798b1" />
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 23 46" src="https://github.com/user-attachments/assets/af4b8a97-a40a-4a96-9fa0-8b1d156b0ff1" />
+
+16)Автор события может удалять или редактировать события в ленте.
+
+ <img width="277" height="549" alt="Screenshot 2026-10-06 at 17 24 58" src="https://github.com/user-attachments/assets/cb84b346-83b7-4087-b295-c0b34429dfb0" />
+ 17) Экран редактирования события по аналогии с постами
  
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 34 09" src="https://github.com/user-attachments/assets/1d6c2b3e-80b1-4ed9-bd70-06ad7c443534" />
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 43 12" src="https://github.com/user-attachments/assets/d9f47570-7cc3-4b2b-928f-866cd3d38cf9" />
+
+18) Экран всех пользователей, при нажатие на них, мы сможем посмотреть их профиль по аналогии с нашим(в работе).
+<img width="277" height="549" alt="Screenshot 2026-10-06 at 17 44 36" src="https://github.com/user-attachments/assets/74c2ec93-0551-4f58-8a67-47abff6a2b7e" />
+
+
 
 
 
