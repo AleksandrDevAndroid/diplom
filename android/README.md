@@ -12,5 +12,15 @@
 
 <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 03 24" src="https://github.com/user-attachments/assets/0c4f6198-16ce-4f74-b724-efb4271f1e93" />
 
-   
+3) Экран авторизации пользователя, при вводе неверного пароля или логина всплывает ToastText с сообщением 
+
+ <img width="281" height="578" alt="Screenshot 2026-10-06 at 15 07 09" src="https://github.com/user-attachments/assets/f51acdb4-f1e0-46c0-982e-794c74ecc851" />
+
+4)Экран регистрации содержит 4 поля ввода, логин, никнейм, пароль и проверка пароля, также пользователь может выбрать аватар из галереи или создать новое через камеру. 
+
+<img width="281" height="578" alt="Screenshot 2026-10-06 at 15 22 23" src="https://github.com/user-attachments/assets/0397d6c6-f1f1-42ac-b93b-16ccac4b0cbb" />
+
+Если пользователь не стал выбирать аватар своего профиля,автар сгенерируется по первой букве его имени с случайным цветом фона.
+
+
 
