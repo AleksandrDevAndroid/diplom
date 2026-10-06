@@ -35,7 +35,8 @@
     <string name="attantion">Please dont share your login and password other people</string>
     <string name="emptyLoginOrPass">Login or pass can not empty</string>
     <string name="tryAgain">Try again,wrong login or pass</string>
-    <string name="register">"Register your accaunt "</string>
+    <string name="register_you_acc">"Register your accaunt "</string>
+    <string name="register">"Register"</string>
     <string name="notification_user_new_post">Creat new post\n</string>
     <string name="notification_from_app">You have new notification\n</string>
     <string name="incorrect_pass">Incorrect password</string>

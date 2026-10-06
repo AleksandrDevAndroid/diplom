@@ -36,7 +36,8 @@
     <string name="attantion">Пожалуйста не сообщайте ваш логин и пароль другим людям</string>
     <string name="emptyLoginOrPass">Поле логина или пароля не могут быть пустыми</string>
     <string name="tryAgain">Неверный логи или пароль</string>
-    <string name="register">"Регестрация аккаунта"</string>
+    <string name="register_you_acc">"Регестрация аккаунта"</string>
+    <string name="register">"Регестрация"</string>
     <string name="notification_user_new_post">Создан новый пост\n</string>
     <string name="notification_from_app">У вас есть уведомление\n</string>
     <string name="incorrect_pass">Неверный пароль</string>

@@ -1,1 +1,9 @@
-
+Приложение социальные сети.
+![Screenshot 2026-10-06 at 14.04.53.png](../../../../../../var/folders/9n/hrjqfzzx24jf3mg4lwftrc740000gn/T/TemporaryItems/NSIRD_screencaptureui_qy2S9v/Screenshot%202026-10-06%20at%2014.04.53.png)
+1) Приложение встречает на основной лентее постов,у не авторизовоного пользователя есть возможность
+просмотра постов,при переходе на вкладки "События" или "Пользователи", приложение просит пройти авторизацию или регистрацию.![Screenshot 2026-10-06 at 14.06.47.png](../../../../../../var/folders/9n/hrjqfzzx24jf3mg4lwftrc740000gn/T/TemporaryItems/NSIRD_screencaptureui_rnV1Lp/Screenshot%202026-10-06%20at%2014.06.47.png)
+При нажатие на кнопку лайка или поделиться, так же всплывает окно с авторизацией.
+2) У нас есть отдельный фрагмент с авторизацией и регистрацией пользователя.![Screenshot 2026-10-06 at 14.09.08.png](../../../../../../var/folders/9n/hrjqfzzx24jf3mg4lwftrc740000gn/T/TemporaryItems/NSIRD_screencaptureui_G7XkAn/Screenshot%202026-10-06%20at%2014.09.08.png)
+При выборе регистрации нас встречает окно где у пользователя есть возможность создать аккаунт,добавить фото,указать логин,пароль и никней![Screenshot 2026-10-06 at 14.11.03.png](../../../../../../var/folders/9n/hrjqfzzx24jf3mg4lwftrc740000gn/T/TemporaryItems/NSIRD_screencaptureui_1OV4ii/Screenshot%202026-10-06%20at%2014.11.03.png)
+При регистрации пользователь может воспользоваться камерой или выбрать уже имеющиеся фото с галереи для создания аватара профеля![Screenshot 2026-10-06 at 14.12.50.png](../../../../../../var/folders/9n/hrjqfzzx24jf3mg4lwftrc740000gn/T/TemporaryItems/NSIRD_screencaptureui_HIrop7/Screenshot%202026-10-06%20at%2014.12.50.png).
+Если пользователь не указал аватар,он будет сгенерирован исходя из его имени,первая буква и случайный цвет фона. 

@@ -58,6 +58,7 @@ class EditeEventFragment : Fragment() {
                     .load(uri)
                     .placeholder(R.drawable.outline_arrow_cool_down_24)
                     .error(R.drawable.error)
+                    .timeout(6_000)
                     .into(binding.photo)
                 binding.removePhoto.isVisible = true
             } else {

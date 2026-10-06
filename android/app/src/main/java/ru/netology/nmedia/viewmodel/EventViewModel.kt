@@ -117,7 +117,7 @@ class EventViewModel @Inject constructor(
                 val event = eventRepository.getById(eventId)
                 val likeOwnerId = event?.participantsIds ?: emptyList()
                 val usersMap = event?.users ?: emptyMap()
-                val likers = likeOwnerId.mapNotNull { id ->
+                val participants = likeOwnerId.mapNotNull { id ->
                     usersMap[id.toString()]?.let { info ->
                         Users(
                             id = id,
@@ -127,7 +127,7 @@ class EventViewModel @Inject constructor(
                         )
                     }
                 }
-                _likers.postValue(likers)
+                _likers.postValue(participants)
             } catch (e: Exception) {
                 _likers.postValue(emptyList())
             }

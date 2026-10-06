@@ -74,6 +74,7 @@ class ShowEventFragment : Fragment() {
             if (!urlAttachment.isNullOrEmpty()) {
                 Glide.with(binding.attachmentPhoto).load(urlAttachment)
                     .placeholder(R.drawable.outline_arrow_cool_down_24).override(1200, 800)
+                    .timeout(6_000)
                     .centerCrop().error(R.drawable.error).into(binding.attachmentPhoto)
             }
         }
