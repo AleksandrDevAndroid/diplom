@@ -106,6 +106,10 @@
         <action
             android:id="@+id/action_viewProfile_to_createJob"
             app:destination="@id/create_job" />
+        <argument
+            android:name="userId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/create_job"
@@ -139,6 +143,9 @@
         <action
             android:id="@+id/action_show_users_to_event_feed"
             app:destination="@id/event_feed" />
+        <action
+            android:id="@+id/action_show_users_to_viewProfile"
+            app:destination="@id/viewProfile" />
     </fragment>
     <fragment
         android:id="@+id/show_users_mentioned"

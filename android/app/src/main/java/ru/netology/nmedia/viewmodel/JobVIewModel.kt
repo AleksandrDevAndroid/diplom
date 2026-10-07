@@ -22,25 +22,24 @@ private val empty = Job(
 )
 @HiltViewModel
 class JobViewModel @Inject constructor(
-    private val repository: JobRepository,
-    private val appAuth: AppAuth
+    private val repository: JobRepository
 ) :
     ViewModel() {
     private val _job = MutableLiveData<List<Job>>()
     val job: LiveData<List<Job>> = _job
 
     private val _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _error = MutableLiveData<String?>(null)
     val error: LiveData<String?> = _error
 
+    private val selectUser = MutableLiveData(false)
 
-    fun loadJobs() {
+
+    fun loadJobs(userId: Long) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                val userId = appAuth.authState.value.id
                 val jobs = repository.getJobs(userId)
                 _job.value = jobs
             } catch (e: Exception) {
@@ -50,15 +49,16 @@ class JobViewModel @Inject constructor(
         }
     }
 
+
     fun saveJob(job: Job) {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
                 _error.value = null
-                val userId = appAuth.authState.value.id
+                val userId = job.ownerId
                 val ownerJob = job.copy(ownerId = userId)
                 repository.saveJob(ownerJob)
-                loadJobs()
+                loadJobs(userId)
             } catch (e: Exception) {
                 _error.value = "${e.message}"
                 _isLoading.value = false
@@ -69,10 +69,11 @@ class JobViewModel @Inject constructor(
     fun deleteJob(job: Job) {
         viewModelScope.launch {
             try {
+                val userId = job.ownerId
                 _isLoading.value = true
                 _error.value = null
                 repository.deleteJob(job)
-                loadJobs()
+                loadJobs(userId)
             } catch (e: Exception) {
                 _error.value = "${e.message}"
             }

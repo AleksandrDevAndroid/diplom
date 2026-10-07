@@ -56,9 +56,23 @@ class ProfileFragment: Fragment() {
             }
         }
 
-        val userId = appAuth.authState.value.id
-        if (userId != 0L) {
-            registerViewModel.getUser(userId)
+        val userId = arguments?.getLong("userId") ?: 0L
+        val myId = appAuth.authState.value.id
+        if (myId != 0L) {
+            registerViewModel.getUser(myId)
+        }
+
+        val targetUserId = if (userId != 0L) userId else myId
+        val isMyProfile = targetUserId == myId
+
+        if (!isMyProfile) {
+            binding.fab.visibility = View.GONE
+            binding.logout.visibility = View.GONE
+        }
+
+        if (targetUserId != 0L) {
+            registerViewModel.getUser(targetUserId)
+            jobViewModel.loadJobs(targetUserId)
         }
 
         mediaObserver = MediaLifecycleObserver(requireContext())
@@ -115,7 +129,7 @@ class ProfileFragment: Fragment() {
                 postViewModel.data.collectLatest { post ->
                     val userId = appAuth.authState.value.id
                     val filteredPagingData = post.filter { feedItem ->
-                        (feedItem as? Post)?.authorId == userId
+                        (feedItem as? Post)?.authorId == targetUserId
                     }
                     postAdapter.submitData(filteredPagingData)
                 }
@@ -128,7 +142,6 @@ class ProfileFragment: Fragment() {
 
 
         postViewModel.updateStatus()
-        jobViewModel.loadJobs()
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -141,7 +154,7 @@ class ProfileFragment: Fragment() {
                     1 -> {
                         binding.postRecyclerView.visibility = View.GONE
                         binding.jobRecyclerView.visibility = View.VISIBLE
-                        binding.fab.show()
+                        if (isMyProfile) binding.fab.show() else binding.fab.hide()
                     }
                 }
             }
@@ -161,8 +174,7 @@ class ProfileFragment: Fragment() {
         } else {
             binding.postRecyclerView.visibility = View.GONE
             binding.jobRecyclerView.visibility = View.VISIBLE
-            binding.fab.show()
-            jobViewModel.loadJobs()
+            if (isMyProfile) binding.fab.show() else binding.fab.hide()
         }
 
         binding.fab.setOnClickListener {

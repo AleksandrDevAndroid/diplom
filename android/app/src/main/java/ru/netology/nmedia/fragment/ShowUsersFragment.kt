@@ -15,7 +15,6 @@ import ru.netology.nmedia.viewmodel.RegisterViewModel
 
 class ShowUsersFragment : Fragment() {
     private val registerViewModel: RegisterViewModel by activityViewModels()
-    private val adapter = UsersAdapter()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,11 +22,20 @@ class ShowUsersFragment : Fragment() {
     ): View? {
         val binding = FragmentShowUsersBinding.inflate(layoutInflater, container, false)
 
+        val adapter = UsersAdapter { user ->
+            val bundle = Bundle().apply {
+                putLong("userId", user.id)
+            }
+            findNavController().navigate(
+                R.id.action_show_users_to_viewProfile,
+                bundle
+            )
+        }
         registerViewModel.getUsers()
 
         binding.usersRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@ShowUsersFragment.adapter
+            this.adapter = adapter
         }
 
         registerViewModel.users.observe(viewLifecycleOwner){ users ->
