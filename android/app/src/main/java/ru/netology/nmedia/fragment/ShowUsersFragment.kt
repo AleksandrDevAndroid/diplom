@@ -38,8 +38,13 @@ class ShowUsersFragment : Fragment() {
             this.adapter = adapter
         }
 
+        binding.swiperefresh.setOnRefreshListener {
+            registerViewModel.getUsers()
+        }
+
         registerViewModel.users.observe(viewLifecycleOwner){ users ->
             adapter.submitList(users)
+            binding.swiperefresh.isRefreshing = false
         }
 
         binding.tabEvent.setOnClickListener {

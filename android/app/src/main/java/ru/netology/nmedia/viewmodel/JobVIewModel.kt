@@ -20,6 +20,7 @@ private val empty = Job(
     link = "",
     ownerId = 0
 )
+
 @HiltViewModel
 class JobViewModel @Inject constructor(
     private val repository: JobRepository
@@ -33,10 +34,8 @@ class JobViewModel @Inject constructor(
     private val _error = MutableLiveData<String?>(null)
     val error: LiveData<String?> = _error
 
-    private val selectUser = MutableLiveData(false)
-
-
     fun loadJobs(userId: Long) {
+        _job.value = emptyList()
         viewModelScope.launch {
             try {
                 _isLoading.value = true
@@ -78,8 +77,5 @@ class JobViewModel @Inject constructor(
                 _error.value = "${e.message}"
             }
         }
-    }
-    fun clearError() {
-        _error.value = null
     }
 }

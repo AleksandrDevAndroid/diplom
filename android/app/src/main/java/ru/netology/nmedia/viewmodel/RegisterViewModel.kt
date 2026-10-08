@@ -60,6 +60,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun getUser(userId: Long) {
+        _user.value = null
         viewModelScope.launch {
             try {
                 val userData = repository.getUser(userId)

@@ -58,9 +58,6 @@ class ProfileFragment: Fragment() {
 
         val userId = arguments?.getLong("userId") ?: 0L
         val myId = appAuth.authState.value.id
-        if (myId != 0L) {
-            registerViewModel.getUser(myId)
-        }
 
         val targetUserId = if (userId != 0L) userId else myId
         val isMyProfile = targetUserId == myId
